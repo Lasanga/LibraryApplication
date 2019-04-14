@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Authorization\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Intellect.Core\Intellect.Core.csproj" />
+    <ProjectReference Include="..\Intellect.Infrastructure\Intellect.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

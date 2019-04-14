@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20190414171508_Modified_Entity_Author.cs" />
+    <Compile Remove="Migrations\20190414172209_Modified_Entity_Author.cs" />
+    <Compile Remove="Migrations\20190414172445_Modified_Entity_Author2.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Intellect.Core\Intellect.Core.csproj" />
+  </ItemGroup>
+
+</Project>
