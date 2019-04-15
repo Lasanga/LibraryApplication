@@ -1,8 +1,8 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 
-.newsCard {
-  max-width: 300px;
+.govPublication{
+    max-width: 300px;
 }
 
 .image{
@@ -14,10 +14,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.editButton{
- float: right;
 }
 
 .condition{

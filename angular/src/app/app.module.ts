@@ -17,10 +17,12 @@ import { LayoutComponent } from './layout/layout.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthInterceptor } from './auth-interceptor';
 import { OlaLeafComponent } from './ola-leaf/ola-leaf.component';
+import { GovernmentPublicationComponent } from './government-publication/government-publication.component';
 
 	//Material Component Imports
 import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule,
-    MatCardModule, MatMenuModule, MatInputModule, MatFormFieldModule, MatRippleModule} from "@angular/material";
+    MatCardModule, MatMenuModule, MatInputModule, MatFormFieldModule, MatRippleModule, MatRadioModule} from "@angular/material";
+
 
 @NgModule({
   declarations: [
@@ -32,12 +34,14 @@ import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, Mat
     BookDetailsComponent,
     NewsPaperComponent,
     LayoutComponent,
-    OlaLeafComponent
+    OlaLeafComponent,
+    GovernmentPublicationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     MatCardModule,
     MatMenuModule,
     MatButtonModule,
@@ -48,6 +52,7 @@ import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, Mat
     MatInputModule,
     MatFormFieldModule,
     MatRippleModule,
+    MatRadioModule,
 
     JwtModule.forRoot({
       config: {
