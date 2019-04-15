@@ -21,7 +21,7 @@ namespace Intellect.Core.Configurations
         {
             return new List<ApiResource>
             {
-                new ApiResource("api1", "My API", claimTypes: new[] { "name", "role"})
+                new ApiResource("api1", "My API", claimTypes: new[] { "name", "role", "permission"})
             };
         }
 
