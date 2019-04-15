@@ -1,3 +1,35 @@
-<div>
+<div class="header">
+
+  <mat-toolbar class="navBarOut">
+
+    <button
+      type="button"
+      aria-label="Toggle sidenav"
+      mat-icon-button
+      (click)="drawer.toggle()"
+      *ngIf="isHandset$ | async">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
   
+    <span style="font-size: 32px; font-weight: bold; color: rgb(66, 66, 66);">{{ title }}</span>
+  
+    <div class="topNav">
+      <button class="navBarButtons">Contact us</button>
+      <button class="navBarButtons">About us</button>
+      <button class="navBarButtons">Events</button>
+      <button class="navBarButtons">Publications</button>
+      <button class="navBarButtons">Our Services</button>
+      <button class="navBarButtons">Collections</button>
+      <button class="navBarButtons">Home</button>
+    </div>
+  
+    <div class="accountIcon">G</div>
+
+    <div>
+      <span style="font-size: 12px; margin-left: 12px;">Welcome </span> 
+      <span style="font-size: 14px; margin-left: 4px;">{{ name }}</span> 
+    </div>
+  
+  </mat-toolbar>
+    
 </div>
