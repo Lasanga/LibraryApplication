@@ -1,107 +1,92 @@
 <mat-card class="regCard">
     
-    <mat-card-actions>
-      <button mat-icon-button>
-        <mat-icon >keyboard_arrow_left</mat-icon> 
-        <span>back to home</span>
-      </button>
-    </mat-card-actions>
+  <a routerLink="/">
+    <button mat-icon-button>
+      <mat-icon >keyboard_arrow_left</mat-icon> 
+      <span>back to home</span>
+    </button>
+  </a>
   
-    <mat-card-header>
-      <h2>Register Portal</h2>
-    </mat-card-header>
-  
+  <mat-card-header>
+    <h2>Register Portal</h2>
+  </mat-card-header>
+
+
+  <div class="formField">
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+          <input matInput placeholder="Fistname"
+          [errorStateMatcher]="matcher" required>
+        
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div class="formField">
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+          <input matInput placeholder="Lastname"
+          [errorStateMatcher]="matcher" required>
+       
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div class="formField">
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+          <input matInput placeholder="E-mail address"
+          [errorStateMatcher]="matcher" required>
+       
+      </mat-form-field>
+    </form>
+  </div>
+
+
+  <div class="formField">
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+          <input matInput placeholder="Password" [errorStateMatcher]="matcher" required>
+        
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div class="formField">
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+          <input matInput placeholder="Re-enter Password" [errorStateMatcher]="matcher" required>
+       
+      </mat-form-field>
+    </form>
+  </div>
+
+  <!-- <span>User</span>
+  <button matRipple mat-button style="background-color: rgb(231, 231, 231); color: grey; margin: 0 20px;">Local</button>
+  <button matRipple mat-button style="background-color: rgb(231, 231, 231); ; color: grey; margin: 0 20px;">Foreign</button> -->
+
+  <mat-form-field>
+    <mat-select [(value)]="selected" style="display: inline;" placeholder="User type" required>
+      <mat-option (click)="localUserClick()" value="Local">Local</mat-option>
+      <mat-option (click)="foreignUserClick()" value="Foreign">Foreign</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div [hidden]="showUserIdentity()">
 
     <div class="formField">
       <form class="example-form">
         <mat-form-field class="example-full-width">
-            <input matInput placeholder="Fistname"
-            [errorStateMatcher]="matcher">
-          <mat-hint>Errors appear instantly!</mat-hint>
-          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-            Please enter a valid email address
-          </mat-error>
-          <mat-error *ngIf="emailFormControl.hasError('required')">
-            Email is <strong>required</strong>
-          </mat-error>
+            <input matInput placeholder="NIC" [errorStateMatcher]="matcher">
         </mat-form-field>
       </form>
     </div>
 
-    <div class="formField">
-      <form class="example-form">
-        <mat-form-field class="example-full-width">
-            <input matInput placeholder="Lastname"
-            [errorStateMatcher]="matcher">
-          <mat-hint>Errors appear instantly!</mat-hint>
-          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-            Please enter a valid email address
-          </mat-error>
-          <mat-error *ngIf="emailFormControl.hasError('required')">
-            Email is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-      </form>
-    </div>
+  </div>
 
-    <div class="formField">
-      <form class="example-form">
-        <mat-form-field class="example-full-width">
-            <input matInput placeholder="E-mail address"
-            [errorStateMatcher]="matcher">
-          <mat-hint>Errors appear instantly!</mat-hint>
-          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-            Please enter a valid email address
-          </mat-error>
-          <mat-error *ngIf="emailFormControl.hasError('required')">
-            Email is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-      </form>
-    </div>
+  <div class="regBtn">
+      <button mat-raised-button style="background-color: rgb(0, 140, 255); color: white;">Register</button>
+  </div>
 
-  
-    <div class="formField">
-      <form class="example-form">
-        <mat-form-field class="example-full-width">
-            <input matInput placeholder="Password" [errorStateMatcher]="matcher">
-          <mat-hint>Errors appear instantly!</mat-hint>
-          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-            Please enter a valid email address
-          </mat-error>
-          <mat-error *ngIf="emailFormControl.hasError('required')">
-            Email is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-      </form>
-    </div>
-
-    <div class="formField">
-      <form class="example-form">
-        <mat-form-field class="example-full-width">
-            <input matInput placeholder="Re-enter Password" [errorStateMatcher]="matcher">
-          <mat-hint>Errors appear instantly!</mat-hint>
-          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-            Please enter a valid email address
-          </mat-error>
-          <mat-error *ngIf="emailFormControl.hasError('required')">
-            Email is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-      </form>
-    </div>
-  
-    <div class="regBtn">
-        <button matRipple mat-raised-button style="background-color: rgb(0, 140, 255); color: white;">Register</button>
-    </div>
-  
-    <div class="loginBtnContainer">
-      <div class="loginBtn">
-        <p style="display: table-cell; font-size: 14px;">Already a member?</p>
-        <a href="/login" style="margin-left: 5px; text-decoration: none;">Login here</a>
-      </div>
-    </div>
-  
-  
-  </mat-card>
+</mat-card>
   

@@ -1,20 +1,8 @@
-@import "@angular/material/prebuilt-themes/indigo-pink.css";
 
 .regCard {
     max-width: 30%;
     margin: 5% auto;
     padding: 20px 20px 40px 20px;
-}
-
-.formField{
-    margin: 40px 10px;
-    border: 1px solid lightgrey;
-    padding: 10px;
-    border-radius: 7px;
-}
-
-.formField:focus {
-    border: 1px solid orange;
 }
 
 .example-form {
@@ -30,6 +18,7 @@
 .regBtn {
     display: flex;
     justify-content: center;
+    margin-top: 30px;
 }
 
 .loginBtnContainer {

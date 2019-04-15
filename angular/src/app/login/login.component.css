@@ -1,20 +1,8 @@
-@import "@angular/material/prebuilt-themes/indigo-pink.css";
 
 .loginCard {
     max-width: 30%;
     margin: 10% auto;
     padding: 20px 20px 40px 20px;
-}
-
-.formField{
-    margin: 40px 20px;
-    border: 1px solid lightgrey;
-    padding: 10px;
-    border-radius: 7px;
-}
-
-.formField:focus {
-    border: 1px solid orange;
 }
 
 .example-form {

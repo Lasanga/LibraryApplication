@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,8 +19,10 @@ import { OlaLeafComponent } from './ola-leaf/ola-leaf.component';
 
 	//Material Component Imports
 import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule,
-    MatCardModule, MatMenuModule, MatInputModule, MatFormFieldModule, MatRippleModule} from "@angular/material";
+    MatCardModule, MatMenuModule, MatInputModule, MatFormFieldModule, MatRippleModule, MatSelectModule,
+    MatRadioModule, MatOptionModule} from "@angular/material";
 import { RegisterComponent } from './register/register.component';
+import { HomeComponent } from './home/home.component';
  
 @NgModule({
   declarations: [
@@ -30,6 +33,7 @@ import { RegisterComponent } from './register/register.component';
     LayoutComponent,
     OlaLeafComponent,
     RegisterComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +50,10 @@ import { RegisterComponent } from './register/register.component';
     MatInputModule,
     MatFormFieldModule,
     MatRippleModule,
+    MatSelectModule,
+    MatRadioModule,
+    FormsModule,
+    MatOptionModule,
 
     JwtModule.forRoot({
       config: {
