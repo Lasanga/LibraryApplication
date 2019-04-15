@@ -28,9 +28,6 @@ import { OlaLeafComponent } from './ola-leaf/ola-leaf.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    MatCardModule,
-    MatMenuModule,
-    MatButtonModule,
 
     JwtModule.forRoot({
       config: {
