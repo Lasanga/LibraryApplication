@@ -19,6 +19,7 @@ import { OlaLeafComponent } from './ola-leaf/ola-leaf.component';
 	//Material Component Imports
 import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule,
     MatCardModule, MatMenuModule, MatInputModule, MatFormFieldModule, MatRippleModule} from "@angular/material";
+import { RegisterComponent } from './register/register.component';
  
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, Mat
     FooterComponent,
     LayoutComponent,
     OlaLeafComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

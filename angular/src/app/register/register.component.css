@@ -1,13 +1,13 @@
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 
-.loginCard {
+.regCard {
     max-width: 30%;
-    margin: 10% auto;
+    margin: 5% auto;
     padding: 20px 20px 40px 20px;
 }
 
 .formField{
-    margin: 40px 20px;
+    margin: 40px 10px;
     border: 1px solid lightgrey;
     padding: 10px;
     border-radius: 7px;
@@ -27,17 +27,17 @@
     width: 100%;
 }
 
-.loginBtn {
-    display: flex;
-    justify-content: center;
-}
-
-.regBtnContainer {
-    display: flex;
-    justify-content: center;
-}
-
 .regBtn {
+    display: flex;
+    justify-content: center;
+}
+
+.loginBtnContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.loginBtn {
     display: table;
     margin-top: 30px;
 }
