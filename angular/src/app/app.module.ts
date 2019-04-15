@@ -35,6 +35,7 @@ import { RegisterComponent } from './register/register.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     MatCardModule,
     MatMenuModule,
     MatButtonModule,
