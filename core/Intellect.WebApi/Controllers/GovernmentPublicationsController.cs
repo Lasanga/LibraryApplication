@@ -6,6 +6,7 @@ using AutoMapper;
 using Intellect.Core.Models.GovtPublications;
 using Intellect.Core.Models.GovtPublications.Dtos;
 using Intellect.DomainServices.GovtPublications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

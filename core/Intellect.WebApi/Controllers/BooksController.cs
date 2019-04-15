@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Intellect.Core;
 using Intellect.Core.Models.Books;
 using Intellect.Core.Models.Books.Dtos;
 using Intellect.DomainServices.Books;
 using Intellect.Infrastructure.Repositories.AuthorRepositoies;
 using Intellect.Infrastructure.Repositories.CategoryRepositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,6 +26,7 @@ namespace Intellect.WebApi.Controllers
 
         [HttpGet]
         [Route("api/[controller]/GetAll")]
+        [AllowAnonymous]
         public async Task<List<BookOutputDto>> GetAll()
         {
             List<BookOutputDto> books = new List<BookOutputDto>();
@@ -53,6 +56,7 @@ namespace Intellect.WebApi.Controllers
 
         [HttpGet()]
         [Route("api/[controller]/GetById")]
+        [AllowAnonymous]
         public async Task<BookOutputDto> Get(int id)
         {
             BookOutputDto book = new BookOutputDto();
@@ -64,6 +68,7 @@ namespace Intellect.WebApi.Controllers
 
         [HttpPost]
         [Route("api/[controller]/Create")]
+        [Authorize(Roles = StaticRoleNames.PrincipleLibrarian)]
         public async Task Post([FromBody] BookInputDto input)
         {
             var book = _mapper.Map<Book>(input);
@@ -72,6 +77,7 @@ namespace Intellect.WebApi.Controllers
 
         [HttpPut()]
         [Route("api/[controller]/Update")]
+        [Authorize(Roles = StaticRoleNames.PrincipleLibrarian)]
         public async Task<BookOutputDto> Put([FromBody] BookUpdateDto input)
         {
             var book = _mapper.Map<Book>(input);
@@ -82,6 +88,7 @@ namespace Intellect.WebApi.Controllers
 
         [HttpDelete()]
         [Route("api/[controller]/Delete")]
+        [Authorize(Roles = StaticRoleNames.PrincipleLibrarian)]
         public void Delete(int id)
         {
             _bookManager.DeleteAsync(id);
