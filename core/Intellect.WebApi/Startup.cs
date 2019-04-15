@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using Intellect.Core.Models.Authorization;
@@ -30,6 +31,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NSwag;
+using NSwag.AspNetCore;
+using NSwag.SwaggerGeneration.Processors.Security;
 
 namespace Intellect.WebApi
 {
@@ -83,7 +87,7 @@ namespace Intellect.WebApi
                     builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
 
-            services.AddSwaggerDocument();
+            services.AddSwagger();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -91,8 +95,7 @@ namespace Intellect.WebApi
 
             app.UseStaticFiles();
             app.UseCors("AllowAllOriginsHeadersAndMethods");
-            app.UseSwagger();
-            app.UseSwaggerUi3();
+            UseNswag(app);
             app.UseMvc();
 
             Seed(app);
@@ -129,6 +132,25 @@ namespace Intellect.WebApi
                 context.Database.Migrate();
                 SeedDb.Seed(context, userManager, roleManager).Wait();
             }
+        }
+
+        private void UseNswag(IApplicationBuilder app)
+        {
+            #pragma warning disable CS0618 // Type or member is obsolete
+            app.UseSwaggerUi3(typeof(Startup).GetTypeInfo().Assembly, settings =>
+            {
+                settings.GeneratorSettings.OperationProcessors.Add(new OperationSecurityScopeProcessor("JWT Token"));
+
+                settings.GeneratorSettings.DocumentProcessors.Add(new SecurityDefinitionAppender("JWT Token",
+                    new SwaggerSecurityScheme
+                    {
+                        Type = SwaggerSecuritySchemeType.ApiKey,
+                        Name = "Authorization",
+                        Description = "Copy 'Bearer ' + valid JWT token into field",
+                        In = SwaggerSecurityApiKeyLocation.Header
+                    }));
+            });
+            #pragma warning restore CS0618 // Type or member is obsolete
         }
     }
 }
