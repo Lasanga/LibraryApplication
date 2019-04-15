@@ -18,7 +18,7 @@ import { OlaLeafComponent } from './ola-leaf/ola-leaf.component';
 
 	//Material Component Imports
 import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule,
-    MatCardModule, MatMenuModule, MatInputModule, MatFormFieldModule} from "@angular/material";
+    MatCardModule, MatMenuModule, MatInputModule, MatFormFieldModule, MatRippleModule} from "@angular/material";
  
 @NgModule({
   declarations: [
@@ -28,6 +28,11 @@ import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, Mat
     FooterComponent,
     LayoutComponent,
     OlaLeafComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
     MatCardModule,
     MatMenuModule,
     MatButtonModule,
@@ -36,12 +41,8 @@ import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, Mat
     MatSidenavModule,
     MatListModule,
     MatInputModule,
-    MatFormFieldModule
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
+    MatFormFieldModule,
+    MatRippleModule,
 
     JwtModule.forRoot({
       config: {
