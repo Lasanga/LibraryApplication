@@ -1,7 +1,7 @@
 
-.loginCard {
+.regCard {
     max-width: 30%;
-    margin: 10% auto;
+    margin: 5% auto;
     padding: 20px 20px 40px 20px;
 }
 
@@ -15,17 +15,18 @@
     width: 100%;
 }
 
-.loginBtn {
-    display: flex;
-    justify-content: center;
-}
-
-.regBtnContainer {
-    display: flex;
-    justify-content: center;
-}
-
 .regBtn {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.loginBtnContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.loginBtn {
     display: table;
     margin-top: 30px;
 }
