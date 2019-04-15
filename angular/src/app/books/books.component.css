@@ -1,18 +1,19 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-.olaLeaf{
-  max-width: 300px;
+
+.example-card {
+    max-width: 300px;
 }
 
 .image{
-height: 250px;
-width: 200px;
+  height: 250px;
+  width: 200px;
 }
 
 .center{
-display: flex;
-justify-content: center;
-align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .condition{
