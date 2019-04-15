@@ -3,13 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intellect.WebApi", "Intellect.WebApi\Intellect.WebApi.csproj", "{389CAA1D-A2F5-4039-87A6-06FA58F01CC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intellect.WebApi", "Intellect.WebApi\Intellect.WebApi.csproj", "{389CAA1D-A2F5-4039-87A6-06FA58F01CC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intellect.Core", "Intellect.Core\Intellect.Core.csproj", "{952EE33A-9B1E-423F-8E37-3B1E0CE7327E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intellect.Core", "Intellect.Core\Intellect.Core.csproj", "{952EE33A-9B1E-423F-8E37-3B1E0CE7327E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intellect.Infrastructure", "Intellect.Infrastructure\Intellect.Infrastructure.csproj", "{3A95C048-CE31-4252-AE32-590F549BA023}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intellect.Infrastructure", "Intellect.Infrastructure\Intellect.Infrastructure.csproj", "{3A95C048-CE31-4252-AE32-590F549BA023}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intellect.DomainServices", "Intellect.DomainServices\Intellect.DomainServices.csproj", "{F4D9A66D-08A7-4783-9F4D-8882C6699480}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Intellect.DomainServices", "Intellect.DomainServices\Intellect.DomainServices.csproj", "{F4D9A66D-08A7-4783-9F4D-8882C6699480}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "consoleApp", "consoleApp", "{7A48AC8E-770D-406F-BF85-F956F0A77683}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intellect.console", "Intellect.console\Intellect.console.csproj", "{D12FF9E3-2712-401A-86E5-4E2D19258B8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,9 +73,24 @@ Global
 		{F4D9A66D-08A7-4783-9F4D-8882C6699480}.Release|x64.Build.0 = Release|Any CPU
 		{F4D9A66D-08A7-4783-9F4D-8882C6699480}.Release|x86.ActiveCfg = Release|Any CPU
 		{F4D9A66D-08A7-4783-9F4D-8882C6699480}.Release|x86.Build.0 = Release|Any CPU
+		{D12FF9E3-2712-401A-86E5-4E2D19258B8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D12FF9E3-2712-401A-86E5-4E2D19258B8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D12FF9E3-2712-401A-86E5-4E2D19258B8A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D12FF9E3-2712-401A-86E5-4E2D19258B8A}.Debug|x64.Build.0 = Debug|Any CPU
+		{D12FF9E3-2712-401A-86E5-4E2D19258B8A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D12FF9E3-2712-401A-86E5-4E2D19258B8A}.Debug|x86.Build.0 = Debug|Any CPU
+		{D12FF9E3-2712-401A-86E5-4E2D19258B8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D12FF9E3-2712-401A-86E5-4E2D19258B8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D12FF9E3-2712-401A-86E5-4E2D19258B8A}.Release|x64.ActiveCfg = Release|Any CPU
+		{D12FF9E3-2712-401A-86E5-4E2D19258B8A}.Release|x64.Build.0 = Release|Any CPU
+		{D12FF9E3-2712-401A-86E5-4E2D19258B8A}.Release|x86.ActiveCfg = Release|Any CPU
+		{D12FF9E3-2712-401A-86E5-4E2D19258B8A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D12FF9E3-2712-401A-86E5-4E2D19258B8A} = {7A48AC8E-770D-406F-BF85-F956F0A77683}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7C1AE108-9B9F-4233-BEA3-4481BA4FB06D}

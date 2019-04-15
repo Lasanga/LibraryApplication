@@ -82,12 +82,12 @@ namespace Intellect.WebApi.Controllers
 
         }
 
-        [HttpGet]
+        [HttpPut]
         [Route("AddForiegner")]
         [Authorize(Policy = PolicyTypes.UserPolicy.Manage)]
-        public async Task AddForiegner(string Id)
+        public async Task AddForiegner(AddForiegnerInputDto input)
         {
-            var user = await _userManager.FindByIdAsync(Id);
+            var user = await _userManager.FindByIdAsync(input.Id);
 
             if (user != null && !user.IsActive)
             {
