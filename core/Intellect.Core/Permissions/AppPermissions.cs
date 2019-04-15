@@ -53,5 +53,10 @@ namespace Intellect.Core.Permissions
             public const string Delete = "category.delete";
             public const string View = "category.view";
         }
+
+        public static class UserPermission
+        {
+            public const string AddUser = "user.add";
+        }
     }
 }

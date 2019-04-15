@@ -5,9 +5,12 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using IdentityServer4.AspNetIdentity;
+using IdentityServer4.Validation;
 using Intellect.Core.Configurations;
 using Intellect.Core.Models.Authorization;
 using Intellect.Core.Permissions;
+using Intellect.DomainServices.Authorization;
 using Intellect.DomainServices.Authors;
 using Intellect.DomainServices.Books;
 using Intellect.DomainServices.Categories;
@@ -65,15 +68,16 @@ namespace Intellect.WebApi
                .AddEntityFrameworkStores<IntellectDbContext>()
                .AddDefaultTokenProviders();
 
-            services.AddIdentityServer(options =>
+            var builder1 = services.AddIdentityServer(options =>
             {
                 options.IssuerUri = null;
-            })
-                                  .AddDeveloperSigningCredential()
-                                  .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                                  .AddInMemoryClients(Config.GetClients())
-                                  .AddInMemoryApiResources(Config.GetApis())
-                                  .AddAspNetIdentity<ApplicationUser>();
+            }).AddDeveloperSigningCredential()
+              .AddInMemoryIdentityResources(Config.GetIdentityResources())
+              .AddInMemoryClients(Config.GetClients())
+              .AddInMemoryApiResources(Config.GetApis())
+              .AddAspNetIdentity<ApplicationUser>();
+
+            builder1.Services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
 
             services.AddAuthentication(options =>
             {
@@ -253,6 +257,14 @@ namespace Intellect.WebApi
                         AppPermissions.GovtPermission.View);
                 });
                 #endregion
+
+                options.AddPolicy(PolicyTypes.UserPolicy.Manage, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.UserPermission.AddUser
+                        );
+                });
             });
         }
 
