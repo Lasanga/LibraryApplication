@@ -21,6 +21,7 @@ namespace Intellect.WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -36,13 +37,14 @@ namespace Intellect.WebApi.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public async Task Resgister(UserRegisterInputDto input)
+        [AllowAnonymous]
+        public async Task Register([FromBody]UserRegisterInputDto input)
         {
             var result = new IdentityResult();
 
             var user = new ApplicationUser { UserName = input.UserName, Email = input.EmailAddress, NationalId = input.NationalId };
 
-            if (user.NationalId != null)
+            if (!string.IsNullOrEmpty(user.NationalId))
             {
                 user.IsActive = true;
                 result = await _userManager.CreateAsync(user, input.Password);
@@ -68,7 +70,7 @@ namespace Intellect.WebApi.Controllers
         [Authorize(Policy = PolicyTypes.UserPolicy.Manage)]
         public async Task<List<UnRegUserOutputDto>> GetForiegners()
         {
-            var users = _userManager.Users.ToList().Where(x => x.IsActive);
+            var users = _userManager.Users.ToList().Where(x => !x.IsActive);
 
             return users?.Select(x => new UnRegUserOutputDto()
             {
@@ -77,6 +79,21 @@ namespace Intellect.WebApi.Controllers
                 IsActive = x.IsActive,
                 UserName = x.UserName
             }).ToList();
+
+        }
+
+        [HttpGet]
+        [Route("AddForiegner")]
+        [Authorize(Policy = PolicyTypes.UserPolicy.Manage)]
+        public async Task AddForiegner(string Id)
+        {
+            var user = await _userManager.FindByIdAsync(Id);
+
+            if (user != null && !user.IsActive)
+            {
+                user.IsActive = true;
+                await _userManager.UpdateAsync(user);
+            }
 
         }
     }

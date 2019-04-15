@@ -113,12 +113,6 @@ namespace Intellect.WebApi
                 options.User.RequireUniqueEmail = true;
             });
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAllOriginsHeadersAndMethods",
-                    builder => builder.WithOrigins("http://localhost:4200"));
-            });
-
             AddPolicies(services);
             services.AddSwagger();
         }
@@ -127,7 +121,6 @@ namespace Intellect.WebApi
         {
             app.UseIdentityServer();
             app.UseStaticFiles();
-            app.UseCors(b => b.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:4200"));
             UseNswag(app);
             app.UseMvc();
 
