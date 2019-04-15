@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Intellect.Core.Configurations;
 using Intellect.Core.Models.Authorization;
+using Intellect.Core.Permissions;
 using Intellect.DomainServices.Authors;
 using Intellect.DomainServices.Books;
 using Intellect.DomainServices.Categories;
@@ -114,10 +115,11 @@ namespace Intellect.WebApi
                     builder => builder.WithOrigins("http://localhost:4200"));
             });
 
+            AddPolicies(services);
             services.AddSwagger();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env )
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseIdentityServer();
             app.UseStaticFiles();
@@ -127,6 +129,133 @@ namespace Intellect.WebApi
 
             Seed(app);
         }
+
+        private void AddPolicies(IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(PolicyTypes.AuthorPolicy.Crud, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.AuthorPermission.Add,
+                        AppPermissions.AuthorPermission.Delete,
+                        AppPermissions.AuthorPermission.Edit,
+                        AppPermissions.AuthorPermission.View);
+                });
+
+                options.AddPolicy(PolicyTypes.CategoryPolicy.Crud, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.CategoryPermission.Add,
+                        AppPermissions.CategoryPermission.Delete,
+                        AppPermissions.CategoryPermission.Edit,
+                        AppPermissions.CategoryPermission.View);
+                });
+
+                #region Books
+                options.AddPolicy(PolicyTypes.BooksPolicy.Cru, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.BooksPermission.Add,
+                        AppPermissions.BooksPermission.Edit,
+                        AppPermissions.BooksPermission.View);
+                });
+
+                options.AddPolicy(PolicyTypes.BooksPolicy.delete, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.BooksPermission.Delete);
+                });
+
+                options.AddPolicy(PolicyTypes.BooksPolicy.View, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.AuthorPermission.View);
+                });
+                #endregion
+
+                #region Newspaper
+                options.AddPolicy(PolicyTypes.NewspaperPolicy.Cru, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.NewspaperPermission.Add,
+                        AppPermissions.NewspaperPermission.Edit,
+                        AppPermissions.NewspaperPermission.View);
+                });
+
+                options.AddPolicy(PolicyTypes.NewspaperPolicy.delete, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.NewspaperPermission.Delete);
+                });
+
+                options.AddPolicy(PolicyTypes.NewspaperPolicy.View, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.NewspaperPermission.View);
+                });
+                #endregion
+
+                #region OlaLeaf
+                options.AddPolicy(PolicyTypes.OlaLeafPolicy.Cru, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.OlaLeafPermission.Add,
+                        AppPermissions.OlaLeafPermission.Edit,
+                        AppPermissions.OlaLeafPermission.View);
+                });
+
+                options.AddPolicy(PolicyTypes.OlaLeafPolicy.delete, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.OlaLeafPermission.Delete);
+                });
+
+                options.AddPolicy(PolicyTypes.OlaLeafPolicy.View, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.OlaLeafPermission.View);
+                });
+                #endregion
+
+                #region Govt
+                options.AddPolicy(PolicyTypes.GovtPolicy.Cru, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.GovtPermission.Add,
+                        AppPermissions.GovtPermission.Edit,
+                        AppPermissions.GovtPermission.View);
+                });
+
+                options.AddPolicy(PolicyTypes.GovtPolicy.delete, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.GovtPermission.Delete);
+                });
+
+                options.AddPolicy(PolicyTypes.GovtPolicy.View, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.GovtPermission.View);
+                });
+                #endregion
+            });
+        }
+
 
 
         private void AddScopes(IServiceCollection services)
