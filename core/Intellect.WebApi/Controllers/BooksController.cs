@@ -2,6 +2,7 @@
 using Intellect.Core;
 using Intellect.Core.Models.Books;
 using Intellect.Core.Models.Books.Dtos;
+using Intellect.Core.Permissions;
 using Intellect.DomainServices.Books;
 using Intellect.Infrastructure.Repositories.AuthorRepositoies;
 using Intellect.Infrastructure.Repositories.CategoryRepositories;
@@ -13,6 +14,8 @@ using System.Threading.Tasks;
 namespace Intellect.WebApi.Controllers
 {
     [ApiController]
+    [Authorize]
+    [Route("api/[controller]")]
     public class BooksController : ControllerBase
     {
         private readonly IBookManager _bookManager;
@@ -25,7 +28,7 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]/GetAll")]
+        [Route("GetAll")]
         [AllowAnonymous]
         public async Task<List<BookOutputDto>> GetAll()
         {
@@ -55,7 +58,7 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpGet()]
-        [Route("api/[controller]/GetById")]
+        [Route("GetById")]
         [AllowAnonymous]
         public async Task<BookOutputDto> Get(int id)
         {
@@ -67,8 +70,8 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("api/[controller]/Create")]
-        [Authorize(Roles = StaticRoleNames.PrincipleLibrarian)]
+        [Route("Create")]
+        [Authorize(Policy = PolicyTypes.BooksPolicy.Cru)]
         public async Task Post([FromBody] BookInputDto input)
         {
             var book = _mapper.Map<Book>(input);
@@ -76,8 +79,8 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpPut()]
-        [Route("api/[controller]/Update")]
-        [Authorize(Roles = StaticRoleNames.PrincipleLibrarian)]
+        [Route("Update")]
+        [Authorize(Policy = PolicyTypes.BooksPolicy.Cru)]
         public async Task<BookOutputDto> Put([FromBody] BookUpdateDto input)
         {
             var book = _mapper.Map<Book>(input);
@@ -87,8 +90,8 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpDelete()]
-        [Route("api/[controller]/Delete")]
-        [Authorize(Roles = StaticRoleNames.PrincipleLibrarian)]
+        [Route("Delete")]
+        [Authorize(Policy = PolicyTypes.BooksPolicy.delete)]
         public void Delete(int id)
         {
             _bookManager.DeleteAsync(id);
