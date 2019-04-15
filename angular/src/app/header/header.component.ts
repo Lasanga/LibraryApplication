@@ -9,6 +9,7 @@ import { AppComponent } from '../app.component';
 export class HeaderComponent implements OnInit {
 
   title = 'Intellect';
+  name = "Guest";
 
   constructor() { }
 

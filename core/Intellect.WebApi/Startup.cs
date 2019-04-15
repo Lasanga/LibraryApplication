@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Intellect.Core.Configurations;
 using Intellect.Core.Models.Authorization;
 using Intellect.DomainServices.Authors;
 using Intellect.DomainServices.Books;
@@ -21,6 +23,7 @@ using Intellect.Infrastructure.Repositories.NewspaperRepositories;
 using Intellect.Infrastructure.Repositories.OlaleafRepositories;
 using Intellect.Infrastructure.SeedDatabase;
 using Intellect.Infrastructure.UnitOfWork;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +34,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.AspNetCore;
 using NSwag.SwaggerGeneration.Processors.Security;
@@ -60,6 +64,29 @@ namespace Intellect.WebApi
                .AddEntityFrameworkStores<IntellectDbContext>()
                .AddDefaultTokenProviders();
 
+            services.AddIdentityServer(options =>
+            {
+                options.IssuerUri = null;
+            })
+                                  .AddDeveloperSigningCredential()
+                                  .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                                  .AddInMemoryClients(Config.GetClients())
+                                  .AddInMemoryApiResources(Config.GetApis())
+                                  .AddAspNetIdentity<ApplicationUser>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "http://localhost:5000";
+                options.RequireHttpsMetadata = false;
+
+                options.Audience = "api1";
+            });
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
@@ -78,23 +105,23 @@ namespace Intellect.WebApi
                 // User settings.
                 options.User.AllowedUserNameCharacters =
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = false;
+                options.User.RequireUniqueEmail = true;
             });
 
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllOriginsHeadersAndMethods",
-                    builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+                    builder => builder.WithOrigins("http://localhost:4200"));
             });
 
             services.AddSwagger();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env )
         {
-
+            app.UseIdentityServer();
             app.UseStaticFiles();
-            app.UseCors("AllowAllOriginsHeadersAndMethods");
+            app.UseCors(b => b.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:4200"));
             UseNswag(app);
             app.UseMvc();
 
@@ -136,7 +163,7 @@ namespace Intellect.WebApi
 
         private void UseNswag(IApplicationBuilder app)
         {
-            #pragma warning disable CS0618 // Type or member is obsolete
+#pragma warning disable CS0618 // Type or member is obsolete
             app.UseSwaggerUi3(typeof(Startup).GetTypeInfo().Assembly, settings =>
             {
                 settings.GeneratorSettings.OperationProcessors.Add(new OperationSecurityScopeProcessor("JWT Token"));
@@ -150,7 +177,7 @@ namespace Intellect.WebApi
                         In = SwaggerSecurityApiKeyLocation.Header
                     }));
             });
-            #pragma warning restore CS0618 // Type or member is obsolete
+#pragma warning restore CS0618 // Type or member is obsolete
         }
     }
 }
