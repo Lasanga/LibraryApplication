@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BooksService, BookOutputDto, CategoryService, CategoryOutputDto } from '../shared-services/shared-services.component';
+import { AuthService } from '../auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,18 +9,27 @@ import { BooksService, BookOutputDto, CategoryService, CategoryOutputDto } from 
 })
 export class LoginComponent implements OnInit {
 
-  category: CategoryOutputDto[] = [];
+  private returnUrl: string;
 
   constructor(
-    private _categoryService: CategoryService
+    private _authService: AuthService,
+    private router: Router, 
+    private activated: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this._categoryService.getAll().subscribe(res => {
-      res.forEach(element => {
-        console.log(element.displayName);
-      });
+    this.activated.queryParams.subscribe(params => {
+        this.returnUrl = params["returnUrl"];
     });
+
+    const username = "admin";
+    const password = "123qwe";
+
+    this._authService.authenticate(username, password)
+    .subscribe(res =>{
+      console.log(res)
+    })
+
   }
 
 }

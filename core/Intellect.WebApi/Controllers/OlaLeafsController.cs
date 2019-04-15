@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Intellect.Core;
 using Intellect.Core.Models.OlaLeafs;
 using Intellect.Core.Models.OlaLeafs.Dtos;
 using Intellect.DomainServices.OlaLeafs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Intellect.WebApi.Controllers
 {
     [ApiController]
+    [Route("api/[controller]")]
     public class OlaLeafsController : ControllerBase
     {
         private readonly IOlaleafManager _olaLeafanager;
@@ -24,7 +28,11 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/[Controller]/GetAll")]
+        [Route("GetAll")]
+        [Authorize(Roles = StaticRoleNames.LocalUser)]
+        [Authorize(Roles = StaticRoleNames.Librarian)]
+        [Authorize(Roles = StaticRoleNames.PrincipleLibrarian)]
+        [Authorize(Roles = StaticRoleNames.Admin)]
         public async Task<List<OlaleafoutputDto>> GetAll()
         {
             List<OlaleafoutputDto> olaLeafs = new List<OlaleafoutputDto>();
@@ -49,7 +57,11 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpGet()]
-        [Route("api/[Controller]/GetById")]
+        [Route("GetById")]
+        [Authorize(Roles = StaticRoleNames.LocalUser)]
+        [Authorize(Roles = StaticRoleNames.Librarian)]
+        [Authorize(Roles = StaticRoleNames.PrincipleLibrarian)]
+        [Authorize(Roles = StaticRoleNames.Admin)]
         public async Task<OlaleafoutputDto> Get(int id)
         {
             OlaleafoutputDto olaLeaf = new OlaleafoutputDto();
@@ -60,7 +72,10 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("api/[Controller]/Create")]
+        [Route("Create")]
+        [Authorize(Roles = StaticRoleNames.Librarian)]
+        [Authorize(Roles = StaticRoleNames.PrincipleLibrarian)]
+        [Authorize(Roles = StaticRoleNames.Admin)]
         public async Task Post([FromBody] OlaLeafInputDto input)
         {
             var olaLeaf = _mapper.Map<OlaLeaf>(input);
@@ -68,7 +83,10 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpPut()]
-        [Route("api/[Controller]/Update")]
+        [Route("Update")]
+        [Authorize(Roles = StaticRoleNames.Librarian)]
+        [Authorize(Roles = StaticRoleNames.PrincipleLibrarian)]
+        [Authorize(Roles = StaticRoleNames.Admin)]
         public async Task<OlaleafoutputDto> Put([FromBody] OlaleafUpdateDto input)
         {
             var olaLeaf = _mapper.Map<OlaLeaf>(input);
@@ -78,7 +96,8 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpDelete()]
-        [Route("api/[Controller]/Delete")]
+        [Route("Delete")]
+        [Authorize(Roles = StaticRoleNames.PrincipleLibrarian)]
         public void Delete(int id)
         {
             _olaLeafanager.DeleteAsync(id);

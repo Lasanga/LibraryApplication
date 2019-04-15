@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Intellect.Core;
 using Intellect.Core.Models.Categories;
 using Intellect.Core.Models.Categories.Dtos;
 using Intellect.DomainServices.Categories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Intellect.WebApi.Controllers
 {
     [ApiController]
+    [Authorize(Roles = StaticRoleNames.Admin)]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryManager _categoryManager;
