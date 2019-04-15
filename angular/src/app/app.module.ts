@@ -15,6 +15,11 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { AuthInterceptor } from './auth-interceptor';
 import { OlaLeafComponent } from './ola-leaf/ola-leaf.component';
 
+	//Material Component Imports
+import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule,
+    MatCardModule, MatMenuModule, MatInputModule, MatFormFieldModule} from "@angular/material";
+  
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +27,16 @@ import { OlaLeafComponent } from './ola-leaf/ola-leaf.component';
     HeaderComponent,
     FooterComponent,
     LayoutComponent,
-    OlaLeafComponent
+    OlaLeafComponent,
+    MatCardModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   imports: [
     BrowserModule,
