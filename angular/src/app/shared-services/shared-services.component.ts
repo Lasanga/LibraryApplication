@@ -1410,7 +1410,7 @@ export class OlaLeafsService {
     }
 
     getAll(): Observable<OlaleafoutputDto[] | null> {
-        let url_ = this.baseUrl + "/api/GetAll";
+        let url_ = this.baseUrl + "/api/OlaLeafs/GetAll";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1462,7 +1462,7 @@ export class OlaLeafsService {
     }
 
     get(id: number): Observable<OlaleafoutputDto | null> {
-        let url_ = this.baseUrl + "/api/GetById?";
+        let url_ = this.baseUrl + "/api/OlaLeafs/GetById?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
@@ -1514,7 +1514,7 @@ export class OlaLeafsService {
     }
 
     post(input: OlaLeafInputDto): Observable<void> {
-        let url_ = this.baseUrl + "/api/Create";
+        let url_ = this.baseUrl + "/api/OlaLeafs/Create";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(input);
@@ -1562,7 +1562,7 @@ export class OlaLeafsService {
     }
 
     put(input: OlaleafUpdateDto): Observable<OlaleafoutputDto | null> {
-        let url_ = this.baseUrl + "/api/Update";
+        let url_ = this.baseUrl + "/api/OlaLeafs/Update";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(input);
@@ -1614,7 +1614,7 @@ export class OlaLeafsService {
     }
 
     delete(id: number): Observable<void> {
-        let url_ = this.baseUrl + "/api/Delete?";
+        let url_ = this.baseUrl + "/api/OlaLeafs/Delete?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
