@@ -97,9 +97,9 @@ namespace Intellect.console
             {
                 Address = disco.TokenEndpoint,
 
-                ClientId = "js",
+                ClientId = "console",
                 ClientSecret = "secret",
-                Scope = "openid profile api1",
+                Scope = "api1",
 
                 UserName = username,
                 Password = password
