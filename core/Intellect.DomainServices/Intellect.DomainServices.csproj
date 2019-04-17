@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Authorization\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Intellect.Core\Intellect.Core.csproj" />
     <ProjectReference Include="..\Intellect.Infrastructure\Intellect.Infrastructure.csproj" />
   </ItemGroup>

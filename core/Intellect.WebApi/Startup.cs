@@ -5,9 +5,12 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using IdentityServer4.AspNetIdentity;
+using IdentityServer4.Validation;
 using Intellect.Core.Configurations;
 using Intellect.Core.Models.Authorization;
 using Intellect.Core.Permissions;
+using Intellect.DomainServices.Authorization;
 using Intellect.DomainServices.Authors;
 using Intellect.DomainServices.Books;
 using Intellect.DomainServices.Categories;
@@ -65,15 +68,16 @@ namespace Intellect.WebApi
                .AddEntityFrameworkStores<IntellectDbContext>()
                .AddDefaultTokenProviders();
 
-            services.AddIdentityServer(options =>
+            var builder1 = services.AddIdentityServer(options =>
             {
                 options.IssuerUri = null;
-            })
-                                  .AddDeveloperSigningCredential()
-                                  .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                                  .AddInMemoryClients(Config.GetClients())
-                                  .AddInMemoryApiResources(Config.GetApis())
-                                  .AddAspNetIdentity<ApplicationUser>();
+            }).AddDeveloperSigningCredential()
+              .AddInMemoryIdentityResources(Config.GetIdentityResources())
+              .AddInMemoryClients(Config.GetClients())
+              .AddInMemoryApiResources(Config.GetApis())
+              .AddAspNetIdentity<ApplicationUser>();
+
+            builder1.Services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
 
             services.AddAuthentication(options =>
             {
@@ -109,12 +113,12 @@ namespace Intellect.WebApi
                 options.User.RequireUniqueEmail = true;
             });
 
+
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllOriginsHeadersAndMethods",
-                    builder => builder.WithOrigins("http://localhost:4200"));
+                    builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
-
             AddPolicies(services);
             services.AddSwagger();
         }
@@ -123,7 +127,7 @@ namespace Intellect.WebApi
         {
             app.UseIdentityServer();
             app.UseStaticFiles();
-            app.UseCors(b => b.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:4200"));
+            app.UseCors("AllowAllOriginsHeadersAndMethods");
             UseNswag(app);
             app.UseMvc();
 
@@ -253,6 +257,14 @@ namespace Intellect.WebApi
                         AppPermissions.GovtPermission.View);
                 });
                 #endregion
+
+                options.AddPolicy(PolicyTypes.UserPolicy.Manage, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.UserPermission.AddUser
+                        );
+                });
             });
         }
 

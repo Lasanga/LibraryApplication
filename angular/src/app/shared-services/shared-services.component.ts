@@ -25,16 +25,110 @@ export class AccountService {
         this.baseUrl = baseUrl ? baseUrl : "https://localhost:5001";
     }
 
-    resgister(userName: string | null | undefined, emailAddress: string | null | undefined, password: string | null | undefined, nationalId: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/Account/Register?";
-        if (userName !== undefined)
-            url_ += "userName=" + encodeURIComponent("" + userName) + "&"; 
-        if (emailAddress !== undefined)
-            url_ += "emailAddress=" + encodeURIComponent("" + emailAddress) + "&"; 
-        if (password !== undefined)
-            url_ += "password=" + encodeURIComponent("" + password) + "&"; 
-        if (nationalId !== undefined)
-            url_ += "nationalId=" + encodeURIComponent("" + nationalId) + "&"; 
+    register(input: UserRegisterInputDto): Observable<void> {
+        let url_ = this.baseUrl + "/api/Account/Register";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(input);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json", 
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRegister(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRegister(<any>response_);
+                } catch (e) {
+                    return <Observable<void>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<void>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processRegister(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return _observableOf<void>(<any>null);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<void>(<any>null);
+    }
+
+    getForiegners(): Observable<UnRegUserOutputDto[] | null> {
+        let url_ = this.baseUrl + "/api/Account/GetForiegners";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetForiegners(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetForiegners(<any>response_);
+                } catch (e) {
+                    return <Observable<UnRegUserOutputDto[] | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<UnRegUserOutputDto[] | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetForiegners(response: HttpResponseBase): Observable<UnRegUserOutputDto[] | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(UnRegUserOutputDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<UnRegUserOutputDto[] | null>(<any>null);
+    }
+
+    addForiegner(id: string | null | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/Account/AddForiegner?";
+        if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -44,12 +138,12 @@ export class AccountService {
             })
         };
 
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processResgister(response_);
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddForiegner(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processResgister(<any>response_);
+                    return this.processAddForiegner(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>_observableThrow(e);
                 }
@@ -58,7 +152,7 @@ export class AccountService {
         }));
     }
 
-    protected processResgister(response: HttpResponseBase): Observable<void> {
+    protected processAddForiegner(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1660,6 +1754,102 @@ export class OlaLeafsService {
         }
         return _observableOf<void>(<any>null);
     }
+}
+
+export class UserRegisterInputDto implements IUserRegisterInputDto {
+    userName?: string | undefined;
+    emailAddress?: string | undefined;
+    password?: string | undefined;
+    nationalId?: string | undefined;
+
+    constructor(data?: IUserRegisterInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.userName = data["userName"];
+            this.emailAddress = data["emailAddress"];
+            this.password = data["password"];
+            this.nationalId = data["nationalId"];
+        }
+    }
+
+    static fromJS(data: any): UserRegisterInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UserRegisterInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userName"] = this.userName;
+        data["emailAddress"] = this.emailAddress;
+        data["password"] = this.password;
+        data["nationalId"] = this.nationalId;
+        return data; 
+    }
+}
+
+export interface IUserRegisterInputDto {
+    userName?: string | undefined;
+    emailAddress?: string | undefined;
+    password?: string | undefined;
+    nationalId?: string | undefined;
+}
+
+export class UnRegUserOutputDto implements IUnRegUserOutputDto {
+    id?: string | undefined;
+    userName?: string | undefined;
+    email?: string | undefined;
+    isActive!: boolean;
+
+    constructor(data?: IUnRegUserOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.userName = data["userName"];
+            this.email = data["email"];
+            this.isActive = data["isActive"];
+        }
+    }
+
+    static fromJS(data: any): UnRegUserOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new UnRegUserOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["userName"] = this.userName;
+        data["email"] = this.email;
+        data["isActive"] = this.isActive;
+        return data; 
+    }
+}
+
+export interface IUnRegUserOutputDto {
+    id?: string | undefined;
+    userName?: string | undefined;
+    email?: string | undefined;
+    isActive: boolean;
 }
 
 export class AuthorOutputDto implements IAuthorOutputDto {

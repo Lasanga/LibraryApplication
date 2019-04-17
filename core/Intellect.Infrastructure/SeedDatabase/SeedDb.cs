@@ -71,6 +71,8 @@ namespace Intellect.Infrastructure.SeedDatabase
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.GovtPermission.Delete));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.GovtPermission.Edit  ));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.GovtPermission.View));
+
+                            await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.UserPermission.AddUser));
                             break;
                         #endregion
 

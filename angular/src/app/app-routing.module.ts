@@ -5,8 +5,17 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { OlaLeafComponent } from './ola-leaf/ola-leaf.component';
 import { HomeComponent } from './home/home.component';
+import { BooksComponent } from './books/books.component';
+import { BookDetailsComponent } from './book-details/book-details.component';
+import { NewsPaperComponent } from './news-paper/news-paper.component';
+import { GovernmentPublicationComponent } from './government-publication/government-publication.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full'
+  },
   {
     path: "login", 
     component: LoginComponent
@@ -16,13 +25,31 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
+    path: "home", 
+    component: HomeComponent
+  },
+  {
     path: "olaleaf", 
     component: OlaLeafComponent
   },
   {
-    path: "home", 
-    component: HomeComponent
+    path: "books", 
+    component: BooksComponent
   },
+  {
+    path: "bookDetails", 
+    component: BookDetailsComponent
+  },
+  {
+    path: "newspapers", 
+    component: NewsPaperComponent
+  },
+  {
+    path: "gvtpub", 
+    component: GovernmentPublicationComponent
+  },
+
+  
 ];
 
 @NgModule({

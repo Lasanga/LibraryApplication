@@ -44,5 +44,10 @@ namespace Intellect.Core.Permissions
             public const string delete = "govt.delte";
         }
 
+        public static class UserPolicy
+        {
+            public const string Manage = "user.manage";
+        }
+
     }
 }

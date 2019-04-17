@@ -9,6 +9,8 @@ using IdentityModel;
 using Intellect.Core;
 using Intellect.Core.Models.Authorization;
 using Intellect.Core.Models.Authorization.Dtos;
+using Intellect.Core.Permissions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +21,7 @@ namespace Intellect.WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -34,13 +37,14 @@ namespace Intellect.WebApi.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public async Task Resgister(UserRegisterInputDto input)
+        [AllowAnonymous]
+        public async Task Register([FromBody]UserRegisterInputDto input)
         {
             var result = new IdentityResult();
 
             var user = new ApplicationUser { UserName = input.UserName, Email = input.EmailAddress, NationalId = input.NationalId };
 
-            if (user.NationalId != null)
+            if (!string.IsNullOrEmpty(user.NationalId))
             {
                 user.IsActive = true;
                 result = await _userManager.CreateAsync(user, input.Password);
@@ -61,46 +65,36 @@ namespace Intellect.WebApi.Controllers
             await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("email", user.Email));
         }
 
-        //[HttpPost]
-        //[Route("Authenticate")]
-        //public async Task<IActionResult> Authenticate([FromBody] UserLoginInputDto input)
-        //{
-        //    var user = await _userManager.FindByEmailAsync(input.Email);
+        [HttpGet]
+        [Route("GetForiegners")]
+        [Authorize(Policy = PolicyTypes.UserPolicy.Manage)]
+        public async Task<List<UnRegUserOutputDto>> GetForiegners()
+        {
+            var users = _userManager.Users.ToList().Where(x => !x.IsActive);
 
-        //    if (user.IsActive)
-        //    {
-        //        var authenticated = await _signInManager.CheckPasswordSignInAsync(user, input.Password, false);
+            return users?.Select(x => new UnRegUserOutputDto()
+            {
+                Email = x.Email,
+                Id = x.Id,
+                IsActive = x.IsActive,
+                UserName = x.UserName
+            }).ToList();
 
-        //        if (authenticated.Succeeded)
-        //        {
-        //            var claims = new[]
-        //            {
-        //                new Claim(JwtClaimTypes.Name, user.UserName),
-        //                new Claim(JwtClaimTypes.Email, user.Email),
-        //                new Claim(JwtClaimTypes.Role, "role")
-        //            };
+        }
 
-        //            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
-        //            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        [HttpPut]
+        [Route("AddForiegner")]
+        [Authorize(Policy = PolicyTypes.UserPolicy.Manage)]
+        public async Task AddForiegner(AddForiegnerInputDto input)
+        {
+            var user = await _userManager.FindByIdAsync(input.Id);
 
-        //            var token = new JwtSecurityToken(
-        //                _configuration["Tokens:Issuer"],
-        //                _configuration["Tokens:Audience"],
-        //                claims,
-        //                expires: DateTime.UtcNow.AddMinutes(10),
-        //                signingCredentials: creds);
+            if (user != null && !user.IsActive)
+            {
+                user.IsActive = true;
+                await _userManager.UpdateAsync(user);
+            }
 
-        //            var result = new
-        //            {
-        //                token = new JwtSecurityTokenHandler().WriteToken(token),
-        //                expires = token.ValidTo
-        //            };
-
-        //            return Created("", result);
-        //        }
-        //    }
-
-        //    return null;
-        //}
+        }
     }
 }

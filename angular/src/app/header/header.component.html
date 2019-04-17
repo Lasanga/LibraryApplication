@@ -5,21 +5,37 @@
     <span style="font-size: 32px; font-weight: bold; color: rgb(66, 66, 66);">{{ title }}</span>
   
     <div class="topNav">
-      <button class="navBarButtons">Contact us</button>
-      <button class="navBarButtons">About us</button>
-      <button class="navBarButtons">Events</button>
-      <button class="navBarButtons">Publications</button>
-      <button class="navBarButtons">Our Services</button>
-      <button class="navBarButtons">Collections</button>
-      <button class="navBarButtons">Home</button>
+
+      <a routerLink="/">
+        <button class="navBarButtons">Contact us</button>
+      </a>
+      <a routerLink="/">
+        <button class="navBarButtons">About us</button>
+      </a>
+      <a routerLink="/">
+        <button class="navBarButtons">Events</button>
+      </a>
+      <a routerLink="/">
+        <button class="navBarButtons">Publications</button>
+      </a>
+      <a routerLink="/">
+        <button class="navBarButtons">Our Services</button>
+      </a>
+      <a routerLink="/">
+        <button class="navBarButtons">Collections</button>
+      </a>
+      <a routerLink="/">
+        <button class="navBarButtons">Home</button>
+      </a>
+      
     </div>
   
     <div style="margin-left: 20px; color: rgb(94, 94, 94);">
       <span style="font-size: 12px; margin-left: 12px;">Welcome </span> 
-      <span style="font-size: 14px; margin-left: 4px; font-weight: bold;">{{ name }}</span> 
+      <span style="font-size: 14px; margin-left: 4px; font-weight: bold;">{{ _showName() }}</span> 
     </div>
   
-    <div style="margin-left: 20px;">
+    <div style="margin-left: 20px;" [style.display]="(isLoggedIn == false) ? 'block' : 'none' ">
       
       <a style="text-decoration: none; color: white;" routerLink="/login">
         <button mat-raised-button style="background-color: rgb(0, 140, 255); color: white; margin-left: 10px;">
@@ -33,7 +49,16 @@
         </button>
       </a>
 
+    </div>
 
+    <div [style.display]="(isLoggedIn == true) ? 'block' : 'none' ">
+
+        <a style="text-decoration: none; color: white;" routerLink="/">
+          <button (click)="_logout()" mat-raised-button style="background-color: rgb(0, 140, 255); color: white; margin-left: 10px;">
+            Logout
+          </button>
+        </a>
+        
     </div>
 
   </mat-toolbar>
