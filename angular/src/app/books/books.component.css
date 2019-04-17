@@ -2,7 +2,9 @@
 
 
 .example-card {
-    max-width: 300px;
+    width: 300px;
+    margin-left: 20px;
+    overflow: hidden;
 }
 
 .image{

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BooksService } from '../shared-services/shared-services.component';
 
 @Component({
   selector: 'app-books',
@@ -7,14 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BooksComponent implements OnInit {
 
+  jsonData: Object[];
+
   private hidden:boolean;
   private icon:string;
   public bookStatus:string = "Public";
   private choice:any;
   private color:string = "green";
-  constructor() { }
+  constructor(
+    private _bookService: BooksService
+  ) { }
 
   ngOnInit() {
+    this._bookService.getAll().subscribe(res => 
+      this.jsonData = res
+    );
     this.hidden = true;
     this.icon = "edit";
   }
@@ -51,3 +59,5 @@ export class BooksComponent implements OnInit {
     return this.color;
   }
 }
+
+
