@@ -65,8 +65,9 @@ export class LoginComponent implements OnInit {
       {
         // window.location.href = "/home";
         this.router.navigate(['/home']);
+        
       }else{
-        this.msg = "NO";
+        this.msg = "Error";
       }
 
 
