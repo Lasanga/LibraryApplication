@@ -1,0 +1,15 @@
+<h1>Edit news paper details:</h1>
+<div mat-dialog-content>
+    <div class="formField">
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="News paper title:">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="News paper written date:">
+        </mat-form-field>
+      </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click) = "onClose()">Cancel</button>
+  <button mat-button cdkFocusInitial>Ok</button>
+</div>

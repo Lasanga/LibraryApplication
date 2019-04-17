@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { NewsPaperEditComponent } from '../news-paper-edit/news-paper-edit.component';
 
 @Component({
   selector: 'app-news-paper',
@@ -12,7 +14,9 @@ export class NewsPaperComponent implements OnInit {
   private choice:any;
   private color:string = "red";
   public bookStatus:string = "public";
-  constructor() { }
+  constructor(
+    private newsPaperEdit:MatDialog
+  ) { }
 
   ngOnInit() {
     this.hidden = true;
@@ -49,5 +53,15 @@ export class NewsPaperComponent implements OnInit {
 
   colorChange(){
     return this.color;
+  }
+  openEdit() {
+    const newsPaperRef = this.newsPaperEdit.open(NewsPaperEditComponent, {
+      width: '500px',
+      data: {}
+    });
+
+    newsPaperRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }

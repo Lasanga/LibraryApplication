@@ -12,6 +12,7 @@ export class BooksComponent implements OnInit {
   public bookStatus:string = "Public";
   private choice:any;
   private color:string = "green";
+  
   constructor() { }
 
   ngOnInit() {

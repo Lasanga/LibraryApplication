@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { GovernmentPublicationEditComponent } from '../government-publication-edit/government-publication-edit.component';
 
 @Component({
   selector: 'app-government-publication',
@@ -13,7 +15,9 @@ export class GovernmentPublicationComponent implements OnInit {
   private color:string = "green";
   private choice:any;
 
-  constructor() { }
+  constructor(
+    private govPubEdit:MatDialog
+  ) { }
 
   ngOnInit() {
     this.hidden=true;
@@ -47,5 +51,15 @@ export class GovernmentPublicationComponent implements OnInit {
   }
   colorChange(){
     return this.color;
+  }
+  openEdit() {
+    const govPubRef = this.govPubEdit.open(GovernmentPublicationEditComponent, {
+      width: '500px',
+      data: {}
+    });
+
+    govPubRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }

@@ -1,0 +1,6 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.popUpWidth{
+  min-width: 400px;
+
+}

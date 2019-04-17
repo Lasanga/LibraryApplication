@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OlaLeafsService } from '../shared-services/shared-services.component';
+import { MatDialog } from '@angular/material';
+import { OlaEditComponent } from '../ola-edit/ola-edit.component';
 
 @Component({
   selector: 'app-ola-leaf',
@@ -13,12 +15,17 @@ export class OlaLeafComponent implements OnInit {
   private choice:any;
   public bookStatus:string = "Public";
   private color:string = "green";
+  jsonData: object[];
+
   constructor(
-    private _olaleafService: OlaLeafsService
-  ) { }
+    private _olaleafService: OlaLeafsService,
+    private olaEdit: MatDialog
+  ) {}
 
   ngOnInit() {
-    this._olaleafService.getAll().subscribe(res => console.log(res));
+    this._olaleafService.getAll().subscribe(res => {
+      this.jsonData = res;
+    });
     this.hidden = true;
     this.icon ="edit";
   }
@@ -52,5 +59,16 @@ export class OlaLeafComponent implements OnInit {
   }
   colorChange(){
     return this.color;
+  }
+
+  openEdit() {
+    const olaLeafRef = this.olaEdit.open(OlaEditComponent, {
+      width: '500px',
+      data: {}
+    });
+
+    olaLeafRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }

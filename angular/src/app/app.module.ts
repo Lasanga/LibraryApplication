@@ -23,9 +23,13 @@ import { GovernmentPublicationComponent } from './government-publication/governm
 	//Material Component Imports
 import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule,
     MatCardModule, MatMenuModule, MatInputModule, MatFormFieldModule, MatRippleModule, MatSelectModule,
-    MatRadioModule, MatOptionModule} from "@angular/material";
+    MatRadioModule, MatOptionModule,MatDialogModule} from "@angular/material";
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
+import { OlaEditComponent } from './ola-edit/ola-edit.component';
+import { NewsPaperEditComponent } from './news-paper-edit/news-paper-edit.component';
+import { GovernmentPublicationEditComponent } from './government-publication-edit/government-publication-edit.component';
+import { BookEditComponent } from './book-edit/book-edit.component';
 
 
 
@@ -42,7 +46,11 @@ import { HomeComponent } from './home/home.component';
     OlaLeafComponent,
     RegisterComponent,
     HomeComponent,
-    GovernmentPublicationComponent
+    GovernmentPublicationComponent,
+    OlaEditComponent,
+    NewsPaperEditComponent,
+    GovernmentPublicationEditComponent,
+    BookEditComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +73,7 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     MatOptionModule,
     MatRadioModule,
+    MatDialogModule,
 
     JwtModule.forRoot({
       config: {
@@ -82,6 +91,7 @@ import { HomeComponent } from './home/home.component';
       multi: true
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [OlaEditComponent,NewsPaperEditComponent,GovernmentPublicationEditComponent,BookEditComponent]
 })
 export class AppModule { }
