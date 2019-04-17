@@ -11,21 +11,10 @@
     <h2>Register Portal</h2>
   </mat-card-header>
 
-
   <div class="formField">
     <form class="example-form">
       <mat-form-field class="example-full-width">
-          <input matInput placeholder="Fistname"
-          [errorStateMatcher]="matcher" required>
-        
-      </mat-form-field>
-    </form>
-  </div>
-
-  <div class="formField">
-    <form class="example-form">
-      <mat-form-field class="example-full-width">
-          <input matInput placeholder="Lastname"
+          <input matInput placeholder="Username"
           [errorStateMatcher]="matcher" required>
        
       </mat-form-field>
@@ -65,14 +54,14 @@
   <button matRipple mat-button style="background-color: rgb(231, 231, 231); color: grey; margin: 0 20px;">Local</button>
   <button matRipple mat-button style="background-color: rgb(231, 231, 231); ; color: grey; margin: 0 20px;">Foreign</button> -->
 
-  <mat-form-field>
+  <!-- <mat-form-field>
     <mat-select [(value)]="selected" style="display: inline;" placeholder="User type" required>
       <mat-option (click)="localUserClick()" value="Local">Local</mat-option>
       <mat-option (click)="foreignUserClick()" value="Foreign">Foreign</mat-option>
     </mat-select>
-  </mat-form-field>
+  </mat-form-field> -->
 
-  <div [hidden]="showUserIdentity()">
+  <div>
 
     <div class="formField">
       <form class="example-form">

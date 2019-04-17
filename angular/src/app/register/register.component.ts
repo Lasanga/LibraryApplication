@@ -10,27 +10,10 @@ export class RegisterComponent implements OnInit {
   
   selected = 'None';
 
-  private hidden:boolean;
-
   constructor() { }
 
   ngOnInit() {
-    this.hidden = true;
-  }
-
-  showUserIdentity()
-  {
-    return this.hidden;
-  }
-
-  localUserClick()
-  {
-    this.hidden = false;
-  }
-
-  foreignUserClick()
-  {
-    this.hidden = true;
+    
   }
 
 

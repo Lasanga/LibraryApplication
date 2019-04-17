@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {FormControl, FormGroupDirective, NgForm, Validators, FormGroup} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 
 
@@ -21,6 +21,12 @@ import {ErrorStateMatcher} from '@angular/material/core';
 
 export class LoginComponent implements OnInit {
 
+  username = new FormControl('', [
+    Validators.required
+  ]);
+  password = new FormControl('', [
+    Validators.required
+  ]);
   // emailFormControl = new FormControl('', [
   //   Validators.required,
   //   Validators.email,
@@ -29,6 +35,10 @@ export class LoginComponent implements OnInit {
   // matcher = new MyErrorStateMatcher();
 
   private returnUrl: string;
+  private msg: string;
+
+  // private username: string;
+  // private password: string;
 
   constructor(
     private _authService: AuthService,
@@ -36,19 +46,35 @@ export class LoginComponent implements OnInit {
     private activated: ActivatedRoute
   ) { }
 
-  ngOnInit() {
+ 
+
+  ngOnInit() {                
+
+
+
+  }
+
+  public _login()
+  {
+
     this.activated.queryParams.subscribe(params => {
         this.returnUrl = params["returnUrl"];
     });
 
-    const username = "admin";
-    const password = "123qwe";
-
-    this._authService.authenticate(username, password)
+    this._authService.authenticate(this.username.value, this.password.value)
     .subscribe(res =>{
-      console.log(res)
+
+      // if(JSON.stringify(res))
+      // {
+      //   this.msg = "OK";
+      // }else{
+      //   this.msg = "NO";
+      // }
+
+
     })
 
   }
+
 
 }
