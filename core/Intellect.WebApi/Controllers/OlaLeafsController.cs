@@ -49,7 +49,57 @@ namespace Intellect.WebApi.Controllers
                     SourceType = item.SourceType,
                     Year = item.Year,
                     Id = item.Id,
-                    Description = item.Description
+                    Description = item.Description,
+                    Author = new Core.Models.Authors.Dtos.AuthorOutputDto
+                    {
+                        Age = item.Author.Age,
+                        DisplayName = item.Author.DisplayName,
+                        EmailAddress = item.Author.EmailAddress,
+                        Id = item.Id
+                    },
+                    Category = new Core.Models.Categories.Dtos.CategoryOutputDto
+                    {
+                        Id = item.Category.Id,
+                        DisplayName = item.Category.DisplayName
+                    }
+                });
+            }
+            return olaLeafs;
+        }
+
+        [HttpGet]
+        [Route("GetRare")]
+        [Authorize(Policy = PolicyTypes.OlaLeafPolicy.rare)]
+        public async Task<List<OlaleafoutputDto>> GetRare()
+        {
+            List<OlaleafoutputDto> olaLeafs = new List<OlaleafoutputDto>();
+            var result = await _olaLeafanager.GetAllRare();
+
+            foreach (var item in result)
+            {
+                //var author = await _authorRepository.GetAsync(item.AuthorId);
+                //var author = await _authorRepository.GetAsync(item.AuthorId);
+                olaLeafs.Add(new OlaleafoutputDto()
+                {
+                    DisplayName = item.DisplayName,
+                    Price = item.Price,
+                    Publisher = item.Publisher,
+                    SourceType = item.SourceType,
+                    Year = item.Year,
+                    Id = item.Id,
+                    Description = item.Description,
+                    Author = new Core.Models.Authors.Dtos.AuthorOutputDto
+                    {
+                        Age = item.Author.Age,
+                        DisplayName = item.Author.DisplayName,
+                        EmailAddress = item.Author.EmailAddress,
+                        Id = item.Id
+                    },
+                    Category = new Core.Models.Categories.Dtos.CategoryOutputDto
+                    {
+                        Id = item.Category.Id,
+                        DisplayName = item.Category.DisplayName
+                    }
                 });
             }
             return olaLeafs;

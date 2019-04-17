@@ -49,7 +49,61 @@ namespace Intellect.WebApi.Controllers
                     SourceType = item.SourceType,
                     TotalPages = item.TotalPages,
                     Year = item.Year,
-                    Id = item.Id
+                    Id = item.Id,
+                    Author = new Core.Models.Authors.Dtos.AuthorOutputDto
+                    {
+                        Age = item.Author.Age,
+                        DisplayName = item.Author.DisplayName,
+                        EmailAddress = item.Author.EmailAddress,
+                        Id = item.Id
+                    },
+                    Category = new Core.Models.Categories.Dtos.CategoryOutputDto
+                    {
+                        Id = item.Category.Id,
+                        DisplayName = item.Category.DisplayName
+                    }
+                });
+            }
+
+            return books;
+
+        }
+
+        [HttpGet]
+        [Route("GetRare")]
+        [Authorize(Policy = PolicyTypes.BooksPolicy.rare)]
+        public async Task<List<BookOutputDto>> GetRare()
+        {
+            List<BookOutputDto> books = new List<BookOutputDto>();
+
+            var result = await _bookManager.GetAllRare();
+
+            foreach (var item in result)
+            {
+                //var author = await _authorRepository.GetAsync(item.AuthorId);
+                //var author = await _authorRepository.GetAsync(item.AuthorId);
+                books.Add(new BookOutputDto()
+                {
+                    DisplayName = item.DisplayName,
+                    IsbnNumber = item.IsbnNumber,
+                    Price = item.Price,
+                    Publisher = item.Publisher,
+                    SourceType = item.SourceType,
+                    TotalPages = item.TotalPages,
+                    Year = item.Year,
+                    Id = item.Id,
+                    Author = new Core.Models.Authors.Dtos.AuthorOutputDto
+                    {
+                        Age = item.Author.Age,
+                        DisplayName = item.Author.DisplayName,
+                        EmailAddress = item.Author.EmailAddress,
+                        Id = item.Id
+                    },
+                    Category = new Core.Models.Categories.Dtos.CategoryOutputDto
+                    {
+                        Id = item.Category.Id,
+                        DisplayName = item.Category.DisplayName
+                    }
                 });
             }
 

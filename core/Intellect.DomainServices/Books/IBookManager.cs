@@ -13,5 +13,6 @@ namespace Intellect.DomainServices.Books
         Task DeleteAsync(int id);
         Task<Book> GetAsync(int id);
         Task<List<Book>> GetAllAsync();
+        Task<List<Book>> GetAllRare();
     }
 }

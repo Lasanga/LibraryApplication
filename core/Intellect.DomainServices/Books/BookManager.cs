@@ -23,6 +23,7 @@ namespace Intellect.DomainServices.Books
         public async Task DeleteAsync(int id)
         {
             var result = await _unitOfWork.Books.GetAllAsync();
+
             if (result != null)
             {
                 var filter = result.Where(x => x.Id == id).FirstOrDefault();
@@ -40,8 +41,16 @@ namespace Intellect.DomainServices.Books
 
         public async Task<List<Book>> GetAllAsync()
         {
-            var result = await _unitOfWork.Books.GetAllAsync();
+            var result = _unitOfWork.Books.GetAllIncluding(x => x.Author, x => x.Category).ToList();
+            result = result.Where(x => x.SourceType == Core.Models.Helpers.SourceType.available).ToList();
+
             return result.ToList();
+        }
+
+        public async Task<List<Book>> GetAllRare()
+        {
+            var result = _unitOfWork.Books.GetAllIncluding(x => x.Author, x => x.Category).ToList();
+            return result.Where(x => x.SourceType == Core.Models.Helpers.SourceType.rare).ToList();
         }
 
         public async Task<Book> GetAsync(int id)

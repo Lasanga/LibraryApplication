@@ -179,7 +179,14 @@ namespace Intellect.WebApi
                 {
                     policy.RequireClaim(
                         CustomClaims.Permission,
-                        AppPermissions.AuthorPermission.View);
+                        AppPermissions.BooksPermission.View);
+                });
+
+                options.AddPolicy(PolicyTypes.BooksPolicy.rare, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.BooksPermission.Rare);
                 });
                 #endregion
 
@@ -206,6 +213,13 @@ namespace Intellect.WebApi
                         CustomClaims.Permission,
                         AppPermissions.NewspaperPermission.View);
                 });
+
+                options.AddPolicy(PolicyTypes.NewspaperPolicy.rare, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.NewspaperPermission.Rare);
+                });
                 #endregion
 
                 #region OlaLeaf
@@ -231,6 +245,13 @@ namespace Intellect.WebApi
                         CustomClaims.Permission,
                         AppPermissions.OlaLeafPermission.View);
                 });
+
+                options.AddPolicy(PolicyTypes.OlaLeafPolicy.rare, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.OlaLeafPermission.Rare);
+                });
                 #endregion
 
                 #region Govt
@@ -255,6 +276,13 @@ namespace Intellect.WebApi
                     policy.RequireClaim(
                         CustomClaims.Permission,
                         AppPermissions.GovtPermission.View);
+                });
+
+                options.AddPolicy(PolicyTypes.GovtPolicy.rare, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.GovtPermission.Rare);
                 });
                 #endregion
 

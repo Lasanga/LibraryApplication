@@ -56,21 +56,25 @@ namespace Intellect.Infrastructure.SeedDatabase
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.BooksPermission.Delete));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.BooksPermission.Edit  ));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.BooksPermission.View));
+                            await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.BooksPermission.Rare));
 
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.NewspaperPermission.Add   ));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.NewspaperPermission.Delete));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.NewspaperPermission.Edit  ));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.NewspaperPermission.View));
+                            await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.NewspaperPermission.Rare));
 
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.OlaLeafPermission.Add   ));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.OlaLeafPermission.Delete));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.OlaLeafPermission.Edit  ));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.OlaLeafPermission.View));
+                            await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.OlaLeafPermission.Rare));
 
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.GovtPermission.Add   ));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.GovtPermission.Delete));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.GovtPermission.Edit  ));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.GovtPermission.View));
+                            await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.GovtPermission.Rare));
 
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.UserPermission.AddUser));
                             break;
@@ -82,18 +86,22 @@ namespace Intellect.Infrastructure.SeedDatabase
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.BooksPermission.Add));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.BooksPermission.Edit));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.BooksPermission.View));
+                            await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.BooksPermission.Rare));
 
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.NewspaperPermission.Add));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.NewspaperPermission.Edit));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.NewspaperPermission.View));
+                            await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.NewspaperPermission.Rare));
 
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.OlaLeafPermission.Add));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.OlaLeafPermission.Edit));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.OlaLeafPermission.View));
+                            await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.OlaLeafPermission.Rare));
 
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.GovtPermission.Add));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.GovtPermission.Edit));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.GovtPermission.View));
+                            await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.GovtPermission.Rare));
                             break;
                         #endregion
 
@@ -104,6 +112,10 @@ namespace Intellect.Infrastructure.SeedDatabase
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.NewspaperPermission.View));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.GovtPermission.View));
                             await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.OlaLeafPermission.View));
+                            await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.OlaLeafPermission.Rare));
+                            await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.NewspaperPermission.Rare));
+                            await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.GovtPermission.Rare));
+                            await roleManager.AddClaimAsync(foundRole, new Claim(CustomClaims.Permission, AppPermissions.BooksPermission.Rare));
                             break;
                         #endregion
 
