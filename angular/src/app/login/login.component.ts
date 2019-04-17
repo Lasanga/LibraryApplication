@@ -21,12 +21,6 @@ import {ErrorStateMatcher} from '@angular/material/core';
 
 export class LoginComponent implements OnInit {
 
-  username = new FormControl('', [
-    Validators.required
-  ]);
-  password = new FormControl('', [
-    Validators.required
-  ]);
   // emailFormControl = new FormControl('', [
   //   Validators.required,
   //   Validators.email,
@@ -35,10 +29,6 @@ export class LoginComponent implements OnInit {
   // matcher = new MyErrorStateMatcher();
 
   private returnUrl: string;
-  private msg: string;
-
-  // private username: string;
-  // private password: string;
 
   constructor(
     private _authService: AuthService,
@@ -46,35 +36,25 @@ export class LoginComponent implements OnInit {
     private activated: ActivatedRoute
   ) { }
 
- 
-
-  ngOnInit() {                
-
-
+  _getLoginValues()
+  {
 
   }
 
-  public _login()
-  {
+  ngOnInit() {
 
     this.activated.queryParams.subscribe(params => {
         this.returnUrl = params["returnUrl"];
     });
 
-    this._authService.authenticate(this.username.value, this.password.value)
+    const username = "admin";
+    const password = "123qwe";
+
+    this._authService.authenticate(username, password)
     .subscribe(res =>{
-
-      // if(JSON.stringify(res))
-      // {
-      //   this.msg = "OK";
-      // }else{
-      //   this.msg = "NO";
-      // }
-
-
+      console.log(res)
     })
 
   }
-
 
 }

@@ -15,27 +15,27 @@
     <h2>Login Portal</h2>
   </mat-card-header>
 
-  <form>
-    <div class="formField">
+  <div class="formField">
+    <form class="example-form">
       <mat-form-field class="example-full-width inputField">
-          <input matInput placeholder="Username" [formControl]="username"
+          <input matInput placeholder="Email"
           [errorStateMatcher]="matcher">
+       
       </mat-form-field>
-    </div>
-  
-    <div class="formField">
+    </form>
+  </div>
+
+  <div class="formField">
+    <form class="example-form">
       <mat-form-field class="example-full-width inputField">
-          <input matInput placeholder="Password" [formControl]="password"
-           [errorStateMatcher]="matcher">
+          <input matInput placeholder="Password" [errorStateMatcher]="matcher">
         
       </mat-form-field>
-    </div>
-  
-    <div class="loginBtn">
-        <button (click) = "_login()" mat-raised-button style="background-color: rgb(0, 140, 255); color: white;">Login</button>
-    </div>
-  </form>
+    </form>
+  </div>
 
-<p>{{ msg }}</p>
+  <div class="loginBtn">
+      <button mat-raised-button style="background-color: rgb(0, 140, 255); color: white;">Login</button>
+  </div>
 
 </mat-card>
