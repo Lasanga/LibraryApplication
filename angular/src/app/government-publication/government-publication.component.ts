@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GovernmentPublicationComponent implements OnInit {
 
-  private color : "red";
   private icon: string;
   private hidden: boolean;
+  public bookStatus:string = "Public";
+  private color:string = "green";
+  private choice:any;
+
   constructor() { }
 
   ngOnInit() {
@@ -31,5 +34,18 @@ export class GovernmentPublicationComponent implements OnInit {
   }
   getIcon(){
     return this.icon;
+  }
+  onClickColorChange(choice:any){
+    this.choice = choice;
+    if(this.choice ==1){
+      this.color = "green";
+      this.bookStatus = "Public";
+    }else if(this.choice ==2){
+      this.color = "red";
+      this.bookStatus = "Rare";
+    }
+  }
+  colorChange(){
+    return this.color;
   }
 }

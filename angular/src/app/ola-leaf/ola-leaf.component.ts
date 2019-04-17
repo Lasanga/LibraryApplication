@@ -10,6 +10,9 @@ export class OlaLeafComponent implements OnInit {
 
   private hidden:boolean;
   private icon:string;
+  private choice:any;
+  public bookStatus:string = "Public";
+  private color:string = "green";
   constructor(
     private _olaleafService: OlaLeafsService
   ) { }
@@ -29,11 +32,25 @@ export class OlaLeafComponent implements OnInit {
       this.icon = "edit";
     }
   }
+
+  onClickColorChange(choice:any){
+    this.choice = choice;
+    if(this.choice ==1){
+      this.color = "green";
+      this.bookStatus = "Public";
+    }else if(this.choice ==2){
+      this.color = "red";
+      this.bookStatus = "Rare";
+    }
+  }
   getHidden(){
     return this.hidden;
   }
 
   getIcon(){
     return this.icon;
+  }
+  colorChange(){
+    return this.color;
   }
 }

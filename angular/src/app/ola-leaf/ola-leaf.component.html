@@ -13,7 +13,7 @@
           <p>Written date :</p>
           <div class="bottomDiv">
               <div class = "bottomDivLeft">
-                <p  class="condition">Public</p>
+                <p  class="condition" [style.color] = "colorChange()">{{bookStatus}}</p>
               </div>
               <div class="bottomDivRight">
                 <button  class ="adminEditButton" (click) = "onClickHide()" mat-icon-button>
@@ -24,8 +24,8 @@
             <div class = "hidden" [hidden]="getHidden()">
               <div class = "radioButton">
                   <mat-radio-group aria-label="Select an option">
-                      <mat-radio-button value="1">Public</mat-radio-button>
-                      <mat-radio-button value="2">Rare</mat-radio-button>
+                      <mat-radio-button (click) = "onClickColorChange(1)" value="1">Public</mat-radio-button>
+                      <mat-radio-button (click) = "onClickColorChange(2)" value="2">Rare</mat-radio-button>
                     </mat-radio-group>
               </div>
               <div  class ="submitButton">
