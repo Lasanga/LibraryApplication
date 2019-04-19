@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BooksComponent implements OnInit {
 
+  jsonData: Object[];
+
   private hidden:boolean;
   private icon:string;
   public bookStatus:string = "Public";
@@ -25,6 +27,7 @@ export class BooksComponent implements OnInit {
     });
     this.hidden = true;
     this.icon = "edit";
+
   }
 
   onClickHide(){
@@ -59,3 +62,5 @@ export class BooksComponent implements OnInit {
     return this.color;
   }
 }
+
+

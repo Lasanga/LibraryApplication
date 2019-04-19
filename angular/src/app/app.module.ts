@@ -43,7 +43,6 @@ import { BookDetailsUserComponent } from './book-details-user/book-details-user.
 import { BookDetailsLibrarianComponent } from './book-details-librarian/book-details-librarian.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,

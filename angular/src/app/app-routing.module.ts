@@ -11,6 +11,7 @@ import { BookDetailsComponent } from './book-details-admin/book-details.componen
 import { BookDetailsLibrarianComponent } from './book-details-librarian/book-details-librarian.component';
 import { NewsPaperComponent } from './news-paper/news-paper.component';
 import { GovernmentPublicationComponent } from './government-publication/government-publication.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
@@ -36,11 +37,13 @@ const routes: Routes = [
   },
   {
     path: "books",
-    component: BooksComponent
+    component: BooksComponent,
   },
   {
     path: "bookDetails",
-    component: BookDetailsComponent
+    component: BookDetailsComponent,
+    canActivate: [AuthGuard],
+    data: {roles: 'Admin'}
   },
   {
     path: "bookDetailsLibrarian/:id",
