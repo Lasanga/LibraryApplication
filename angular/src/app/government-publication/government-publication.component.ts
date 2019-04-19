@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { GovernmentPublicationEditComponent } from '../government-publication-edit/government-publication-edit.component';
+import { GovernmentPublicationsService } from '../shared-services/shared-services.component';
 
 @Component({
   selector: 'app-government-publication',
@@ -14,12 +15,17 @@ export class GovernmentPublicationComponent implements OnInit {
   public bookStatus:string = "Public";
   private color:string = "green";
   private choice:any;
+  jasonData:object[];
 
   constructor(
+    private _governmentPublication: GovernmentPublicationsService,
     private govPubEdit:MatDialog
   ) { }
 
   ngOnInit() {
+    this._governmentPublication.getAll().subscribe(res =>{
+      this.jasonData = res
+    });
     this.hidden=true;
     this.icon = "edit";
   }

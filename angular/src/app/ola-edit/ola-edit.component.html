@@ -6,7 +6,30 @@
         </mat-form-field>
         <br>
         <mat-form-field class="popUpWidth">
-            <input matInput placeholder="Ola-Leaf written date:">
+            <input matInput placeholder="Ola-Leaf author(s):">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="Ola-Leaf publisher(s):">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="Ola-Leaf published date:">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="Ola-Leaf source type:">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Select source type:</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let type of sourceType" [value]="type.value">
+                {{type.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="Ola-Leaf price:">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="Ola-Leaf description:">
         </mat-form-field>
       </div>
 </div>

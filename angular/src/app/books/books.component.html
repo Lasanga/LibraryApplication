@@ -1,5 +1,5 @@
 <div>
-  <mat-card class="example-card">
+  <mat-card class="example-card" *ngFor="let book of jasonData">
         <mat-card-header>
           <p></p>
         </mat-card-header>
@@ -7,32 +7,18 @@
           <div class="center">
               <img class="image" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
           </div>
-          <p>Book Title :</p>
-          <p>Book Author :</p>
+          <p>Book Title : {{book.displayName}}</p>
+          <p>Book Author : {{book.author}}</p>
         </mat-card-content>
         <div class="bottomDiv">
           <div class = "bottomDivLeft">
-            <p  class="condition" [style.color] = "colorChange()">{{bookStatus}}</p>
-          </div>
-          <div class="bottomDivRight">
-            <button  class ="adminEditButton" (click) = "onClickHide()" mat-icon-button>
-              <mat-icon>{{getIcon()}}</mat-icon>
-            </button>
+            <p  class="condition" [style.color] = "colorChange()">{{book.sourceType}}</p>
           </div>
         </div>
-        <div class = "hidden" [hidden]="getHidden()">
-            <div class = "radioButton">
-                <mat-radio-group aria-label="Select an option">
-                    <mat-radio-button (click) = "onClickColorChange(1)" value="1">Public</mat-radio-button>
-                    <mat-radio-button (click) = "onClickColorChange(2)" value="2">Rare</mat-radio-button>
-                  </mat-radio-group>
-            </div>
-            <div  class ="submitButton">
-                <button mat-raised-button color="primary">Submit</button>
-            </div>
-          </div>
         <mat-card-actions class="center">
-            <button mat-raised-button color="primary">View more</button>
+            <a [routerLink]="['/bookDetailsLibrarian/', book.id]">
+            <button mat-button color="primary">View more</button>
+          </a>
         </mat-card-actions>
   </mat-card>
 </div>

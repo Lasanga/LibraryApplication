@@ -10,24 +10,25 @@ import { OlaEditComponent } from '../ola-edit/ola-edit.component';
 })
 export class OlaLeafComponent implements OnInit {
 
-  private hidden:boolean;
-  private icon:string;
-  private choice:any;
-  public bookStatus:string = "Public";
-  private color:string = "green";
-  jsonData: object[];
-
   constructor(
     private _olaleafService: OlaLeafsService,
     private olaEdit: MatDialog
   ) {}
 
+  private hidden:boolean;
+  private icon:string;
+  private choice:any;
+  public jsonData: object[];
+  public bookStatus:string;
+  private color:string ;
+
   ngOnInit() {
     this._olaleafService.getAll().subscribe(res => {
-      this.jsonData = res;
+      this.jsonData = res
     });
     this.hidden = true;
     this.icon ="edit";
+
   }
 
   onClickHide(){
@@ -41,11 +42,12 @@ export class OlaLeafComponent implements OnInit {
   }
 
   onClickColorChange(choice:any){
+    console.log("this was called");
     this.choice = choice;
-    if(this.choice ==1){
+    if(this.choice ==10){
       this.color = "green";
       this.bookStatus = "Public";
-    }else if(this.choice ==2){
+    }else if(this.choice ==20){
       this.color = "red";
       this.bookStatus = "Rare";
     }

@@ -1,5 +1,5 @@
 <div>
-  <mat-card class ="newsCard">
+  <mat-card class ="newsCard" *ngFor="let newsPaper of jasonData">
       <mat-card-content>
           <mat-card-actions>
               <button mat-icon-button style="margin-bottom: 10px; float: right;" (click) = "openEdit()">
@@ -9,11 +9,11 @@
           <div class="center">
               <img class="image" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
           </div>
-          <p>Title :</p>
-          <p>Date :</p>
+          <p>Title : {{newsPaper.displayName}}</p>
+          <p>Date : {{newsPaper.year}}</p>
           <div class="bottomDiv">
               <div class = "bottomDivLeft">
-                <p  class="condition" [style.color] = "colorChange()">{{bookStatus}}</p>
+                <p  class="condition" [style.color] = "colorChange()">{{newsPaper.sourceType}}</p>
               </div>
               <div class="bottomDivRight">
                 <button  class ="adminEditButton" (click) = "onClickHide()" mat-icon-button>
@@ -29,9 +29,12 @@
                       </mat-radio-group>
                 </div>
                 <div  class ="submitButton">
-                    <button mat-raised-button color="primary" (click)= "onClickColorChange()">Submit</button>
+                    <button mat-button color="primary" (click)= "onClickColorChange()">Submit</button>
                 </div>
               </div>
+              <mat-card-actions class="center">
+                  <button mat-button color="primary">View more</button>
+              </mat-card-actions>
       </mat-card-content>
   </mat-card>
 </div>

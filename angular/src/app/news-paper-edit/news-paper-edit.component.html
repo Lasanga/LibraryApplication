@@ -5,7 +5,30 @@
             <input matInput placeholder="News paper title:">
         </mat-form-field>
         <mat-form-field class="popUpWidth">
-            <input matInput placeholder="News paper written date:">
+            <input matInput placeholder="Number of sub-parts:">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="News paper author(s):">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="News paper publisher(s):">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="News paper published date:">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Select source type:</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let type of sourceType" [value]="type.value">
+                {{type.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="News paper price:">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="News paper category:">
         </mat-form-field>
       </div>
 </div>

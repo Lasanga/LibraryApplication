@@ -1,0 +1,31 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.mainDiv{
+  table-layout: fixed;
+  display: table;
+}
+.imageDiv{
+  display: table-cell;
+
+}
+.detailsDiv{
+  padding-left: 20px;
+  padding-right: 20px;
+  display: table-cell;
+  max-width: 650px;
+  vertical-align: top;
+  word-break: break-all;
+}
+.buttonDiv{
+  display: flex;
+  justify-content: center;
+}
+.image{
+  height: 500px;
+  width: 300px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 6px lightgrey;
+}

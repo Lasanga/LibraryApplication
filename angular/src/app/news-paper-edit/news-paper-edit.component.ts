@@ -15,6 +15,10 @@ export class NewsPaperEditComponent implements OnInit {
   ngOnInit() {
   }
 
+  public sourceType:Array<Object> = [
+    {value: 'Public-0', viewValue:'Public'},
+    {value: 'Rare-1', viewValue: 'Rare'}
+];
   onClose(){
     this.newsPaperRef.close();
   }

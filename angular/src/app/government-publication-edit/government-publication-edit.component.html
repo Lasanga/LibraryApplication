@@ -2,10 +2,37 @@
 <div mat-dialog-content>
     <div class="formField">
         <mat-form-field class="popUpWidth">
-            <input matInput placeholder="Document title:">
+            <input matInput placeholder="Publication title:">
+        </mat-form-field>
+        <br>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="Sector:">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="Total pages:">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="Publication author(s):">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="Publisher(s):">
         </mat-form-field>
         <mat-form-field class="popUpWidth">
             <input matInput placeholder="Published date:">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Select source type:</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let type of sourceType" [value]="type.value">
+                {{type.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="Publication price:">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="Publication category:">
         </mat-form-field>
       </div>
 </div>

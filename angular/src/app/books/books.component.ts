@@ -1,3 +1,4 @@
+import { BooksService } from './../shared-services/shared-services.component';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -12,10 +13,16 @@ export class BooksComponent implements OnInit {
   public bookStatus:string = "Public";
   private choice:any;
   private color:string = "green";
-  
-  constructor() { }
+  jasonData : object[];
+
+  constructor(
+    private _booksService : BooksService
+  ) { }
 
   ngOnInit() {
+    this._booksService.getAll().subscribe(res=>{
+      this.jasonData = res
+    });
     this.hidden = true;
     this.icon = "edit";
   }

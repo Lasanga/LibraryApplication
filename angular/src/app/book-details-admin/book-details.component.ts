@@ -1,4 +1,4 @@
-import { BookEditComponent } from './../book-edit/book-edit.component';
+import { BookEditComponent } from '../book-edit/book-edit.component';
 import { MatDialog } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 

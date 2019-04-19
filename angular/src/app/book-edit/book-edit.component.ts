@@ -10,11 +10,15 @@ export class BookEditComponent implements OnInit {
 
   constructor(
     private bookEditRef:MatDialogRef<BookEditComponent>
-  ) { }
+  ) {}
 
   ngOnInit() {
   }
 
+  public sourceType:Array<Object> = [
+    {value: 'Public-0', viewValue:'Public'},
+    {value: 'Rare-1', viewValue: 'Rare'}
+];
   onClose(){
     this.bookEditRef.close();
   }

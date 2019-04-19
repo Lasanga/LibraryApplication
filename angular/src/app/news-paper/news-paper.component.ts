@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { NewsPaperEditComponent } from '../news-paper-edit/news-paper-edit.component';
+import { NewsPapersService } from '../shared-services/shared-services.component';
 
 @Component({
   selector: 'app-news-paper',
@@ -14,11 +15,17 @@ export class NewsPaperComponent implements OnInit {
   private choice:any;
   private color:string = "red";
   public bookStatus:string = "public";
+  jasonData:object[];
+
   constructor(
+    private _newsPaperService: NewsPapersService,
     private newsPaperEdit:MatDialog
   ) { }
 
   ngOnInit() {
+    this._newsPaperService.getAll().subscribe(res=>{
+      this.jasonData = res
+    });
     this.hidden = true;
     this.icon = "edit";
   }
