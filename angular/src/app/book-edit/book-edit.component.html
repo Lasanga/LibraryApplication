@@ -1,0 +1,44 @@
+<h1>Edit book details:</h1>
+<div mat-dialog-content>
+    <div class="formField">
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="Book title: {{name}}">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+          <input matInput placeholder="ISBN number:">
+      </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="Author(s):">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="Publisher(s):">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+          <input matInput placeholder="Published date:">
+      </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="Number of pages:">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Select source type:</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let type of sourceType" [value]="type.value">
+                {{type.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        <mat-form-field class="popUpWidth">
+            <input matInput placeholder="Price:">
+        </mat-form-field>
+        <mat-form-field class="popUpWidth">
+          <input matInput placeholder="Category:">
+      </mat-form-field>
+    <mat-form-field class="popUpWidth">
+      <input matInput placeholder="Description:">
+  </mat-form-field>
+      </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click) = "onClose()">Cancel</button>
+  <button mat-button cdkFocusInitial>Ok</button>
+</div>

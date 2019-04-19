@@ -26,7 +26,9 @@ export class AuthService {
     }).pipe(
       map(jwt => {
         if (jwt && jwt.access_token) {
-          localStorage.setItem('token', JSON.stringify(jwt))
+          localStorage.setItem('token', JSON.stringify(jwt));
+          localStorage.setItem('username', username);
+          return true;
         }
       })
     );
@@ -44,4 +46,5 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
   }
+  
 }

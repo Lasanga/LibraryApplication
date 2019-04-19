@@ -1,3 +1,4 @@
+import { BooksService, BookOutputDto } from './../shared-services/shared-services.component';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,11 +10,22 @@ export class BooksComponent implements OnInit {
 
   private hidden:boolean;
   private icon:string;
-  constructor() { }
+  public bookStatus:string = "Public";
+  private choice:any;
+  private color:string = "green";
+  jasonData : BookOutputDto[] = [];
+
+  constructor(
+    private _booksService : BooksService
+  ) { }
 
   ngOnInit() {
+    this._booksService.getAll().subscribe(res=>{
+      this.jasonData = res
+    });
     this.hidden = true;
     this.icon = "edit";
+
   }
 
   onClickHide(){
@@ -26,6 +38,17 @@ export class BooksComponent implements OnInit {
     }
   }
 
+  onClickColorChange(choice:any){
+    this.choice = choice;
+    if(this.choice ==1){
+      this.color = "green";
+      this.bookStatus = "Public";
+    }else if(this.choice ==2){
+      this.color = "red";
+      this.bookStatus = "Rare";
+    }
+  }
+
   getHidden(){
     return this.hidden;
   }
@@ -33,4 +56,9 @@ export class BooksComponent implements OnInit {
   getIcon(){
     return this.icon;
   }
+  colorChange(){
+    return this.color;
+  }
 }
+
+

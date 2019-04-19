@@ -32,10 +32,10 @@
   
     <div style="margin-left: 20px; color: rgb(94, 94, 94);">
       <span style="font-size: 12px; margin-left: 12px;">Welcome </span> 
-      <span style="font-size: 14px; margin-left: 4px; font-weight: bold;">{{ name }}</span> 
+      <span style="font-size: 14px; margin-left: 4px; font-weight: bold;">{{ _showName() }}</span> 
     </div>
   
-    <div style="margin-left: 20px;">
+    <div style="margin-left: 20px;" [style.display]="(isLoggedIn == false) ? 'block' : 'none' ">
       
       <a style="text-decoration: none; color: white;" routerLink="/login">
         <button mat-raised-button style="background-color: rgb(0, 140, 255); color: white; margin-left: 10px;">
@@ -49,7 +49,16 @@
         </button>
       </a>
 
+    </div>
 
+    <div [style.display]="(isLoggedIn == true) ? 'block' : 'none' ">
+
+        <a style="text-decoration: none; color: white;" routerLink="/">
+          <button (click)="_logout()" mat-raised-button style="background-color: rgb(0, 140, 255); color: white; margin-left: 10px;">
+            Logout
+          </button>
+        </a>
+        
     </div>
 
   </mat-toolbar>
