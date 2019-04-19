@@ -15,6 +15,7 @@ export class BooksComponent implements OnInit {
   public bookStatus:string = "Public";
   private choice:any;
   private color:string = "green";
+
   constructor(
     private _bookService: BooksService
   ) { }
@@ -22,9 +23,11 @@ export class BooksComponent implements OnInit {
   ngOnInit() {
     this._bookService.getAll().subscribe(res => 
       this.jsonData = res
+      // console.log(res)
     );
     this.hidden = true;
     this.icon = "edit";
+    
   }
 
   onClickHide(){

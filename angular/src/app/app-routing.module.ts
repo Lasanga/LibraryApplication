@@ -9,6 +9,7 @@ import { BooksComponent } from './books/books.component';
 import { BookDetailsComponent } from './book-details/book-details.component';
 import { NewsPaperComponent } from './news-paper/news-paper.component';
 import { GovernmentPublicationComponent } from './government-publication/government-publication.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
@@ -34,11 +35,13 @@ const routes: Routes = [
   },
   {
     path: "books", 
-    component: BooksComponent
+    component: BooksComponent,
   },
   {
     path: "bookDetails", 
-    component: BookDetailsComponent
+    component: BookDetailsComponent,
+    canActivate: [AuthGuard],
+    data: {roles: 'Admin'}
   },
   {
     path: "newspapers", 

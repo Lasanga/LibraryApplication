@@ -28,7 +28,6 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -1,8 +1,8 @@
-<div style="display: flex; background-color: aquamarine; min-width: 500px;">
+<div style="display: flex;  flex-wrap: wrap; justify-content: center;">
 
-  <div *ngFor="let data of jsonData" style="padding: 20px;">
+  <!-- <div style="padding: 20px;"> -->
 
-      <mat-card class="example-card">
+      <mat-card class="example-card" *ngFor="let data of jsonData" style=" flex: 1 0 20; margin: 25px; ">
           <mat-card-header>
             <p></p>
           </mat-card-header>
@@ -19,7 +19,7 @@
             </div>
             <div class="bottomDivRight">
               <button  class ="adminEditButton" (click) = "onClickHide()" mat-icon-button>
-                <mat-icon>{{getIcon()}}</mat-icon>
+                <mat-icon>{{ getIcon() }}</mat-icon>
               </button>
             </div>
           </div>
@@ -39,11 +39,13 @@
           </div>
 
           <mat-card-actions class="center">
+            <a routerLink="/bookDetails">
               <button mat-raised-button color="primary">View more</button>
+            </a>
           </mat-card-actions>
 
     </mat-card>
 
-  </div>
+  <!-- </div> -->
  
 </div>

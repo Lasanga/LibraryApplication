@@ -64,6 +64,7 @@ export class LoginComponent implements OnInit {
       if(res)
       {
         // window.location.href = "/home";
+        // location.reload();
         this.router.navigate(['/home']);
         
       }else{
