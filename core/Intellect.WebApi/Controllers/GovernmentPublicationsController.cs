@@ -48,7 +48,58 @@ namespace Intellect.WebApi.Controllers
                     TotalPages = item.TotalPages,
                     Year = item.Year,
                     Id = item.Id,
-                    Sector = item.Sector
+                    Sector = item.Sector,
+                    Author = new Core.Models.Authors.Dtos.AuthorOutputDto
+                    {
+                        Age = item.Author.Age,
+                        DisplayName = item.Author.DisplayName,
+                        EmailAddress = item.Author.EmailAddress,
+                        Id = item.Id
+                    },
+                    Category = new Core.Models.Categories.Dtos.CategoryOutputDto
+                    {
+                        Id = item.Category.Id,
+                        DisplayName = item.Category.DisplayName
+                    }
+                });
+            }
+            return govts;
+        }
+
+        [HttpGet]
+        [Route("GetRare")]
+        [Authorize(Policy = PolicyTypes.GovtPolicy.rare)]
+        public async Task<List<GovtPublicationOutputDto>> GetRare()
+        {
+            List<GovtPublicationOutputDto> govts = new List<GovtPublicationOutputDto>();
+            var result = await _govtManager.GetAllRare();
+
+            foreach (var item in result)
+            {
+                //var author = await _authorRepository.GetAsync(item.AuthorId);
+                //var author = await _authorRepository.GetAsync(item.AuthorId);
+                govts.Add(new GovtPublicationOutputDto()
+                {
+                    DisplayName = item.DisplayName,
+                    Price = item.Price,
+                    Publisher = item.Publisher,
+                    SourceType = item.SourceType,
+                    TotalPages = item.TotalPages,
+                    Year = item.Year,
+                    Id = item.Id,
+                    Sector = item.Sector,
+                    Author = new Core.Models.Authors.Dtos.AuthorOutputDto
+                    {
+                        Age = item.Author.Age,
+                        DisplayName = item.Author.DisplayName,
+                        EmailAddress = item.Author.EmailAddress,
+                        Id = item.Id
+                    },
+                    Category = new Core.Models.Categories.Dtos.CategoryOutputDto
+                    {
+                        Id = item.Category.Id,
+                        DisplayName = item.Category.DisplayName
+                    }
                 });
             }
             return govts;

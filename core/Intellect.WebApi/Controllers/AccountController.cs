@@ -40,6 +40,10 @@ namespace Intellect.WebApi.Controllers
         [AllowAnonymous]
         public async Task Register([FromBody]UserRegisterInputDto input)
         {
+            if (input.NationalId.Length != 10)
+            {
+                throw new Exception("NationalId should be a legal 10 digit value");
+            }
             var result = new IdentityResult();
 
             var user = new ApplicationUser { UserName = input.UserName, Email = input.EmailAddress, NationalId = input.NationalId };
@@ -85,7 +89,7 @@ namespace Intellect.WebApi.Controllers
         [HttpPut]
         [Route("AddForiegner")]
         [Authorize(Policy = PolicyTypes.UserPolicy.Manage)]
-        public async Task AddForiegner(AddForiegnerInputDto input)
+        public async Task AddForiegner([FromBody]AddForiegnerInputDto input)
         {
             var user = await _userManager.FindByIdAsync(input.Id);
 

@@ -41,7 +41,15 @@ namespace Intellect.DomainServices.GovtPublications
 
         public async Task<List<GovtPublication>> GetAllAsync()
         {
-            var result = await _unitOfWork.Govts.GetAllAsync();
+            var result = _unitOfWork.Govts.GetAllIncluding(x => x.Author, x => x.Category).ToList();
+            result = result.Where(x => x.SourceType == Core.Models.Helpers.SourceType.available).ToList();
+            return result.ToList();
+        }
+
+        public async Task<List<GovtPublication>> GetAllRare()
+        {
+            var result = _unitOfWork.Govts.GetAllIncluding(x => x.Author, x => x.Category).ToList();
+            result = result.Where(x => x.SourceType == Core.Models.Helpers.SourceType.rare).ToList();
             return result.ToList();
         }
 

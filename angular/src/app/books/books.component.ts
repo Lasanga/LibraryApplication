@@ -1,4 +1,4 @@
-import { BooksService } from './../shared-services/shared-services.component';
+import { BooksService, BookOutputDto } from './../shared-services/shared-services.component';
 import { Component, OnInit } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
@@ -11,8 +11,6 @@ import { AuthService } from '../auth.service';
 })
 export class BooksComponent implements OnInit {
 
-  jsonData: Object[];
-
   private hidden:boolean;
   private icon:string;
   public bookStatus:string = "Public";
@@ -20,6 +18,7 @@ export class BooksComponent implements OnInit {
   private color:string = "green";
   jasonData : object[];
   public role: string;
+  jasonData : BookOutputDto[] = [];
 
   constructor(
     private _booksService : BooksService,

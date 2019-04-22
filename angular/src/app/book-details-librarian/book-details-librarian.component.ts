@@ -1,3 +1,4 @@
+import { BookOutputDto } from './../shared-services/shared-services.component';
 import { Component, OnInit } from '@angular/core';
 import { BookEditComponent } from '../book-edit/book-edit.component';
 import { MatDialog } from '@angular/material';
@@ -11,8 +12,8 @@ import { BooksService } from '../shared-services/shared-services.component';
 })
 export class BookDetailsLibrarianComponent implements OnInit {
 
-  jasonData:object;
-  id;
+  result:  BookOutputDto;
+  id: number = 0;
   constructor(
     private bookEdit:MatDialog,
     private _Activatedroute:ActivatedRoute,
@@ -20,9 +21,12 @@ export class BookDetailsLibrarianComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.id = this._Activatedroute.snapshot.params['id'];
-    this.jasonData = this._bookService.get(1);
-    console.log(this.jasonData);
+     this.id = this._Activatedroute.snapshot.params['id'];
+
+    this._bookService.get(this.id)
+    .subscribe(res => {
+      this.result = res;
+    })
   }
 
   openEdit() {

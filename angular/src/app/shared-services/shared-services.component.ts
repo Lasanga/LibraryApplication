@@ -125,16 +125,18 @@ export class AccountService {
         return _observableOf<UnRegUserOutputDto[] | null>(<any>null);
     }
 
-    addForiegner(id: string | null | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/Account/AddForiegner?";
-        if (id !== undefined)
-            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+    addForiegner(input: AddForiegnerInputDto): Observable<void> {
+        let url_ = this.baseUrl + "/api/Account/AddForiegner";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(input);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json", 
             })
         };
 
@@ -474,6 +476,58 @@ export class BooksService {
     }
 
     protected processGetAll(response: HttpResponseBase): Observable<BookOutputDto[] | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(BookOutputDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<BookOutputDto[] | null>(<any>null);
+    }
+
+    getRare(): Observable<BookOutputDto[] | null> {
+        let url_ = this.baseUrl + "/api/Books/GetRare";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetRare(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetRare(<any>response_);
+                } catch (e) {
+                    return <Observable<BookOutputDto[] | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<BookOutputDto[] | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetRare(response: HttpResponseBase): Observable<BookOutputDto[] | null> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1027,6 +1081,58 @@ export class GovernmentPublicationsService {
         return _observableOf<GovtPublicationOutputDto[] | null>(<any>null);
     }
 
+    getRare(): Observable<GovtPublicationOutputDto[] | null> {
+        let url_ = this.baseUrl + "/api/GovernmentPublications/GetRare";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetRare(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetRare(<any>response_);
+                } catch (e) {
+                    return <Observable<GovtPublicationOutputDto[] | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GovtPublicationOutputDto[] | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetRare(response: HttpResponseBase): Observable<GovtPublicationOutputDto[] | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(GovtPublicationOutputDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GovtPublicationOutputDto[] | null>(<any>null);
+    }
+
     get(id: number): Observable<GovtPublicationOutputDto | null> {
         let url_ = this.baseUrl + "/api/GovernmentPublications/GetById?";
         if (id === undefined || id === null)
@@ -1291,6 +1397,58 @@ export class NewsPapersService {
         return _observableOf<NewspaperOutputDto[] | null>(<any>null);
     }
 
+    getRare(): Observable<NewspaperOutputDto[] | null> {
+        let url_ = this.baseUrl + "/api/NewsPapers/GetRare";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetRare(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetRare(<any>response_);
+                } catch (e) {
+                    return <Observable<NewspaperOutputDto[] | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<NewspaperOutputDto[] | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetRare(response: HttpResponseBase): Observable<NewspaperOutputDto[] | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(NewspaperOutputDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<NewspaperOutputDto[] | null>(<any>null);
+    }
+
     get(id: number): Observable<NewspaperOutputDto | null> {
         let url_ = this.baseUrl + "/api/NewsPapers/GetById?";
         if (id === undefined || id === null)
@@ -1530,6 +1688,58 @@ export class OlaLeafsService {
     }
 
     protected processGetAll(response: HttpResponseBase): Observable<OlaleafoutputDto[] | null> {
+        const status = response.status;
+        const responseBlob = 
+            response instanceof HttpResponse ? response.body : 
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(OlaleafoutputDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<OlaleafoutputDto[] | null>(<any>null);
+    }
+
+    getRare(): Observable<OlaleafoutputDto[] | null> {
+        let url_ = this.baseUrl + "/api/OlaLeafs/GetRare";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetRare(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetRare(<any>response_);
+                } catch (e) {
+                    return <Observable<OlaleafoutputDto[] | null>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<OlaleafoutputDto[] | null>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetRare(response: HttpResponseBase): Observable<OlaleafoutputDto[] | null> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1850,6 +2060,42 @@ export interface IUnRegUserOutputDto {
     userName?: string | undefined;
     email?: string | undefined;
     isActive: boolean;
+}
+
+export class AddForiegnerInputDto implements IAddForiegnerInputDto {
+    id?: string | undefined;
+
+    constructor(data?: IAddForiegnerInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+        }
+    }
+
+    static fromJS(data: any): AddForiegnerInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AddForiegnerInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        return data; 
+    }
+}
+
+export interface IAddForiegnerInputDto {
+    id?: string | undefined;
 }
 
 export class AuthorOutputDto implements IAuthorOutputDto {

@@ -13,5 +13,6 @@ namespace Intellect.DomainServices.GovtPublications
         Task DeleteAsync(int id);
         Task<GovtPublication> GetAsync(int id);
         Task<List<GovtPublication>> GetAllAsync();
+        Task<List<GovtPublication>> GetAllRare();
     }
 }
