@@ -8,6 +8,9 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
+  static isAuthenticated() {
+    throw new Error("Method not implemented.");
+  }
   
   private url: string = 'http://localhost:5000/connect/token';
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }

@@ -16,9 +16,9 @@
           </div>
         </div>
         <mat-card-actions class="center">
-            <a [routerLink]="['/bookDetailsLibrarian/', book.id]">
-            <button mat-button color="primary">View more</button>
-          </a>
+            <!-- <a [routerLink]="['/bookDetailsLibrarian/', book.id]"> -->
+            <button (click)="_onBooksViewmore()" mat-button color="primary">View more</button>
+          <!-- </a> -->
         </mat-card-actions>
   </mat-card>
 </div>

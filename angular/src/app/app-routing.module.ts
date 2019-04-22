@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { BooksComponent } from './books/books.component';
 import { BookDetailsComponent } from './book-details-admin/book-details.component';
 import { BookDetailsLibrarianComponent } from './book-details-librarian/book-details-librarian.component';
+import { BookDetailsUserComponent } from './book-details-user/book-details-user.component';
 import { NewsPaperComponent } from './news-paper/news-paper.component';
 import { GovernmentPublicationComponent } from './government-publication/government-publication.component';
 import { AuthGuard } from './auth.guard';
@@ -30,6 +31,18 @@ const routes: Routes = [
   {
     path: "home",
     component: HomeComponent
+  },
+  {
+    path: "booksAdmin",
+    component: BookDetailsComponent
+  },
+  {
+    path: "booksLibrarian",
+    component: BookDetailsLibrarianComponent
+  },
+  {
+    path: "booksUser",
+    component: BookDetailsUserComponent
   },
   {
     path: "olaleaf",
