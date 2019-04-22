@@ -53,9 +53,9 @@ namespace Intellect.DomainServices.Books
             return result.Where(x => x.SourceType == Core.Models.Helpers.SourceType.rare).ToList();
         }
 
-        public async Task<Book> GetAsync(int id)
+        public Book GetAsync(int id)
         {
-            var result = await _unitOfWork.Books.GetAsync(id);
+            var result =  _unitOfWork.Books.GetAllIncluding(x => x.Author, x => x.Category).Where(x => x.Id == id).FirstOrDefault();
             return result;
         }
 

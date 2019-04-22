@@ -54,7 +54,7 @@ namespace Intellect.DomainServices.Newspapers
 
         public async Task<NewsPaper> GetAsync(int id)
         {
-            var result = await _unitOfWork.Newspapers.GetAsync(id);
+            var result = _unitOfWork.Newspapers.GetAllIncluding(x => x.Author, x => x.Category).Where(x => x.Id == id).FirstOrDefault();
             return result;
         }
 

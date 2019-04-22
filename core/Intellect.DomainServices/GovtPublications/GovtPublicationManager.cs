@@ -55,7 +55,7 @@ namespace Intellect.DomainServices.GovtPublications
 
         public async Task<GovtPublication> GetAsync(int id)
         {
-            var result = await _unitOfWork.Govts.GetAsync(id);
+            var result = _unitOfWork.Govts.GetAllIncluding(x => x.Author, x => x.Category).Where(x => x.Id == id).FirstOrDefault();
             return result;
         }
 

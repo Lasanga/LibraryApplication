@@ -117,7 +117,7 @@ namespace Intellect.WebApi.Controllers
         public async Task<BookOutputDto> Get(int id)
         {
             BookOutputDto book = new BookOutputDto();
-            var result = await _bookManager.GetAsync(id);
+            var result = _bookManager.GetAsync(id);
 
             book = _mapper.Map<BookOutputDto>(result);
             return book;
