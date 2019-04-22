@@ -53,7 +53,7 @@ namespace Intellect.DomainServices.OlaLeafs
 
         public async Task<OlaLeaf> GetAsync(int id)
         {
-            var result = await _unitOfWork.Olaleaves.GetAsync(id);
+            var result = _unitOfWork.Olaleaves.GetAllIncluding(x => x.Author, x => x.Category).Where(x => x.Id == id).FirstOrDefault();
             return result;
         }
 
