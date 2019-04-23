@@ -21,6 +21,7 @@ namespace Intellect.Core.Permissions
             public const string Cru = "book.cru";
             public const string View = "book.view";
             public const string delete = "book.delte";
+            public const string rare = "book.rare";
         }
 
         public static class NewspaperPolicy
@@ -28,6 +29,7 @@ namespace Intellect.Core.Permissions
             public const string Cru = "newspaper.cru";
             public const string View = "newspaper.view";
             public const string delete = "newspaper.delte";
+            public const string rare = "newspaper.rare";
         }
 
         public static class OlaLeafPolicy
@@ -35,6 +37,7 @@ namespace Intellect.Core.Permissions
             public const string Cru = "olaleaf.cru";
             public const string View = "olaleaf.view";
             public const string delete = "olaleaf.delte";
+            public const string rare = "olaleaf.rare";
         }
 
         public static class GovtPolicy
@@ -42,6 +45,12 @@ namespace Intellect.Core.Permissions
             public const string Cru = "govt.cru";
             public const string View = "govt.view";
             public const string delete = "govt.delte";
+            public const string rare = "govt.rare";
+        }
+
+        public static class UserPolicy
+        {
+            public const string Manage = "user.manage";
         }
 
     }

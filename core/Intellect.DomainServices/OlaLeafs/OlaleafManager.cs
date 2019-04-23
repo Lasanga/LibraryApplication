@@ -38,13 +38,22 @@ namespace Intellect.DomainServices.OlaLeafs
 
         public async Task<List<OlaLeaf>> GetAllAsync()
         {
-            var result = await _unitOfWork.Olaleaves.GetAllAsync();
+            var result =  _unitOfWork.Olaleaves.GetAllIncluding(x => x.Author, x => x.Category).ToList();
+            result = result.Where(x => x.SourceType == Core.Models.Helpers.SourceType.available).ToList();
+
+            return result.ToList();
+        }
+
+        public async Task<List<OlaLeaf>> GetAllRare()
+        {
+            var result = _unitOfWork.Olaleaves.GetAllIncluding(x => x.Author, x => x.Category).ToList();
+            result = result.Where(x => x.SourceType == Core.Models.Helpers.SourceType.rare).ToList();
             return result.ToList();
         }
 
         public async Task<OlaLeaf> GetAsync(int id)
         {
-            var result = await _unitOfWork.Olaleaves.GetAsync(id);
+            var result = _unitOfWork.Olaleaves.GetAllIncluding(x => x.Author, x => x.Category).Where(x => x.Id == id).FirstOrDefault();
             return result;
         }
 

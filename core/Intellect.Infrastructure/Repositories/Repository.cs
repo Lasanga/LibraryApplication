@@ -1,5 +1,9 @@
 ﻿using Intellect.Infrastructure.EntityFramework;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Intellect.Infrastructure.Repositories
@@ -21,7 +25,7 @@ namespace Intellect.Infrastructure.Repositories
 
         public async Task<IQueryable<TEntity>> GetAllAsync()
         {
-            var result =  _context.Set<TEntity>();
+            var result = _context.Set<TEntity>();
             return result;
         }
 
@@ -42,6 +46,17 @@ namespace Intellect.Infrastructure.Repositories
             _context.Set<TEntity>().Update(entity);
             await _context.SaveChangesAsync();
             return entity;
+        }
+
+        public IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] includeExpressions)
+        {
+            IQueryable<TEntity> set = _context.Set<TEntity>();
+
+            foreach (var includeExpression in includeExpressions)
+            {
+                set = set.Include(includeExpression);
+            }
+            return set;
         }
     }
 }

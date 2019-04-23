@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Intellect.Core.Models.Authorization;
+using Intellect.Core.Models.Authorization.Dtos;
 using Intellect.Core.Models.Authors;
 using Intellect.Core.Models.Authors.Dtos;
 using Intellect.Core.Models.Books;
@@ -44,6 +46,8 @@ namespace Intellect.Core.Profiles
             CreateMap<OlaLeafInputDto, OlaLeaf>();
             CreateMap<OlaleafUpdateDto, OlaLeaf>();
             CreateMap<OlaLeaf, OlaleafoutputDto>();
+
+            CreateMap<ApplicationUser, UnRegUserOutputDto>();
         }
     }
 }

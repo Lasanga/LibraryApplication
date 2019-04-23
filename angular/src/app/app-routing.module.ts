@@ -1,55 +1,37 @@
+// import { BookDetailsLibrarianComponent } from './book-details-librarian/book-details-librarian.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { OlaLeafComponent } from './ola-leaf/ola-leaf.component';
 import { HomeComponent } from './home/home.component';
-import { BooksComponent } from './books/books.component';
-import { BookDetailsComponent } from './book-details/book-details.component';
-import { NewsPaperComponent } from './news-paper/news-paper.component';
-import { GovernmentPublicationComponent } from './government-publication/government-publication.component';
+import { AuthGuard } from './auth.guard';
+import { BookComponent } from './book/book.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/book',
     pathMatch: 'full'
   },
   {
-    path: "login", 
+    path: "login",
     component: LoginComponent
   },
   {
-    path: "register", 
+    path: "register",
     component: RegisterComponent
   },
   {
-    path: "home", 
+    path: "home",
     component: HomeComponent
   },
   {
-    path: "olaleaf", 
-    component: OlaLeafComponent
-  },
-  {
-    path: "books", 
-    component: BooksComponent
-  },
-  {
-    path: "bookDetails", 
-    component: BookDetailsComponent
-  },
-  {
-    path: "newspapers", 
-    component: NewsPaperComponent
-  },
-  {
-    path: "gvtpub", 
-    component: GovernmentPublicationComponent
-  },
+    path: "book",
+    component: BookComponent
+  }
 
-  
+
 ];
 
 @NgModule({

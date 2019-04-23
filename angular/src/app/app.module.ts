@@ -1,32 +1,27 @@
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BooksService, CategoryService, OlaLeafsService } from './shared-services/shared-services.component';
+import { BooksService, CategoryService, OlaLeafsService, AccountService, AuthorService } from './shared-services/shared-services.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { BooksComponent } from './books/books.component';
-import { BookDetailsComponent } from './book-details/book-details.component';
-import { NewsPaperComponent } from './news-paper/news-paper.component';
-import { LayoutComponent } from './layout/layout.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthInterceptor } from './auth-interceptor';
-import { OlaLeafComponent } from './ola-leaf/ola-leaf.component';
-import { GovernmentPublicationComponent } from './government-publication/government-publication.component';
 
 	//Material Component Imports
 import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule,
     MatCardModule, MatMenuModule, MatInputModule, MatFormFieldModule, MatRippleModule, MatSelectModule,
-    MatRadioModule, MatOptionModule} from "@angular/material";
+    MatRadioModule, MatOptionModule,MatDialogModule} from "@angular/material";
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
-
+import { BookComponent } from './book/book.component';
+import { BookEditComponent } from './book/book-edit/book-edit.component';
+import { BookCreateComponent } from './book/book-create/book-create.component';
 
 
 @NgModule({
@@ -35,14 +30,11 @@ import { HomeComponent } from './home/home.component';
     LoginComponent,
     HeaderComponent,
     FooterComponent,
-    BooksComponent,
-    BookDetailsComponent,
-    NewsPaperComponent,
-    LayoutComponent,
-    OlaLeafComponent,
     RegisterComponent,
     HomeComponent,
-    GovernmentPublicationComponent
+    BookComponent,
+    BookEditComponent,
+    BookCreateComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +57,7 @@ import { HomeComponent } from './home/home.component';
     FormsModule,
     MatOptionModule,
     MatRadioModule,
+    MatDialogModule,
 
     JwtModule.forRoot({
       config: {
@@ -75,13 +68,16 @@ import { HomeComponent } from './home/home.component';
   providers: [
     BooksService,
     CategoryService,
+    AccountService,
     OlaLeafsService,
+    AuthorService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [BookEditComponent, BookCreateComponent]
 })
 export class AppModule { }

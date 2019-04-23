@@ -12,6 +12,7 @@ namespace Intellect.Core.Permissions
             public const string Edit = "books.edit";
             public const string Delete = "books.delete";
             public const string View = "books.view";
+            public const string Rare = "books.rare";
         }
 
         public static class NewspaperPermission
@@ -20,6 +21,7 @@ namespace Intellect.Core.Permissions
             public const string Edit = "newspaper.edit";
             public const string Delete = "newspaper.delete";
             public const string View = "newspaper.view";
+            public const string Rare = "newspaper.rare";
         }
 
         public static class OlaLeafPermission
@@ -28,6 +30,7 @@ namespace Intellect.Core.Permissions
             public const string Edit = "olaleaf.edit";
             public const string Delete = "olaleaf.delete";
             public const string View = "olaleaf.view";
+            public const string Rare = "olaleaf.rare";
         }
 
         public static class GovtPermission
@@ -36,6 +39,7 @@ namespace Intellect.Core.Permissions
             public const string Edit = "govt.edit";
             public const string Delete = "govt.delete";
             public const string View = "govt.view";
+            public const string Rare = "govt.rare";
         }
 
         public static class AuthorPermission
@@ -52,6 +56,11 @@ namespace Intellect.Core.Permissions
             public const string Edit = "category.edit";
             public const string Delete = "category.delete";
             public const string View = "category.view";
+        }
+
+        public static class UserPermission
+        {
+            public const string AddUser = "user.add";
         }
     }
 }

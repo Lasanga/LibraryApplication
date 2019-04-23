@@ -3,80 +3,28 @@
   <!--Banner-->
 </div>
 
-
-<div class="cardGroup">
-
-  <div class="eachCard">
-
-    <mat-card class="example-card">
-      <mat-card-header>
-        <mat-card-title>Books</mat-card-title>
-      </mat-card-header>
-      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-      <mat-card-content>
-       
-      </mat-card-content>
-      <mat-card-actions>
-        <a routerLink="/books">
-          <button mat-button>View More</button>
-        </a>
-      </mat-card-actions>
-    </mat-card>
-
+<div class="container">
+  <div class="row">
+    <div class="col-4" *ngFor="let book of bookOutputDto">
+        <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>{{book.displayName}}</mat-card-title>
+              <mat-card-subtitle>{{book.author.displayName}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+              <p>"Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, dignissimos ut maxime dolore enim, temporibus reprehenderit 
+                numquam doloremque cum eos ad! Voluptate modi, vitae iste vel fuga fugiat culpa animi!"</p>
+            
+              <i><strong>#{{book.category.displayName}}</strong></i>
+              <p style="text-align:right">{{book.totalPages}} Pages</p>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-card-footer style="margin: 0px !important;">
+                <mat-card-subtitle><i>{{book.author.emailAddress}}</i></mat-card-subtitle>
+            </mat-card-footer>
+          </mat-card>
+    </div>  
   </div>
-  <div class="eachCard">
-
-    <mat-card class="example-card">
-      <mat-card-header>
-        <mat-card-title>Newspapers</mat-card-title>
-      </mat-card-header>
-      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-      <mat-card-content>
-       
-      </mat-card-content>
-      <mat-card-actions>
-        <a routerLink="/newspapers">
-          <button mat-button>View More</button>
-        </a>
-      </mat-card-actions>
-    </mat-card>
-
-  </div>
-  <div class="eachCard">
-
-    <mat-card class="example-card">
-      <mat-card-header>
-        <mat-card-title>Government Publications</mat-card-title>
-      </mat-card-header>
-      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-      <mat-card-content>
-       
-      </mat-card-content>
-      <mat-card-actions>
-        <a routerLink="/gvtpub">
-          <button mat-button>View More</button>
-        </a>
-      </mat-card-actions>
-    </mat-card>
-
-  </div>
-  <div class="eachCard">
-
-    <mat-card class="example-card">
-      <mat-card-header>
-        <mat-card-title>Ola leafs</mat-card-title>
-      </mat-card-header>
-      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-      <mat-card-content>
-       
-      </mat-card-content>
-      <mat-card-actions>
-        <a routerLink="/olaleaf">
-          <button mat-button>View More</button>
-        </a>
-      </mat-card-actions>
-    </mat-card>
-
-  </div>
-
 </div>

@@ -13,5 +13,6 @@ namespace Intellect.DomainServices.Newspapers
         Task DeleteAsync(int id);
         Task<NewsPaper> GetAsync(int id);
         Task<List<NewsPaper>> GetAllAsync();
+        Task<List<NewsPaper>> GetAllRare();
     }
 }

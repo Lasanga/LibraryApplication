@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OlaLeafComponent } from './ola-leaf.component';
+import { BookComponent } from './book.component';
 
-describe('OlaLeafComponent', () => {
-  let component: OlaLeafComponent;
-  let fixture: ComponentFixture<OlaLeafComponent>;
+describe('BookComponent', () => {
+  let component: BookComponent;
+  let fixture: ComponentFixture<BookComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OlaLeafComponent ]
+      declarations: [ BookComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OlaLeafComponent);
+    fixture = TestBed.createComponent(BookComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -31,7 +31,7 @@ namespace Intellect.Core.Configurations
             {
                 new Client
                 {
-                    ClientId = "ro.client",
+                    ClientId = "console",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 
                     ClientSecrets =

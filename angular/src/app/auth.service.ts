@@ -8,6 +8,9 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
+  static isAuthenticated() {
+    throw new Error("Method not implemented.");
+  }
   
   private url: string = 'http://localhost:5000/connect/token';
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
@@ -26,7 +29,9 @@ export class AuthService {
     }).pipe(
       map(jwt => {
         if (jwt && jwt.access_token) {
-          localStorage.setItem('token', JSON.stringify(jwt))
+          localStorage.setItem('token', JSON.stringify(jwt));
+          localStorage.setItem('username', username);
+          return true;
         }
       })
     );
@@ -44,4 +49,5 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
   }
+  
 }

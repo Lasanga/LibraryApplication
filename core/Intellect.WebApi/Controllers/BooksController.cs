@@ -49,7 +49,19 @@ namespace Intellect.WebApi.Controllers
                     SourceType = item.SourceType,
                     TotalPages = item.TotalPages,
                     Year = item.Year,
-                    Id = item.Id
+                    Id = item.Id,
+                    Author = new Core.Models.Authors.Dtos.AuthorOutputDto
+                    {
+                        Age = item.Author.Age,
+                        DisplayName = item.Author.DisplayName,
+                        EmailAddress = item.Author.EmailAddress,
+                        Id = item.Id
+                    },
+                    Category = new Core.Models.Categories.Dtos.CategoryOutputDto
+                    {
+                        Id = item.Category.Id,
+                        DisplayName = item.Category.DisplayName
+                    }
                 });
             }
 
@@ -57,31 +69,73 @@ namespace Intellect.WebApi.Controllers
 
         }
 
-        [HttpGet()]
-        [Route("GetById")]
+        [HttpGet]
+        [Route("GetRare")]
+        [Authorize(Policy = PolicyTypes.BooksPolicy.rare)]
+        public async Task<List<BookOutputDto>> GetRare()
+        {
+            List<BookOutputDto> books = new List<BookOutputDto>();
+
+            var result = await _bookManager.GetAllRare();
+
+            foreach (var item in result)
+            {
+                //var author = await _authorRepository.GetAsync(item.AuthorId);
+                //var author = await _authorRepository.GetAsync(item.AuthorId);
+                books.Add(new BookOutputDto()
+                {
+                    DisplayName = item.DisplayName,
+                    IsbnNumber = item.IsbnNumber,
+                    Price = item.Price,
+                    Publisher = item.Publisher,
+                    SourceType = item.SourceType,
+                    TotalPages = item.TotalPages,
+                    Year = item.Year,
+                    Id = item.Id,
+                    Author = new Core.Models.Authors.Dtos.AuthorOutputDto
+                    {
+                        Age = item.Author.Age,
+                        DisplayName = item.Author.DisplayName,
+                        EmailAddress = item.Author.EmailAddress,
+                        Id = item.Id
+                    },
+                    Category = new Core.Models.Categories.Dtos.CategoryOutputDto
+                    {
+                        Id = item.Category.Id,
+                        DisplayName = item.Category.DisplayName
+                    }
+                });
+            }
+
+            return books;
+
+        }
+
+        [HttpGet]
+        [Route("GetBookById")]
         [AllowAnonymous]
-        public async Task<BookOutputDto> Get(int id)
+        public async Task<BookOutputDto> GetBookById(int id)
         {
             BookOutputDto book = new BookOutputDto();
-            var result = await _bookManager.GetAsync(id);
+            var result = _bookManager.GetAsync(id);
 
             book = _mapper.Map<BookOutputDto>(result);
             return book;
         }
 
         [HttpPost]
-        [Route("Create")]
+        [Route("CreateBook")]
         [Authorize(Policy = PolicyTypes.BooksPolicy.Cru)]
-        public async Task Post([FromBody] BookInputDto input)
+        public async Task CreateBook([FromBody] BookInputDto input)
         {
             var book = _mapper.Map<Book>(input);
             await _bookManager.InsertAsync(book);
         }
 
-        [HttpPut()]
-        [Route("Update")]
+        [HttpPut]
+        [Route("UpdateBook")]
         [Authorize(Policy = PolicyTypes.BooksPolicy.Cru)]
-        public async Task<BookOutputDto> Put([FromBody] BookUpdateDto input)
+        public async Task<BookOutputDto> UpdateBook([FromBody] BookUpdateDto input)
         {
             var book = _mapper.Map<Book>(input);
             var result = await _bookManager.UpdateAsync(book);
@@ -89,10 +143,10 @@ namespace Intellect.WebApi.Controllers
             return _mapper.Map<BookOutputDto>(result);
         }
 
-        [HttpDelete()]
-        [Route("Delete")]
+        [HttpDelete]
+        [Route("DeleteBook")]
         [Authorize(Policy = PolicyTypes.BooksPolicy.delete)]
-        public void Delete(int id)
+        public void DeleteBook(int id)
         {
             _bookManager.DeleteAsync(id);
         }
