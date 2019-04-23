@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit {
       if(res)
       {
         this.router.navigate(['/book']);
+        location.reload();
         
       }else{
         this.msg = "Error";
