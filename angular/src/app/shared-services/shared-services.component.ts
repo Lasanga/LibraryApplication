@@ -3113,8 +3113,8 @@ export class GovtPublicationUpdateDto implements IGovtPublicationUpdateDto {
     year: Date;
     price: number;
     sourceType: SourceType;
-    authorId: number;
-    categoryId: number;
+    author: Author;
+    category: Category;
 
     constructor(data?: IGovtPublicationUpdateDto) {
         if (data) {
@@ -3135,8 +3135,8 @@ export class GovtPublicationUpdateDto implements IGovtPublicationUpdateDto {
             this.year = data["year"] ? new Date(data["year"].toString()) : <any>undefined;
             this.price = data["price"];
             this.sourceType = data["sourceType"];
-            this.authorId = data["authorId"];
-            this.categoryId = data["categoryId"];
+            this.author = data["author"] ? Author.fromJS(data["author"]) : <any>undefined;
+            this.category = data["category"] ? Category.fromJS(data["category"]) : <any>undefined;
         }
     }
 
@@ -3157,8 +3157,8 @@ export class GovtPublicationUpdateDto implements IGovtPublicationUpdateDto {
         data["year"] = this.year ? this.year.toISOString() : <any>undefined;
         data["price"] = this.price;
         data["sourceType"] = this.sourceType;
-        data["authorId"] = this.authorId;
-        data["categoryId"] = this.categoryId;
+        data["author"] = this.author ? this.author.toJSON() : <any>undefined;
+        data["category"] = this.category ? this.category.toJSON() : <any>undefined;
         return data; 
     }
 
@@ -3179,8 +3179,8 @@ export interface IGovtPublicationUpdateDto {
     year: Date;
     price: number;
     sourceType: SourceType;
-    authorId: number;
-    categoryId: number;
+    author: Author;
+    category: Category;
 }
 
 export class NewspaperOutputDto implements INewspaperOutputDto {
@@ -3346,8 +3346,8 @@ export class NewspaperUpdateDto implements INewspaperUpdateDto {
     year: Date;
     price: number;
     sourceType: SourceType;
-    authorId: number;
-    categoryId: number;
+    author: Author;
+    category: Category;
 
     constructor(data?: INewspaperUpdateDto) {
         if (data) {
@@ -3368,8 +3368,8 @@ export class NewspaperUpdateDto implements INewspaperUpdateDto {
             this.year = data["year"] ? new Date(data["year"].toString()) : <any>undefined;
             this.price = data["price"];
             this.sourceType = data["sourceType"];
-            this.authorId = data["authorId"];
-            this.categoryId = data["categoryId"];
+            this.author = data["author"] ? Author.fromJS(data["author"]) : <any>undefined;
+            this.category = data["category"] ? Category.fromJS(data["category"]) : <any>undefined;
         }
     }
 
@@ -3390,8 +3390,8 @@ export class NewspaperUpdateDto implements INewspaperUpdateDto {
         data["year"] = this.year ? this.year.toISOString() : <any>undefined;
         data["price"] = this.price;
         data["sourceType"] = this.sourceType;
-        data["authorId"] = this.authorId;
-        data["categoryId"] = this.categoryId;
+        data["author"] = this.author ? this.author.toJSON() : <any>undefined;
+        data["category"] = this.category ? this.category.toJSON() : <any>undefined;
         return data; 
     }
 
@@ -3412,8 +3412,8 @@ export interface INewspaperUpdateDto {
     year: Date;
     price: number;
     sourceType: SourceType;
-    authorId: number;
-    categoryId: number;
+    author: Author;
+    category: Category;
 }
 
 export class OlaleafoutputDto implements IOlaleafoutputDto {
@@ -3570,8 +3570,8 @@ export class OlaleafUpdateDto implements IOlaleafUpdateDto {
     year: Date;
     price: number;
     sourceType: SourceType;
-    authorId: number;
-    categoryId: number;
+    author: Author;
+    category: Category;
 
     constructor(data?: IOlaleafUpdateDto) {
         if (data) {
@@ -3591,8 +3591,8 @@ export class OlaleafUpdateDto implements IOlaleafUpdateDto {
             this.year = data["year"] ? new Date(data["year"].toString()) : <any>undefined;
             this.price = data["price"];
             this.sourceType = data["sourceType"];
-            this.authorId = data["authorId"];
-            this.categoryId = data["categoryId"];
+            this.author = data["author"] ? Author.fromJS(data["author"]) : <any>undefined;
+            this.category = data["category"] ? Category.fromJS(data["category"]) : <any>undefined;
         }
     }
 
@@ -3612,8 +3612,8 @@ export class OlaleafUpdateDto implements IOlaleafUpdateDto {
         data["year"] = this.year ? this.year.toISOString() : <any>undefined;
         data["price"] = this.price;
         data["sourceType"] = this.sourceType;
-        data["authorId"] = this.authorId;
-        data["categoryId"] = this.categoryId;
+        data["author"] = this.author ? this.author.toJSON() : <any>undefined;
+        data["category"] = this.category ? this.category.toJSON() : <any>undefined;
         return data; 
     }
 
@@ -3633,8 +3633,8 @@ export interface IOlaleafUpdateDto {
     year: Date;
     price: number;
     sourceType: SourceType;
-    authorId: number;
-    categoryId: number;
+    author: Author;
+    category: Category;
 }
 
 export class SwaggerException extends Error {

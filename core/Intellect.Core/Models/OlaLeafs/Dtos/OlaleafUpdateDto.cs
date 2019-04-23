@@ -1,7 +1,9 @@
-﻿using Intellect.Core.Models.Helpers;
+﻿using Intellect.Core.Models.Authors;
+using Intellect.Core.Models.Authors.Dtos;
+using Intellect.Core.Models.Categories;
+using Intellect.Core.Models.Categories.Dtos;
+using Intellect.Core.Models.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Intellect.Core.Models.OlaLeafs.Dtos
 {
@@ -21,8 +23,8 @@ namespace Intellect.Core.Models.OlaLeafs.Dtos
 
         public SourceType SourceType { get; set; }
 
-        public int AuthorId { get; set; }
+        public Author Author { get; set; }
 
-        public int CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }
