@@ -35,6 +35,9 @@ import { BooksRareComponent } from './rare-collection/books/books-rare.component
 import { NewspapersRareComponent } from './rare-collection/newspapers/newspapers-rare.component';
 import { GovernmentPublicationsRareComponent } from './rare-collection/government-publications/government-publications-rare.component';
 import { OlaLeafRareComponent } from './rare-collection/ola-leaf/ola-leaf-rare.component';
+import { OlaLeafComponent } from './ola-leaf/ola-leaf.component';
+import { OlaLeafEditComponent } from './ola-leaf/ola-leaf-edit/ola-leaf-edit.component';
+import { OlaLeafCreateComponent } from './ola-leaf/ola-leaf-create/ola-leaf-create.component';
 
 
 @NgModule({
@@ -61,6 +64,9 @@ import { OlaLeafRareComponent } from './rare-collection/ola-leaf/ola-leaf-rare.c
     NewspapersRareComponent,
     GovernmentPublicationsRareComponent,
     OlaLeafRareComponent,
+    OlaLeafComponent,
+    OlaLeafEditComponent,
+    OlaLeafCreateComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,6 +114,6 @@ import { OlaLeafRareComponent } from './rare-collection/ola-leaf/ola-leaf-rare.c
     },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [BookEditComponent, BookCreateComponent, NewsPaperEditComponent, NewsPaperCreateComponent, GovernmentPublicationCreateComponent, GovernmentPublicationEditComponent]
+  entryComponents: [BookEditComponent, BookCreateComponent, NewsPaperEditComponent, NewsPaperCreateComponent, GovernmentPublicationCreateComponent, GovernmentPublicationEditComponent, OlaLeafEditComponent, OlaLeafCreateComponent]
 })
 export class AppModule { }

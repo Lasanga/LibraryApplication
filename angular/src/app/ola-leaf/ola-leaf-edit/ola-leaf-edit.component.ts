@@ -1,15 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { AuthorOutputDto, CategoryOutputDto, OlaleafUpdateDto, OlaLeafsService, AuthorService, CategoryService } from 'src/app/shared-services/shared-services.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Location } from '@angular/common';
-import { BooksService, AuthorOutputDto, CategoryOutputDto, AuthorService, CategoryService, BookOutputDto, BookUpdateDto } from 'src/app/shared-services/shared-services.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
-  selector: 'app-book-edit',
-  templateUrl: './book-edit.component.html',
-  styleUrls: ['./book-edit.component.css']
+  selector: 'app-ola-leaf-edit',
+  templateUrl: './ola-leaf-edit.component.html',
+  styleUrls: ['./ola-leaf-edit.component.css']
 })
-export class BookEditComponent implements OnInit {
+export class OlaLeafEditComponent implements OnInit {
 
   authors: AuthorOutputDto[] = [];
   categories: CategoryOutputDto[] = [];
@@ -17,9 +16,9 @@ export class BookEditComponent implements OnInit {
   canType: Boolean = false;
 
   constructor(
-    public dialogRef: MatDialogRef<BookEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public book: BookUpdateDto,
-    private _bookService: BooksService,
+    public dialogRef: MatDialogRef<OlaLeafEditComponent>,
+    @Inject(MAT_DIALOG_DATA) public olaLeaf: OlaleafUpdateDto,
+    private _olaService: OlaLeafsService,
     private _authorService: AuthorService,
     private _categoryService: CategoryService,
     private jwtHelper: JwtHelperService,
@@ -30,7 +29,6 @@ export class BookEditComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this._authorService.getAll().subscribe(res => {
       this.authors = res;
     });
@@ -42,7 +40,7 @@ export class BookEditComponent implements OnInit {
     const token = localStorage.getItem('token');
     const decodeToken = this.jwtHelper.decodeToken(token);
 
-    if (decodeToken['permission'].includes("books.rare")){
+    if (decodeToken['permission'].includes("olaleaf.rare")){
       if(decodeToken['role'] == 'Librarian'){
         this.canType = false;
       }else{
@@ -51,12 +49,11 @@ export class BookEditComponent implements OnInit {
     }
   }
 
-  onSubmit(data: BookUpdateDto): void{
+  onSubmit(data: OlaleafUpdateDto): void{
     data.year = new Date('August 19, 2019 23:15:30');
-    this._bookService.updateBook(data).subscribe(res =>{
+    this._olaService.update(data).subscribe(res =>{
       this.dialogRef.close();
       location.reload();
     })
   }
-
 }
