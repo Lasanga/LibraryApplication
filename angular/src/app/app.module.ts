@@ -31,10 +31,10 @@ import { GovernmentPublicationCreateComponent } from './government-publication/g
 import { GovernmentPublicationEditComponent } from './government-publication/government-publication-edit/government-publication-edit.component';
 import { NotFound404Component } from './not-found404/not-found404.component';
 import { RareCollectionComponent } from './rare-collection/rare-collection.component';
-import { BooksComponent } from './rare-collection/books/books.component';
-import { NewspapersComponent } from './rare-collection/newspapers/newspapers.component';
-import { GovernmentPublicationsComponent } from './rare-collection/government-publications/government-publications.component';
-import { OlaLeafComponent } from './rare-collection/ola-leaf/ola-leaf.component';
+import { BooksRareComponent } from './rare-collection/books/books-rare.component';
+import { NewspapersRareComponent } from './rare-collection/newspapers/newspapers-rare.component';
+import { GovernmentPublicationsRareComponent } from './rare-collection/government-publications/government-publications-rare.component';
+import { OlaLeafRareComponent } from './rare-collection/ola-leaf/ola-leaf-rare.component';
 
 
 @NgModule({
@@ -57,10 +57,10 @@ import { OlaLeafComponent } from './rare-collection/ola-leaf/ola-leaf.component'
     GovernmentPublicationEditComponent,
     NotFound404Component,
     RareCollectionComponent,
-    BooksComponent,
-    NewspapersComponent,
-    GovernmentPublicationsComponent,
-    OlaLeafComponent,
+    BooksRareComponent,
+    NewspapersRareComponent,
+    GovernmentPublicationsRareComponent,
+    OlaLeafRareComponent,
   ],
   imports: [
     BrowserModule,

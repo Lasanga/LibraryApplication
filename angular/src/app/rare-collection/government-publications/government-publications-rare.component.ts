@@ -4,10 +4,10 @@ import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-rare-government-publications',
-  templateUrl: './government-publications.component.html',
-  styleUrls: ['./government-publications.component.css']
+  templateUrl: './government-publications-rare.component.html',
+  styleUrls: ['./government-publications-rare.component.css']
 })
-export class GovernmentPublicationsComponent implements OnInit {
+export class GovernmentPublicationsRareComponent implements OnInit {
 
   govPubOutputDto: GovtPublicationOutputDto[] = [];
 

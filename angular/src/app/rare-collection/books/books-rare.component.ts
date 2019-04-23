@@ -3,10 +3,10 @@ import { BookOutputDto, BooksService } from 'src/app/shared-services/shared-serv
 
 @Component({
   selector: 'app-rare-books',
-  templateUrl: './books.component.html',
-  styleUrls: ['./books.component.css']
+  templateUrl: './books-rare.component.html',
+  styleUrls: ['./books-rare.component.css']
 })
-export class BooksComponent implements OnInit {
+export class BooksRareComponent implements OnInit {
 
   bookOutputDto: BookOutputDto[] = [];
 

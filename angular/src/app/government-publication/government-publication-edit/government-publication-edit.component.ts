@@ -40,8 +40,13 @@ export class GovernmentPublicationEditComponent implements OnInit {
     const token = localStorage.getItem('token');
     const decodeToken = this.jwtHelper.decodeToken(token);
 
-    if (decodeToken['permission'].includes("govt.rare"))
-      this.canType = true;
+    if (decodeToken['permission'].includes("govt.rare")){
+      if(decodeToken['role'] == 'Librarian'){
+        this.canType = false;
+      }else{
+        this.canType = true;
+      }
+    }
   }
 
   onSubmit(data: GovtPublicationUpdateDto): void{
