@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Location } from '@angular/common';
 import { BooksService, BookInputDto, AuthorService, CategoryService, AuthorOutputDto, CategoryOutputDto } from 'src/app/shared-services/shared-services.component';
 
 @Component({
@@ -12,10 +13,11 @@ export class BookCreateComponent implements OnInit {
   authors: AuthorOutputDto[] = [];
   categories: CategoryOutputDto[] = [];
   book: BookInputDto = new BookInputDto();
+  canEditSrc: Boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<BookCreateComponent>,
-    @Inject(MAT_DIALOG_DATA) public bookData: BookInputDto,
+    @Inject(MAT_DIALOG_DATA) public token: any,
     private _bookService: BooksService,
     private _authorService: AuthorService,
     private _categoryService: CategoryService
@@ -39,6 +41,7 @@ export class BookCreateComponent implements OnInit {
     data.year = new Date('August 19, 2019 23:15:30');
     this._bookService.createBook(data).subscribe(res =>{
       this.dialogRef.close();
+      location.reload();
     })
   }
 

@@ -35,7 +35,7 @@
         <input matInput placeholder="Price" type="number" [(ngModel)]="book.data.price" required name="price">
       </mat-form-field>
     </div>
-    <div class="col-6">
+    <div class="col-6" *ngIf="canType">
       <p class="mat-small">Source Type</p>
       <mat-select [(ngModel)]="book.data.sourceType" name="sourceType">
         <mat-option [value]=10>Public</mat-option>

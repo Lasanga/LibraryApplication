@@ -65,7 +65,7 @@ export class BookComponent implements OnInit {
     });
   }
 
-  openCreate(): void{
+  openCreate(): void {
     const dialogRef = this.dialog.open(BookCreateComponent, {
       width: '800px'
     });

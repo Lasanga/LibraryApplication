@@ -137,8 +137,17 @@ namespace Intellect.WebApi.Controllers
         [Authorize(Policy = PolicyTypes.BooksPolicy.Cru)]
         public async Task<BookOutputDto> UpdateBook([FromBody] BookUpdateDto input)
         {
-            var book = _mapper.Map<Book>(input);
-            var result = await _bookManager.UpdateAsync(book);
+            var result = new Book();
+            try
+            {
+                var book = _mapper.Map<Book>(input);
+                result = await _bookManager.UpdateAsync(book);
+            }
+            catch (System.Exception ex)
+            {
+
+                throw;
+            }
 
             return _mapper.Map<BookOutputDto>(result);
         }

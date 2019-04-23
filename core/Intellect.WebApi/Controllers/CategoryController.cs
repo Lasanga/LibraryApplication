@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Intellect.WebApi.Controllers
 {
     [ApiController]
-    [Authorize(Policy = PolicyTypes.CategoryPolicy.Crud)]
+    [Authorize]
     [Route("api/[controller]")]
     public class CategoryController : ControllerBase
     {
@@ -55,6 +55,7 @@ namespace Intellect.WebApi.Controllers
 
         [HttpPost]
         [Route("Create")]
+        [Authorize(Policy = PolicyTypes.CategoryPolicy.Crud)]
         public async Task Post([FromBody] CategoryInputDto input)
         {
             var category = _mapper.Map<Category>(input);
@@ -63,6 +64,7 @@ namespace Intellect.WebApi.Controllers
 
         [HttpPut()]
         [Route("Update")]
+        [Authorize(Policy = PolicyTypes.CategoryPolicy.Crud)]
         public async Task<CategoryOutputDto> Put([FromBody] CategoryUpdateDto input)
         {
             var category = _mapper.Map<Category>(input);
@@ -73,6 +75,7 @@ namespace Intellect.WebApi.Controllers
 
         [HttpDelete()]
         [Route("Delete")]
+        [Authorize(Policy = PolicyTypes.CategoryPolicy.Crud)]
         public void Delete(int id)
         {
             _categoryManager.DeleteAsync(id);
