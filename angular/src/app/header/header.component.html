@@ -5,25 +5,30 @@
     <span style="font-size: 32px; font-weight: bold; color: rgb(66, 66, 66);">{{ title }}</span>
   
     <div class="topNav">
-
+      
       <a routerLink="/">
-        <button class="navBarButtons">Books</button>
-      </a>
+        <button class="navBarButtons">Categories</button>
+      </a> 
       <a routerLink="/">
-        <button class="navBarButtons">News-Papers</button>
-      </a>
-      <a routerLink="/">
-        <button class="navBarButtons">Ola-Leafs</button>
+        <button class="navBarButtons">Authors</button>
+      </a>  
+      <a *ngIf="viewRare" routerLink="/">
+        <button class="navBarButtons">Rare Collection</button>
       </a>
       <a routerLink="/">
         <button class="navBarButtons">Government-Publications</button>
       </a>
       <a routerLink="/">
-        <button class="navBarButtons">Authors</button>
+        <button class="navBarButtons">Ola-Leafs</button>
       </a>
       <a routerLink="/">
-        <button class="navBarButtons">Categories</button>
-      </a>      
+        <button class="navBarButtons">News-Papers</button>
+      </a>
+      <a routerLink="/">
+        <button class="navBarButtons">Books</button>
+      </a>
+      
+         
     </div>
   
     <div style="margin-left: 20px; color: rgb(94, 94, 94);">

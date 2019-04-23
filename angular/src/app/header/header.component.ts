@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-header',
@@ -12,16 +13,29 @@ export class HeaderComponent implements OnInit {
 
   title = 'Intellect';
   name = "Guest";
+  viewRare: Boolean = false;
 
   public isLoggedIn = false;
 
   // isLoggedIn$: Observable<boolean>;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private jwtHelper: JwtHelperService
   ) { }
 
   ngOnInit() {
+
+    const token = localStorage.getItem('token');
+    const decodeToken = this.jwtHelper.decodeToken(token);
+
+    if (!decodeToken) {
+      return false;
+    }
+
+    if (decodeToken['role'][0] == "LocalUser")
+      this.viewRare = true;
+
 
   }
 
