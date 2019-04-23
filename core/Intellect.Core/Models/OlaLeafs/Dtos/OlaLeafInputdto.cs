@@ -16,8 +16,7 @@ namespace Intellect.Core.Models.OlaLeafs.Dtos
         public DateTime Year { get; set; }
 
         public int Price { get; set; }
-
-        public SourceType SourceType { get; set; }
+        public SourceType SourceType { get; set; } = SourceType.available;
 
         public int AuthorId { get; set; }
 
