@@ -42,7 +42,7 @@ export class BookEditComponent implements OnInit {
     const token = localStorage.getItem('token');
     const decodeToken = this.jwtHelper.decodeToken(token);
 
-    if (decodeToken['permission'] == 'Book.rare')
+    if (decodeToken['permission'].includes("books.rare"))
       this.canType = true;
   }
 

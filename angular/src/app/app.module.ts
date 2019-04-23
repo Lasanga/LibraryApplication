@@ -16,7 +16,7 @@ import { AuthInterceptor } from './auth-interceptor';
 	//Material Component Imports
 import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule,
     MatCardModule, MatMenuModule, MatInputModule, MatFormFieldModule, MatRippleModule, MatSelectModule,
-    MatRadioModule, MatOptionModule,MatDialogModule, MatTableModule} from "@angular/material";
+    MatRadioModule, MatOptionModule,MatDialogModule, MatTableModule, MatTabsModule} from "@angular/material";
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { BookComponent } from './book/book.component';
@@ -27,6 +27,11 @@ import { NewsPaperComponent } from './news-paper/news-paper.component';
 import { NewsPaperEditComponent } from './news-paper/news-paper-edit/news-paper-edit.component';
 import { NewsPaperCreateComponent } from './news-paper/news-paper-create/news-paper-create.component';
 import { NotFound404Component } from './not-found404/not-found404.component';
+import { RareCollectionComponent } from './rare-collection/rare-collection.component';
+import { BooksComponent } from './rare-collection/books/books.component';
+import { NewspapersComponent } from './rare-collection/newspapers/newspapers.component';
+import { GovernmentPublicationsComponent } from './rare-collection/government-publications/government-publications.component';
+import { OlaLeafComponent } from './rare-collection/ola-leaf/ola-leaf.component';
 
 
 @NgModule({
@@ -45,6 +50,11 @@ import { NotFound404Component } from './not-found404/not-found404.component';
     NewsPaperEditComponent,
     NewsPaperCreateComponent,
     NotFound404Component,
+    RareCollectionComponent,
+    BooksComponent,
+    NewspapersComponent,
+    GovernmentPublicationsComponent,
+    OlaLeafComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +79,7 @@ import { NotFound404Component } from './not-found404/not-found404.component';
     MatRadioModule,
     MatDialogModule,
     MatTableModule,
+    MatTabsModule,
 
     JwtModule.forRoot({
       config: {
