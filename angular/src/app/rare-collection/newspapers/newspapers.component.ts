@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NewspaperOutputDto, NewsPapersService } from 'src/app/shared-services/shared-services.component';
 
 @Component({
   selector: 'app-rare-newspapers',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewspapersComponent implements OnInit {
 
-  constructor() { }
+  newsOutputDto: NewspaperOutputDto[] = [];
+
+  constructor(
+    private _newsService: NewsPapersService
+  ) { }
 
   ngOnInit() {
+
+    this._newsService.getRare().subscribe(res => {
+      this.newsOutputDto = res;
+    })
+    
   }
 
 }
