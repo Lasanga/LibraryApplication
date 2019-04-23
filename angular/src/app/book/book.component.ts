@@ -33,6 +33,8 @@ export class BookComponent implements OnInit {
     const token = localStorage.getItem('token');
     const decodeToken = this.jwtHelper.decodeToken(token);
 
+    console.log(decodeToken);
+    
     if (!decodeToken) {
       return false;
     }

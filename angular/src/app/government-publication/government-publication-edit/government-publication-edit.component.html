@@ -1,15 +1,15 @@
-<h1 mat-dialog-title>Edit Book {{book.data.displayName}}</h1>
-<form class="example-form" (ngSubmit)="onSubmit(book.data)">
+<h1 mat-dialog-title>Edit government publication {{govPub.data.displayName}}</h1>
+<form class="example-form" (ngSubmit)="onSubmit(govPub.data)">
   <div class="row">
     <div class="col-6">
       <mat-form-field class="example-half-width">
-        <input matInput placeholder="isbnNumber" type="text" [(ngModel)]="book.data.isbnNumber" required
+        <input matInput placeholder="Sector" type="text" [(ngModel)]="govPub.data.sector" required
           name="isbnNumber">
       </mat-form-field>
     </div>
     <div class="col-6">
       <mat-form-field class="example-half-width">
-        <input matInput placeholder="DsiplayName" type="text" [(ngModel)]="book.data.displayName" required
+        <input matInput placeholder="DsiplayName" type="text" [(ngModel)]="govPub.data.displayName" required
           name="displayName">
       </mat-form-field>
     </div>
@@ -18,13 +18,13 @@
   <div class="row">
     <div class="col-6">
       <mat-form-field class="example-half-width">
-        <input matInput placeholder="totalPages" type="number" [(ngModel)]="book.data.totalPages" required
+        <input matInput placeholder="totalPages" type="number" [(ngModel)]="govPub.data.totalPages" required
           name="totalPages">
       </mat-form-field>
     </div>
     <div class="col-6">
       <mat-form-field class="example-half-width">
-        <input matInput placeholder="publisher" type="text" [(ngModel)]="book.data.publisher" name="publisher">
+        <input matInput placeholder="publisher" type="text" [(ngModel)]="govPub.data.publisher" name="publisher">
       </mat-form-field>
     </div>
   </div>
@@ -32,12 +32,12 @@
   <div class="row mb-3">
     <div class="col-6">
       <mat-form-field class="example-half-width">
-        <input matInput placeholder="Price" type="number" [(ngModel)]="book.data.price" required name="price">
+        <input matInput placeholder="Price" type="number" [(ngModel)]="govPub.data.price" required name="price">
       </mat-form-field>
     </div>
     <div class="col-6" *ngIf="canType">
       <p class="mat-small">Source Type</p>
-      <mat-select [(ngModel)]="book.data.sourceType" name="sourceType">
+      <mat-select [(ngModel)]="govPub.data.sourceType" name="sourceType">
         <mat-option [value]=10>Public</mat-option>
         <mat-option [value]=20>Rare</mat-option>
       </mat-select>
@@ -48,13 +48,13 @@
   <div class="row">
     <div class="col-6">
       <p class="mat-small">Category</p>
-      <mat-select [(ngModel)]="book.data.category.id" name="id">
+      <mat-select [(ngModel)]="govPub.data.category.id" name="id">
         <mat-option *ngFor="let category of categories" [value]=category.id>{{category.displayName}}</mat-option>
       </mat-select>
     </div>
     <div class="col-6">
       <p class="mat-small">Author</p>
-      <mat-select [(ngModel)]="book.data.author.id" name=id>
+      <mat-select [(ngModel)]="govPub.data.author.id" name=id>
         <mat-option *ngFor="let author of authors" [value]=author.id>{{author.displayName}}</mat-option>
       </mat-select>
     </div>

@@ -40,7 +40,7 @@ export class NewsPaperEditComponent implements OnInit {
     const token = localStorage.getItem('token');
     const decodeToken = this.jwtHelper.decodeToken(token);
 
-    if (decodeToken['permission'] == 'NewsPaper.rare')
+    if (decodeToken['permission'].includes("newspaper.rare"))
       this.canType = true;
   }
 

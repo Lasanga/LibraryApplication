@@ -36,10 +36,10 @@ export class NewsPaperComponent implements OnInit {
       return false;
     }
 
-    if (decodeToken['permission'].includes("newsPapers.edit"))
+    if (decodeToken['permission'].includes("newspaper.edit"))
       this.canEdit = true;
 
-    if (decodeToken['permission'].includes("newsPapers.delete"))
+    if (decodeToken['permission'].includes("newspaper.delete"))
       this.canDelete = true;
 
     if (decodeToken['role'] == 'ForeignUser')

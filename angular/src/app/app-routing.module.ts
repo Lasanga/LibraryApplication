@@ -9,6 +9,7 @@ import { AuthGuard } from './auth.guard';
 import { BookComponent } from './book/book.component';
 import { ForeignerApprovalComponent } from './foreigner-approval/foreigner-approval.component';
 import { NewsPaperComponent } from './news-paper/news-paper.component';
+import { GovernmentPublicationComponent } from './government-publication/government-publication.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
   {
     path: "newsPaper",
     component: NewsPaperComponent
+  },
+  {
+    path: "govPublication",
+    component: GovernmentPublicationComponent
   },
   {
     path: "foreignerApproval",

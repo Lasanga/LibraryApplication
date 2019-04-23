@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BooksService, CategoryService, OlaLeafsService, AccountService, AuthorService } from './shared-services/shared-services.component';
+import { BooksService, CategoryService, OlaLeafsService, AccountService, AuthorService, NewsPapersService, GovernmentPublicationsService } from './shared-services/shared-services.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -26,6 +26,9 @@ import { ForeignerApprovalComponent } from './foreigner-approval/foreigner-appro
 import { NewsPaperComponent } from './news-paper/news-paper.component';
 import { NewsPaperEditComponent } from './news-paper/news-paper-edit/news-paper-edit.component';
 import { NewsPaperCreateComponent } from './news-paper/news-paper-create/news-paper-create.component';
+import { GovernmentPublicationComponent } from './government-publication/government-publication.component';
+import { GovernmentPublicationCreateComponent } from './government-publication/government-publication-create/government-publication-create.component';
+import { GovernmentPublicationEditComponent } from './government-publication/government-publication-edit/government-publication-edit.component';
 
 
 @NgModule({
@@ -43,6 +46,9 @@ import { NewsPaperCreateComponent } from './news-paper/news-paper-create/news-pa
     NewsPaperComponent,
     NewsPaperEditComponent,
     NewsPaperCreateComponent,
+    GovernmentPublicationComponent,
+    GovernmentPublicationCreateComponent,
+    GovernmentPublicationEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,6 +86,8 @@ import { NewsPaperCreateComponent } from './news-paper/news-paper-create/news-pa
     AccountService,
     OlaLeafsService,
     AuthorService,
+    NewsPapersService,
+    GovernmentPublicationsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
@@ -87,6 +95,6 @@ import { NewsPaperCreateComponent } from './news-paper/news-paper-create/news-pa
     },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [BookEditComponent, BookCreateComponent, NewsPaperEditComponent, NewsPaperCreateComponent]
+  entryComponents: [BookEditComponent, BookCreateComponent, NewsPaperEditComponent, NewsPaperCreateComponent, GovernmentPublicationCreateComponent, GovernmentPublicationEditComponent]
 })
 export class AppModule { }
