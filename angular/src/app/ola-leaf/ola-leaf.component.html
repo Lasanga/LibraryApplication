@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="col-2" style="margin-bottom: 10px;">
+        <button *ngIf="canEdit" class="btn btn-block btn-outline-primary" (click)="openCreate()">Create New</button>
+  </div>
+  <div class="row">
+    <div class="col-4 mb-3" *ngFor="let olaLeaf of olaLeafOutputDto">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div style="width: 100%">
+            <mat-select style="width: 30%; float: right;" *ngIf="canEdit" (selectionChange)="option($event.value)">
+              <mat-option [value]="olaLeaf">Edit</mat-option>
+              <mat-option [value]="olaLeafolaLeaf.id" *ngIf="canDelete">Delete</mat-option>
+            </mat-select>
+          </div>
+
+        </mat-card-header>
+        <mat-card-content>
+          <p><small>#{{olaLeaf.category.displayName}}</small></p>
+          <h4>{{olaLeaf.displayName}}</h4>
+          <h6>Rs. {{ olaLeaf.price }}</h6>
+          <mat-divider></mat-divider><br />
+          <span style="font-size: 12px;">{{olaLeaf.author.displayName}}</span><br />
+          <small>
+              {{olaLeaf.author.emailAddress}}
+          </small>
+
+          <i><strong></strong></i>
+
+          <p style="text-align:right">{{olaLeaf.totalPages}} Pages</p>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

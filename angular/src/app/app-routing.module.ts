@@ -12,6 +12,7 @@ import { NewsPaperComponent } from './news-paper/news-paper.component';
 import { NotFound404Component } from './not-found404/not-found404.component';
 import { RareCollectionComponent } from './rare-collection/rare-collection.component';
 import { GovernmentPublicationComponent } from './government-publication/government-publication.component';
+import { OlaLeafComponent } from './ola-leaf/ola-leaf.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,10 @@ const routes: Routes = [
   {
     path: "rareCollection",
     component: RareCollectionComponent
+  },
+  {
+    path: "olaLeaf",
+    component: OlaLeafComponent
   },
   {
     path: "404NotFound",

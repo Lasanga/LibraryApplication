@@ -1,16 +1,15 @@
-<h1 mat-dialog-title>Edit News Paper {{newsPaper.data.displayName}}</h1>
-<form class="example-form" (ngSubmit)="onSubmit(newsPaper.data)">
+<h1 mat-dialog-title>Create ola leaf</h1>
+<form class="example-form" (ngSubmit)="onSubmit(olaLeaf)">
   <div class="row">
     <div class="col-6">
       <mat-form-field class="example-half-width">
-        <input matInput placeholder="DsiplayName" type="text" [(ngModel)]="newsPaper.data.displayName" required
-          name="displayName">
+        <input matInput placeholder="Publisher" type="text" [(ngModel)]="olaLeaf.publisher" required name="publisher">
       </mat-form-field>
     </div>
     <div class="col-6">
       <mat-form-field class="example-half-width">
-        <input matInput placeholder="Toal sub-parts" type="text" [(ngModel)]="newsPaper.data.totalSubParts" required
-          name="totalSubParts">
+        <input matInput placeholder="DisplayName" type="text" [(ngModel)]="olaLeaf.displayName" required
+          name="displayName">
       </mat-form-field>
     </div>
   </div>
@@ -18,35 +17,26 @@
   <div class="row">
     <div class="col-6">
       <mat-form-field class="example-half-width">
-        <input matInput placeholder="publisher" type="text" [(ngModel)]="newsPaper.data.publisher" name="publisher">
+        <input matInput placeholder="Price" type="number" [(ngModel)]="olaLeaf.price" required name="price">
       </mat-form-field>
     </div>
-  </div>
-  <div class="row mb-3">
     <div class="col-6">
       <mat-form-field class="example-half-width">
-        <input matInput placeholder="Price" type="number" [(ngModel)]="newsPaper.data.price" required name="price">
+        <input matInput placeholder="Description" type="text" [(ngModel)]="olaLeaf.description" name="description">
       </mat-form-field>
-    </div>
-    <div class="col-6" *ngIf="canType">
-      <p class="mat-small">Source Type</p>
-      <mat-select [(ngModel)]="newsPaper.data.sourceType" name="sourceType">
-        <mat-option [value]=10>Public</mat-option>
-        <mat-option [value]=20>Rare</mat-option>
-      </mat-select>
     </div>
   </div>
 
   <div class="row">
     <div class="col-6">
       <p class="mat-small">Category</p>
-      <mat-select [(ngModel)]="newsPaper.data.category.id" name="id">
+      <mat-select [(ngModel)]="olaLeaf.categoryId" name="categoryId">
         <mat-option *ngFor="let category of categories" [value]=category.id>{{category.displayName}}</mat-option>
       </mat-select>
     </div>
     <div class="col-6">
       <p class="mat-small">Author</p>
-      <mat-select [(ngModel)]="newsPaper.data.author.id" name=id>
+      <mat-select [(ngModel)]="olaLeaf.authorId" name=authorId>
         <mat-option *ngFor="let author of authors" [value]=author.id>{{author.displayName}}</mat-option>
       </mat-select>
     </div>
