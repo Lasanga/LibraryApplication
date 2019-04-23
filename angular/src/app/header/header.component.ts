@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
   title = 'Intellect';
   name = "Guest";
   viewRare: Boolean = false;
+  viewForeignerApprovals: Boolean = false;
 
   public isLoggedIn = false;
 
@@ -33,9 +34,14 @@ export class HeaderComponent implements OnInit {
       return false;
     }
 
-    if (decodeToken['role'][0] == "LocalUser")
+    if (decodeToken['role'][0] == "LocalUser"){
       this.viewRare = true;
+    }
 
+    if(decodeToken['role'] == 'Admin'){
+      this.viewForeignerApprovals = true;
+    }
+      
 
   }
 

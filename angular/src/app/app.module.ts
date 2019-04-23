@@ -16,12 +16,13 @@ import { AuthInterceptor } from './auth-interceptor';
 	//Material Component Imports
 import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule,
     MatCardModule, MatMenuModule, MatInputModule, MatFormFieldModule, MatRippleModule, MatSelectModule,
-    MatRadioModule, MatOptionModule,MatDialogModule} from "@angular/material";
+    MatRadioModule, MatOptionModule,MatDialogModule, MatTableModule} from "@angular/material";
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { BookComponent } from './book/book.component';
 import { BookEditComponent } from './book/book-edit/book-edit.component';
 import { BookCreateComponent } from './book/book-create/book-create.component';
+import { ForeignerApprovalComponent } from './foreigner-approval/foreigner-approval.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { BookCreateComponent } from './book/book-create/book-create.component';
     BookComponent,
     BookEditComponent,
     BookCreateComponent,
+    ForeignerApprovalComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +60,7 @@ import { BookCreateComponent } from './book/book-create/book-create.component';
     MatOptionModule,
     MatRadioModule,
     MatDialogModule,
+    MatTableModule,
 
     JwtModule.forRoot({
       config: {
