@@ -22,7 +22,8 @@
     </div>
     <div class="col-6">
       <mat-form-field class="example-half-width">
-        <input matInput placeholder="Description" type="text" [(ngModel)]="olaLeaf.description" name="description">
+        <!-- <input matInput placeholder="Description" type="text" [(ngModel)]="olaLeaf.description" name="description"> -->
+        <textarea matInput placeholder="Description" rows="6" [(ngModel)]="olaLeaf.description" required name="description" style="resize: none;"></textarea>
       </mat-form-field>
     </div>
   </div>

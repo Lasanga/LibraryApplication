@@ -39,8 +39,10 @@ export class HeaderComponent implements OnInit {
       this.viewRare = true;
     }
 
+
     if(decodeToken['role'] == 'Admin'){
       this.viewForeignerApprovals = true;
+      this.viewRare = true;
     }
 
 

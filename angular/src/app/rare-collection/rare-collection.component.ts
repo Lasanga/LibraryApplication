@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rare-collection',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RareCollectionComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+
+    if( !this._authService.isAuthenticated() )
+    {
+      this.router.navigate(['/login'])
+    }
+
   }
 
 }

@@ -43,12 +43,14 @@ export class BookEditComponent implements OnInit {
     const decodeToken = this.jwtHelper.decodeToken(token);
 
     if (decodeToken['permission'].includes("books.rare")){
+      
       if(decodeToken['role'] == 'Librarian'){
         this.canType = false;
       }else{
         this.canType = true;
       }
     }
+
   }
 
   onSubmit(data: BookUpdateDto): void{

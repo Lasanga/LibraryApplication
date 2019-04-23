@@ -38,6 +38,10 @@ import { OlaLeafRareComponent } from './rare-collection/ola-leaf/ola-leaf-rare.c
 import { OlaLeafComponent } from './ola-leaf/ola-leaf.component';
 import { OlaLeafEditComponent } from './ola-leaf/ola-leaf-edit/ola-leaf-edit.component';
 import { OlaLeafCreateComponent } from './ola-leaf/ola-leaf-create/ola-leaf-create.component';
+import { RareBooksEditComponent } from './rare-collection/books/rare-books-edit/rare-books-edit.component';
+import { RareNewspapersEditComponent } from './rare-collection/newspapers/rare-newspapers-edit/rare-newspapers-edit.component';
+import { GovernmentPublicationsRareEditComponent } from './rare-collection/government-publications/government-publications-rare-edit/government-publications-rare-edit.component';
+import { OlaLeafRareEditComponent } from './rare-collection/ola-leaf/ola-leaf-rare-edit/ola-leaf-rare-edit.component';
 
 
 @NgModule({
@@ -67,6 +71,10 @@ import { OlaLeafCreateComponent } from './ola-leaf/ola-leaf-create/ola-leaf-crea
     OlaLeafComponent,
     OlaLeafEditComponent,
     OlaLeafCreateComponent,
+    RareBooksEditComponent,
+    RareNewspapersEditComponent,
+    GovernmentPublicationsRareEditComponent,
+    OlaLeafRareEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -114,6 +122,8 @@ import { OlaLeafCreateComponent } from './ola-leaf/ola-leaf-create/ola-leaf-crea
     },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [BookEditComponent, BookCreateComponent, NewsPaperEditComponent, NewsPaperCreateComponent, GovernmentPublicationCreateComponent, GovernmentPublicationEditComponent, OlaLeafEditComponent, OlaLeafCreateComponent]
+  entryComponents: [BookEditComponent, BookCreateComponent, NewsPaperEditComponent, NewsPaperCreateComponent, GovernmentPublicationCreateComponent, 
+    GovernmentPublicationEditComponent, OlaLeafEditComponent, OlaLeafCreateComponent, RareBooksEditComponent, RareNewspapersEditComponent,
+    GovernmentPublicationsRareEditComponent, OlaLeafRareEditComponent]
 })
 export class AppModule { }
