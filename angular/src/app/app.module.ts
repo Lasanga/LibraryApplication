@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BooksService, CategoryService, OlaLeafsService, AccountService, AuthorService } from './shared-services/shared-services.component';
+import { BooksService, CategoryService, OlaLeafsService, AccountService, AuthorService, NewsPapersService } from './shared-services/shared-services.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -26,6 +26,7 @@ import { ForeignerApprovalComponent } from './foreigner-approval/foreigner-appro
 import { NewsPaperComponent } from './news-paper/news-paper.component';
 import { NewsPaperEditComponent } from './news-paper/news-paper-edit/news-paper-edit.component';
 import { NewsPaperCreateComponent } from './news-paper/news-paper-create/news-paper-create.component';
+import { NotFound404Component } from './not-found404/not-found404.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { NewsPaperCreateComponent } from './news-paper/news-paper-create/news-pa
     NewsPaperComponent,
     NewsPaperEditComponent,
     NewsPaperCreateComponent,
+    NotFound404Component,
   ],
   imports: [
     BrowserModule,
@@ -80,6 +82,7 @@ import { NewsPaperCreateComponent } from './news-paper/news-paper-create/news-pa
     AccountService,
     OlaLeafsService,
     AuthorService,
+    NewsPapersService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

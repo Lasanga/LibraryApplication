@@ -4,6 +4,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { MatDialog } from '@angular/material';
 import { NewsPaperEditComponent } from './news-paper-edit/news-paper-edit.component';
 import { NewsPaperCreateComponent } from './news-paper-create/news-paper-create.component';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-news-paper',
@@ -19,37 +21,47 @@ export class NewsPaperComponent implements OnInit {
 
   constructor(
     private jwtHelper: JwtHelperService,
-    private _NewsService: NewsPapersService,
-    public dialog: MatDialog
+    private _newsService: NewsPapersService,
+    public dialog: MatDialog,
+    private _authservice: AuthService,
+    public router: Router
   ) { }
 
   ngOnInit() {
 
-    this._NewsService.getAll().subscribe(res => {
+    if( this._authservice.isAuthenticated() ){
+
+      this._newsService.getAll().subscribe(res => {
       this.newsOutputDto = res;
-    })
+      })
 
-    const token = localStorage.getItem('token');
-    const decodeToken = this.jwtHelper.decodeToken(token);
+      const token = localStorage.getItem('token');
+      const decodeToken = this.jwtHelper.decodeToken(token);
 
-    if (!decodeToken) {
-      return false;
+      if (!decodeToken) {
+        return false;
+      }
+
+      if (decodeToken['permission'].includes("newsPapers.edit"))
+        this.canEdit = true;
+
+      if (decodeToken['permission'].includes("newsPapers.delete"))
+        this.canDelete = true;
+
+      if (decodeToken['role'] == 'ForeignUser')
+        this.isForeign = true;
+
+    }else{
+      this.router.navigate(['/404NotFound']);
     }
 
-    if (decodeToken['permission'].includes("newsPapers.edit"))
-      this.canEdit = true;
-
-    if (decodeToken['permission'].includes("newsPapers.delete"))
-      this.canDelete = true;
-
-    if (decodeToken['role'] == 'ForeignUser')
-      this.isForeign = true;
+    
   }
 
 
   option(element: any): void {
     if (!isNaN(element)) {
-      this._NewsService.delete(element).subscribe(res => {
+      this._newsService.delete(element).subscribe(res => {
         this.ngOnInit();
       })
     } else {
@@ -69,4 +81,5 @@ export class NewsPaperComponent implements OnInit {
       width: '800px'
     });
   }
+  
 }

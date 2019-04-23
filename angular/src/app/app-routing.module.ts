@@ -9,6 +9,7 @@ import { AuthGuard } from './auth.guard';
 import { BookComponent } from './book/book.component';
 import { ForeignerApprovalComponent } from './foreigner-approval/foreigner-approval.component';
 import { NewsPaperComponent } from './news-paper/news-paper.component';
+import { NotFound404Component } from './not-found404/not-found404.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,10 @@ const routes: Routes = [
   {
     path: "foreignerApproval",
     component: ForeignerApprovalComponent
+  },
+  {
+    path: "404NotFound",
+    component: NotFound404Component
   }
 
 

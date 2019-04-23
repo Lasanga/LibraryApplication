@@ -70,4 +70,5 @@ export class BookComponent implements OnInit {
       width: '800px'
     });
   }
+  
 }
