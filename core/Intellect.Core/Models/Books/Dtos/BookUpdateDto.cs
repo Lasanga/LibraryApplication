@@ -1,9 +1,9 @@
 ﻿using Intellect.Core.Models.Authors;
+using Intellect.Core.Models.Authors.Dtos;
 using Intellect.Core.Models.Categories;
+using Intellect.Core.Models.Categories.Dtos;
 using Intellect.Core.Models.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Intellect.Core.Models.Books.Dtos
 {
