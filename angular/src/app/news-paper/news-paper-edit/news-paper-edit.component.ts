@@ -46,6 +46,7 @@ export class NewsPaperEditComponent implements OnInit {
 
   onSubmit(data: NewspaperUpdateDto): void{
     data.year = new Date('August 19, 2019 23:15:30');
+    data.publicationDate = new Date('August 19, 2019 23:15:30');
     this._newsService.update(data).subscribe(res =>{
       this.dialogRef.close();
       location.reload();
