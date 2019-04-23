@@ -23,6 +23,9 @@ import { BookComponent } from './book/book.component';
 import { BookEditComponent } from './book/book-edit/book-edit.component';
 import { BookCreateComponent } from './book/book-create/book-create.component';
 import { ForeignerApprovalComponent } from './foreigner-approval/foreigner-approval.component';
+import { NewsPaperComponent } from './news-paper/news-paper.component';
+import { NewsPaperEditComponent } from './news-paper/news-paper-edit/news-paper-edit.component';
+import { NewsPaperCreateComponent } from './news-paper/news-paper-create/news-paper-create.component';
 
 
 @NgModule({
@@ -37,6 +40,9 @@ import { ForeignerApprovalComponent } from './foreigner-approval/foreigner-appro
     BookEditComponent,
     BookCreateComponent,
     ForeignerApprovalComponent,
+    NewsPaperComponent,
+    NewsPaperEditComponent,
+    NewsPaperCreateComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,6 +87,6 @@ import { ForeignerApprovalComponent } from './foreigner-approval/foreigner-appro
     },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [BookEditComponent, BookCreateComponent]
+  entryComponents: [BookEditComponent, BookCreateComponent, NewsPaperEditComponent, NewsPaperCreateComponent]
 })
 export class AppModule { }

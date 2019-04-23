@@ -3,18 +3,18 @@
   <mat-toolbar class="navBarOut">
 
     <span style="font-size: 32px; font-weight: bold; color: rgb(66, 66, 66);">{{ title }}</span>
-  
+
     <div class="topNav">
-      
+
       <a *ngIf="viewForeignerApprovals" routerLink="/foreignerApproval">
         <button class="navBarButtons">Foreigner Approvals</button>
       </a>
       <a routerLink="/">
         <button class="navBarButtons">Categories</button>
-      </a> 
+      </a>
       <a routerLink="/">
         <button class="navBarButtons">Authors</button>
-      </a>  
+      </a>
       <a *ngIf="viewRare" routerLink="/">
         <button class="navBarButtons">Rare Collection</button>
       </a>
@@ -24,23 +24,23 @@
       <a routerLink="/">
         <button class="navBarButtons">Ola-Leafs</button>
       </a>
-      <a routerLink="/">
+      <a routerLink="/newsPaper">
         <button class="navBarButtons">News-Papers</button>
       </a>
       <a routerLink="/">
         <button class="navBarButtons">Books</button>
       </a>
-      
-         
+
+
     </div>
-  
+
     <div style="margin-left: 20px; color: rgb(94, 94, 94);">
-      <span style="font-size: 12px; margin-left: 12px;">Welcome </span> 
-      <span style="font-size: 14px; margin-left: 4px; font-weight: bold;">{{ _showName() }}</span> 
+      <span style="font-size: 12px; margin-left: 12px;">Welcome </span>
+      <span style="font-size: 14px; margin-left: 4px; font-weight: bold;">{{ _showName() }}</span>
     </div>
-  
+
     <div style="margin-left: 20px;" [style.display]="(isLoggedIn == false) ? 'block' : 'none' ">
-      
+
       <a style="text-decoration: none; color: white;" routerLink="/login">
         <button mat-raised-button style="background-color: rgb(0, 140, 255); color: white; margin-left: 10px;">
           Login
@@ -62,9 +62,9 @@
             Logout
           </button>
         </a>
-        
+
     </div>
 
   </mat-toolbar>
-    
+
 </div>

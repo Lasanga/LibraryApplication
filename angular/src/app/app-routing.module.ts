@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth.guard';
 import { BookComponent } from './book/book.component';
 import { ForeignerApprovalComponent } from './foreigner-approval/foreigner-approval.component';
+import { NewsPaperComponent } from './news-paper/news-paper.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
   {
     path: "book",
     component: BookComponent
+  },
+  {
+    path: "newsPaper",
+    component: NewsPaperComponent
   },
   {
     path: "foreignerApproval",
