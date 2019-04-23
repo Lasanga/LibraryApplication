@@ -1,0 +1,32 @@
+
+.regCard {
+    max-width: 30%;
+    margin: 5% auto;
+    padding: 20px 20px 40px 20px;
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.example-full-width {
+    width: 100%;
+}
+
+.regBtn {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.loginBtnContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.loginBtn {
+    display: table;
+    margin-top: 30px;
+}

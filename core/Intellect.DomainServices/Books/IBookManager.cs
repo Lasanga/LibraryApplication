@@ -11,7 +11,8 @@ namespace Intellect.DomainServices.Books
         Task InsertAsync(Book book);
         Task<Book> UpdateAsync(Book book);
         Task DeleteAsync(int id);
-        Task<Book> GetAsync(int id);
+        Book GetAsync(int id);
         Task<List<Book>> GetAllAsync();
+        Task<List<Book>> GetAllRare();
     }
 }

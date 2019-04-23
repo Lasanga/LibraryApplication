@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 mb-3">
+      <button *ngIf="canEdit" class="btn btn-block btn-outline-primary" (click)="openCreate()">Create New</button>
+    </div>
+    <div class="col-4 mb-3" *ngFor="let book of bookOutputDto">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <!-- <div mat-card-avatar class="example-header-image"></div> -->
+
+          <div style="width: 100%">
+            <mat-select style="width: 30%; float: right;" *ngIf="canEdit" (selectionChange)="option($event.value)">
+              <mat-option [value]="book">Edit</mat-option>
+              <mat-option [value]="book.id" *ngIf="canDelete">Delete</mat-option>
+            </mat-select>
+          </div>
+
+          <!-- <mat-card-title>
+              {{book.displayName}}
+          </mat-card-title>
+          <mat-card-subtitle>
+              #{{book.category.displayName}}
+          </mat-card-subtitle> -->
+
+        </mat-card-header>
+        <!-- <mat-divider></mat-divider> -->
+        <mat-card-content>
+          <p><small>#{{book.category.displayName}}</small></p>
+          <h4>{{book.displayName}}</h4>
+          <mat-divider></mat-divider><br />
+          <span style="font-size: 12px;">{{book.author.displayName}}</span><br />
+          <small>
+              {{book.author.emailAddress}}
+          </small> 
+            
+            <!-- {{book.author.displayName}} | {{book.author.emailAddress}} -->
+          <!-- <p>
+            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, dignissimos ut maxime dolore enim,
+            temporibus reprehenderit
+            numquam doloremque cum eos ad! Voluptate modi, vitae iste vel fuga fugiat culpa animi!"
+          </p> -->
+
+          <i><strong></strong></i>
+          <p style="text-align:right">{{book.totalPages}} Pages</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

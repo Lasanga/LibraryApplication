@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Intellect.Core;
 using Intellect.Core.Models.Categories;
 using Intellect.Core.Models.Categories.Dtos;
+using Intellect.Core.Permissions;
 using Intellect.DomainServices.Categories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Intellect.WebApi.Controllers
 {
     [ApiController]
+    [Authorize]
+    [Route("api/[controller]")]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryManager _categoryManager;
@@ -24,7 +29,7 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]/GetAll")]
+        [Route("GetAll")]
         public async Task<List<CategoryOutputDto>> GetAll()
         {
             var result = await _categoryManager.GetAllAsync();
@@ -38,7 +43,7 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpGet()]
-        [Route("api/[controller]/GetById")]
+        [Route("GetById")]
         public async Task<CategoryOutputDto> Get(int id)
         {
             CategoryOutputDto author = new CategoryOutputDto();
@@ -49,7 +54,8 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("api/[controller]/Create")]
+        [Route("Create")]
+        [Authorize(Policy = PolicyTypes.CategoryPolicy.Crud)]
         public async Task Post([FromBody] CategoryInputDto input)
         {
             var category = _mapper.Map<Category>(input);
@@ -57,7 +63,8 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpPut()]
-        [Route("api/[controller]/Update")]
+        [Route("Update")]
+        [Authorize(Policy = PolicyTypes.CategoryPolicy.Crud)]
         public async Task<CategoryOutputDto> Put([FromBody] CategoryUpdateDto input)
         {
             var category = _mapper.Map<Category>(input);
@@ -67,7 +74,8 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpDelete()]
-        [Route("api/[controller]/Delete")]
+        [Route("Delete")]
+        [Authorize(Policy = PolicyTypes.CategoryPolicy.Crud)]
         public void Delete(int id)
         {
             _categoryManager.DeleteAsync(id);

@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Intellect.Core;
 using Intellect.Core.Models.Authors;
 using Intellect.Core.Models.Authors.Dtos;
+using Intellect.Core.Permissions;
 using Intellect.DomainServices.Authors;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Intellect.WebApi.Controllers
 {
     [ApiController]
+    [Route("api/[controller]")]
+    [Authorize]
     public class AuthorController : ControllerBase
     {
         private readonly IAuthorManager _authorManager;
@@ -24,7 +29,7 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]/GetAll")]
+        [Route("GetAll")]
         public async Task<List<AuthorOutputDto>> GetAll()
         {
             List<AuthorOutputDto> authors = new List<AuthorOutputDto>();
@@ -48,7 +53,7 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpGet()]
-        [Route("api/[controller]/GetById")]
+        [Route("GetById")]
         public async Task<AuthorOutputDto> Get(int id)
         {
             AuthorOutputDto author = new AuthorOutputDto();
@@ -59,7 +64,8 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("api/[controller]/Create")]
+        [Route("Create")]
+        [Authorize(Policy = PolicyTypes.AuthorPolicy.Crud)]
         public async Task Post([FromBody] AuthorInputDto input)
         {
             var author = _mapper.Map<Author>(input);
@@ -67,7 +73,8 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpPut()]
-        [Route("api/[controller]/Update")]
+        [Route("Update")]
+        [Authorize(Policy = PolicyTypes.AuthorPolicy.Crud)]
         public async Task<AuthorOutputDto> Put([FromBody] AuthorUpdateDto input)
         {
             var book = _mapper.Map<Author>(input);
@@ -77,7 +84,8 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpDelete()]
-        [Route("api/[controller]/Delete")]
+        [Route("Delete")]
+        [Authorize(Policy = PolicyTypes.AuthorPolicy.Crud)]
         public void Delete(int id)
         {
             _authorManager.DeleteAsync(id);

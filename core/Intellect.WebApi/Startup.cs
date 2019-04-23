@@ -1,9 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using IdentityServer4.AspNetIdentity;
+using IdentityServer4.Validation;
+using Intellect.Core.Configurations;
 using Intellect.Core.Models.Authorization;
+using Intellect.Core.Permissions;
+using Intellect.DomainServices.Authorization;
 using Intellect.DomainServices.Authors;
 using Intellect.DomainServices.Books;
 using Intellect.DomainServices.Categories;
@@ -20,6 +27,7 @@ using Intellect.Infrastructure.Repositories.NewspaperRepositories;
 using Intellect.Infrastructure.Repositories.OlaleafRepositories;
 using Intellect.Infrastructure.SeedDatabase;
 using Intellect.Infrastructure.UnitOfWork;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +38,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using NSwag;
+using NSwag.AspNetCore;
+using NSwag.SwaggerGeneration.Processors.Security;
 
 namespace Intellect.WebApi
 {
@@ -56,6 +68,30 @@ namespace Intellect.WebApi
                .AddEntityFrameworkStores<IntellectDbContext>()
                .AddDefaultTokenProviders();
 
+            var builder1 = services.AddIdentityServer(options =>
+            {
+                options.IssuerUri = null;
+            }).AddDeveloperSigningCredential()
+              .AddInMemoryIdentityResources(Config.GetIdentityResources())
+              .AddInMemoryClients(Config.GetClients())
+              .AddInMemoryApiResources(Config.GetApis())
+              .AddAspNetIdentity<ApplicationUser>();
+
+            builder1.Services.AddTransient<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "http://localhost:5000";
+                options.RequireHttpsMetadata = false;
+
+                options.Audience = "api1";
+            });
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
@@ -74,29 +110,192 @@ namespace Intellect.WebApi
                 // User settings.
                 options.User.AllowedUserNameCharacters =
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = false;
+                options.User.RequireUniqueEmail = true;
             });
+
 
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllOriginsHeadersAndMethods",
                     builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
-
-            services.AddSwaggerDocument();
+            AddPolicies(services);
+            services.AddSwagger();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
+            app.UseIdentityServer();
             app.UseStaticFiles();
             app.UseCors("AllowAllOriginsHeadersAndMethods");
-            app.UseSwagger();
-            app.UseSwaggerUi3();
+            UseNswag(app);
             app.UseMvc();
 
             Seed(app);
         }
+
+        private void AddPolicies(IServiceCollection services)
+        {
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(PolicyTypes.AuthorPolicy.Crud, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.AuthorPermission.Add,
+                        AppPermissions.AuthorPermission.Delete,
+                        AppPermissions.AuthorPermission.Edit,
+                        AppPermissions.AuthorPermission.View);
+                });
+
+                options.AddPolicy(PolicyTypes.CategoryPolicy.Crud, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.CategoryPermission.Add,
+                        AppPermissions.CategoryPermission.Delete,
+                        AppPermissions.CategoryPermission.Edit,
+                        AppPermissions.CategoryPermission.View);
+                });
+
+                #region Books
+                options.AddPolicy(PolicyTypes.BooksPolicy.Cru, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.BooksPermission.Add,
+                        AppPermissions.BooksPermission.Edit,
+                        AppPermissions.BooksPermission.View);
+                });
+
+                options.AddPolicy(PolicyTypes.BooksPolicy.delete, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.BooksPermission.Delete);
+                });
+
+                options.AddPolicy(PolicyTypes.BooksPolicy.View, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.BooksPermission.View);
+                });
+
+                options.AddPolicy(PolicyTypes.BooksPolicy.rare, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.BooksPermission.Rare);
+                });
+                #endregion
+
+                #region Newspaper
+                options.AddPolicy(PolicyTypes.NewspaperPolicy.Cru, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.NewspaperPermission.Add,
+                        AppPermissions.NewspaperPermission.Edit,
+                        AppPermissions.NewspaperPermission.View);
+                });
+
+                options.AddPolicy(PolicyTypes.NewspaperPolicy.delete, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.NewspaperPermission.Delete);
+                });
+
+                options.AddPolicy(PolicyTypes.NewspaperPolicy.View, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.NewspaperPermission.View);
+                });
+
+                options.AddPolicy(PolicyTypes.NewspaperPolicy.rare, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.NewspaperPermission.Rare);
+                });
+                #endregion
+
+                #region OlaLeaf
+                options.AddPolicy(PolicyTypes.OlaLeafPolicy.Cru, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.OlaLeafPermission.Add,
+                        AppPermissions.OlaLeafPermission.Edit,
+                        AppPermissions.OlaLeafPermission.View);
+                });
+
+                options.AddPolicy(PolicyTypes.OlaLeafPolicy.delete, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.OlaLeafPermission.Delete);
+                });
+
+                options.AddPolicy(PolicyTypes.OlaLeafPolicy.View, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.OlaLeafPermission.View);
+                });
+
+                options.AddPolicy(PolicyTypes.OlaLeafPolicy.rare, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.OlaLeafPermission.Rare);
+                });
+                #endregion
+
+                #region Govt
+                options.AddPolicy(PolicyTypes.GovtPolicy.Cru, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.GovtPermission.Add,
+                        AppPermissions.GovtPermission.Edit,
+                        AppPermissions.GovtPermission.View);
+                });
+
+                options.AddPolicy(PolicyTypes.GovtPolicy.delete, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.GovtPermission.Delete);
+                });
+
+                options.AddPolicy(PolicyTypes.GovtPolicy.View, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.GovtPermission.View);
+                });
+
+                options.AddPolicy(PolicyTypes.GovtPolicy.rare, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.GovtPermission.Rare);
+                });
+                #endregion
+
+                options.AddPolicy(PolicyTypes.UserPolicy.Manage, policy =>
+                {
+                    policy.RequireClaim(
+                        CustomClaims.Permission,
+                        AppPermissions.UserPermission.AddUser
+                        );
+                });
+            });
+        }
+
 
 
         private void AddScopes(IServiceCollection services)
@@ -129,6 +328,25 @@ namespace Intellect.WebApi
                 context.Database.Migrate();
                 SeedDb.Seed(context, userManager, roleManager).Wait();
             }
+        }
+
+        private void UseNswag(IApplicationBuilder app)
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            app.UseSwaggerUi3(typeof(Startup).GetTypeInfo().Assembly, settings =>
+            {
+                settings.GeneratorSettings.OperationProcessors.Add(new OperationSecurityScopeProcessor("JWT Token"));
+
+                settings.GeneratorSettings.DocumentProcessors.Add(new SecurityDefinitionAppender("JWT Token",
+                    new SwaggerSecurityScheme
+                    {
+                        Type = SwaggerSecuritySchemeType.ApiKey,
+                        Name = "Authorization",
+                        Description = "Copy 'Bearer ' + valid JWT token into field",
+                        In = SwaggerSecurityApiKeyLocation.Header
+                    }));
+            });
+#pragma warning restore CS0618 // Type or member is obsolete
         }
     }
 }

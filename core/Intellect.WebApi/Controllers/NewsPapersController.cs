@@ -5,13 +5,17 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Intellect.Core.Models.Newspapers;
 using Intellect.Core.Models.Newspapers.Dtos;
+using Intellect.Core.Permissions;
 using Intellect.DomainServices.Newspapers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Intellect.WebApi.Controllers
 {
     [ApiController]
+    [Route("api/[controller]")]
+    [Authorize]
     public class NewsPapersController : ControllerBase
     {
         private readonly INewspaperManager _newspaperManager;
@@ -24,7 +28,8 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]/GetAll")]
+        [Route("GetAll")]
+        [Authorize(Policy = PolicyTypes.NewspaperPolicy.View)]
         public async Task<List<NewspaperOutputDto>> GetAll()
         {
             List<NewspaperOutputDto> newspapers = new List<NewspaperOutputDto>();
@@ -43,14 +48,66 @@ namespace Intellect.WebApi.Controllers
                     Year = item.Year,
                     Id = item.Id,
                     PublicationDate = item.PublicationDate,
-                    TotalSubParts = item.TotalSubParts
+                    TotalSubParts = item.TotalSubParts,
+                    Author = new Core.Models.Authors.Dtos.AuthorOutputDto
+                    {
+                        Age = item.Author.Age,
+                        DisplayName = item.Author.DisplayName,
+                        EmailAddress = item.Author.EmailAddress,
+                        Id = item.Id
+                    },
+                    Category = new Core.Models.Categories.Dtos.CategoryOutputDto
+                    {
+                        Id = item.Category.Id,
+                        DisplayName = item.Category.DisplayName
+                    }
+                });
+            }
+            return newspapers;
+        }
+
+        [HttpGet]
+        [Route("GetRare")]
+        [Authorize(Policy = PolicyTypes.NewspaperPolicy.rare)]
+        public async Task<List<NewspaperOutputDto>> GetRare()
+        {
+            List<NewspaperOutputDto> newspapers = new List<NewspaperOutputDto>();
+            var result = await _newspaperManager.GetAllRare();
+
+            foreach (var item in result)
+            {
+                //var author = await _authorRepository.GetAsync(item.AuthorId);
+                //var author = await _authorRepository.GetAsync(item.AuthorId);
+                newspapers.Add(new NewspaperOutputDto()
+                {
+                    DisplayName = item.DisplayName,
+                    Price = item.Price,
+                    Publisher = item.Publisher,
+                    SourceType = item.SourceType,
+                    Year = item.Year,
+                    Id = item.Id,
+                    PublicationDate = item.PublicationDate,
+                    TotalSubParts = item.TotalSubParts,
+                    Author = new Core.Models.Authors.Dtos.AuthorOutputDto
+                    {
+                        Age = item.Author.Age,
+                        DisplayName = item.Author.DisplayName,
+                        EmailAddress = item.Author.EmailAddress,
+                        Id = item.Id
+                    },
+                    Category = new Core.Models.Categories.Dtos.CategoryOutputDto
+                    {
+                        Id = item.Category.Id,
+                        DisplayName = item.Category.DisplayName
+                    }
                 });
             }
             return newspapers;
         }
 
         [HttpGet()]
-        [Route("api/[controller]/GetById")]
+        [Route("GetById")]
+        [Authorize(Policy = PolicyTypes.NewspaperPolicy.View)]
         public async Task<NewspaperOutputDto> Get(int id)
         {
             NewspaperOutputDto newspaper = new NewspaperOutputDto();
@@ -61,7 +118,8 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("api/[controller]/Create")]
+        [Route("Create")]
+        [Authorize(Policy = PolicyTypes.NewspaperPolicy.Cru)]
         public async Task Post([FromBody] NewspaperInputDto input)
         {
             var newsPaper = _mapper.Map<NewsPaper>(input);
@@ -69,7 +127,8 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpPut()]
-        [Route("api/[controller]/Update")]
+        [Route("Update")]
+        [Authorize(Policy = PolicyTypes.NewspaperPolicy.Cru)]
         public async Task<NewspaperOutputDto> Put([FromBody] NewspaperUpdateDto input)
         {
             var newsPaper = _mapper.Map<NewsPaper>(input);
@@ -79,7 +138,8 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpDelete()]
-        [Route("api/[controller]/Delete")]
+        [Route("Delete")]
+        [Authorize(Policy = PolicyTypes.NewspaperPolicy.delete)]
         public void Delete(int id)
         {
             _newspaperManager.DeleteAsync(id);

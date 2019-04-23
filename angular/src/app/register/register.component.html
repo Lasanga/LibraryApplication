@@ -1,0 +1,34 @@
+<mat-card class="regCard">
+
+  <a routerLink="/">
+    <button mat-icon-button>
+      <mat-icon>keyboard_arrow_left</mat-icon>
+      <span>back to home</span>
+    </button>
+  </a>
+
+  <mat-card-header>
+    <h2>Register Portal</h2>
+  </mat-card-header>
+
+  <form class="example-form" (ngSubmit)="register(userRegister)">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="UserName" type="text" [(ngModel)]="userRegister.userName" required name="userName">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Email" type="email" [(ngModel)]="userRegister.emailAddress" required name="emailAddress">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Passowrd" type="password" [(ngModel)]="userRegister.password" required name="password">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="NationId" type="text" [(ngModel)]="userRegister.nationalId" min="10" max="10" name="nationalId">
+    </mat-form-field>
+
+    <button type="submit" class="btn btn-block btn-outline-success">Register</button>
+  </form>
+
+</mat-card>

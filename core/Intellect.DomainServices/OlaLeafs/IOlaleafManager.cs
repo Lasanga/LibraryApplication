@@ -13,5 +13,6 @@ namespace Intellect.DomainServices.OlaLeafs
         Task DeleteAsync(int id);
         Task<OlaLeaf> GetAsync(int id);
         Task<List<OlaLeaf>> GetAllAsync();
+        Task<List<OlaLeaf>> GetAllRare();
     }
 }

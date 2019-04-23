@@ -39,13 +39,22 @@ namespace Intellect.DomainServices.Newspapers
 
         public async Task<List<NewsPaper>> GetAllAsync()
         {
-            var result = await _unitOfWork.Newspapers.GetAllAsync();
+            var result = _unitOfWork.Newspapers.GetAllIncluding(x => x.Author, x => x.Category).ToList();
+            result = result.Where(x => x.SourceType == Core.Models.Helpers.SourceType.available).ToList();
+
+            return result.ToList();
+        }
+
+        public async Task<List<NewsPaper>> GetAllRare()
+        {
+            var result = _unitOfWork.Newspapers.GetAllIncluding(x => x.Author, x => x.Category).ToList();
+            result = result.Where(x => x.SourceType == Core.Models.Helpers.SourceType.rare).ToList();
             return result.ToList();
         }
 
         public async Task<NewsPaper> GetAsync(int id)
         {
-            var result = await _unitOfWork.Newspapers.GetAsync(id);
+            var result = _unitOfWork.Newspapers.GetAllIncluding(x => x.Author, x => x.Category).Where(x => x.Id == id).FirstOrDefault();
             return result;
         }
 
