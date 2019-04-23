@@ -24,6 +24,8 @@
     "@auth0/angular-jwt": "^2.1.0",
     "angular-jwt": "github:auth0/angular-jwt",
     "core-js": "^2.5.4",
+    "moment": "^2.24.0",
+    "ngx-bootstrap": "^4.0.1",
     "nswag": "^12.1.0",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",

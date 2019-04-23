@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 mb-3">
+      <button *ngIf="canEdit" class="btn btn-block btn-outline-primary" (click)="openCreate()">Create New</button>
+    </div>
+    <div class="col-4" *ngFor="let book of bookOutputDto">
+      <mat-card style="height:350px" class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+
+          <mat-select *ngIf="canEdit" (selectionChange)="option($event.value)">
+            <mat-option [value]="book">Edit</mat-option>
+            <mat-option [value]="book.id" *ngIf="canDelete">Delete</mat-option>
+          </mat-select>
+
+          <mat-card-title>{{book.displayName}}</mat-card-title>
+          <mat-card-subtitle>{{book.author.displayName}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <p>"Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, dignissimos ut maxime dolore enim,
+            temporibus reprehenderit
+            numquam doloremque cum eos ad! Voluptate modi, vitae iste vel fuga fugiat culpa animi!"</p>
+
+          <i><strong>#{{book.category.displayName}}</strong></i>
+          <p style="text-align:right">{{book.totalPages}} Pages</p>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-card-footer style="margin: 0px !important;">
+          <mat-card-subtitle><i>{{book.author.emailAddress}}</i></mat-card-subtitle>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -28,12 +28,6 @@ export class LoginComponent implements OnInit {
     Validators.required
   ]);
 
-  // emailFormControl = new FormControl('', [
-  //   Validators.required,
-  //   Validators.email,
-  // ]);
-
-  // matcher = new MyErrorStateMatcher();
 
   private returnUrl: string;
   private msg: string;
@@ -63,9 +57,7 @@ export class LoginComponent implements OnInit {
 
       if(res)
       {
-        // window.location.href = "/home";
-        // location.reload();
-        this.router.navigate(['/home']);
+        this.router.navigate(['/book']);
         
       }else{
         this.msg = "Error";

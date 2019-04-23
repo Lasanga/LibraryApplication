@@ -18,7 +18,7 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 export class AccountService {
     private http: HttpClient;
     private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+    protected jsonParseReviver: (key: string, value: any) => any = undefined;
 
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
@@ -73,7 +73,7 @@ export class AccountService {
         return _observableOf<void>(<any>null);
     }
 
-    getForiegners(): Observable<UnRegUserOutputDto[] | null> {
+    getForiegners(): Observable<UnRegUserOutputDto[]> {
         let url_ = this.baseUrl + "/api/Account/GetForiegners";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -92,14 +92,14 @@ export class AccountService {
                 try {
                     return this.processGetForiegners(<any>response_);
                 } catch (e) {
-                    return <Observable<UnRegUserOutputDto[] | null>><any>_observableThrow(e);
+                    return <Observable<UnRegUserOutputDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<UnRegUserOutputDto[] | null>><any>_observableThrow(response_);
+                return <Observable<UnRegUserOutputDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetForiegners(response: HttpResponseBase): Observable<UnRegUserOutputDto[] | null> {
+    protected processGetForiegners(response: HttpResponseBase): Observable<UnRegUserOutputDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -113,7 +113,7 @@ export class AccountService {
             if (resultData200 && resultData200.constructor === Array) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(UnRegUserOutputDto.fromJS(item));
+                    result200.push(UnRegUserOutputDto.fromJS(item));
             }
             return _observableOf(result200);
             }));
@@ -122,7 +122,7 @@ export class AccountService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<UnRegUserOutputDto[] | null>(<any>null);
+        return _observableOf<UnRegUserOutputDto[]>(<any>null);
     }
 
     addForiegner(input: AddForiegnerInputDto): Observable<void> {
@@ -178,14 +178,14 @@ export class AccountService {
 export class AuthorService {
     private http: HttpClient;
     private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+    protected jsonParseReviver: (key: string, value: any) => any = undefined;
 
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "https://localhost:5001";
     }
 
-    getAll(): Observable<AuthorOutputDto[] | null> {
+    getAll(): Observable<AuthorOutputDto[]> {
         let url_ = this.baseUrl + "/api/Author/GetAll";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -204,14 +204,14 @@ export class AuthorService {
                 try {
                     return this.processGetAll(<any>response_);
                 } catch (e) {
-                    return <Observable<AuthorOutputDto[] | null>><any>_observableThrow(e);
+                    return <Observable<AuthorOutputDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<AuthorOutputDto[] | null>><any>_observableThrow(response_);
+                return <Observable<AuthorOutputDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAll(response: HttpResponseBase): Observable<AuthorOutputDto[] | null> {
+    protected processGetAll(response: HttpResponseBase): Observable<AuthorOutputDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -225,7 +225,7 @@ export class AuthorService {
             if (resultData200 && resultData200.constructor === Array) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(AuthorOutputDto.fromJS(item));
+                    result200.push(AuthorOutputDto.fromJS(item));
             }
             return _observableOf(result200);
             }));
@@ -234,10 +234,10 @@ export class AuthorService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<AuthorOutputDto[] | null>(<any>null);
+        return _observableOf<AuthorOutputDto[]>(<any>null);
     }
 
-    get(id: number): Observable<AuthorOutputDto | null> {
+    getById(id: number): Observable<AuthorOutputDto> {
         let url_ = this.baseUrl + "/api/Author/GetById?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
@@ -254,20 +254,20 @@ export class AuthorService {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
+            return this.processGetById(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet(<any>response_);
+                    return this.processGetById(<any>response_);
                 } catch (e) {
-                    return <Observable<AuthorOutputDto | null>><any>_observableThrow(e);
+                    return <Observable<AuthorOutputDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<AuthorOutputDto | null>><any>_observableThrow(response_);
+                return <Observable<AuthorOutputDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<AuthorOutputDto | null> {
+    protected processGetById(response: HttpResponseBase): Observable<AuthorOutputDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -286,10 +286,10 @@ export class AuthorService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<AuthorOutputDto | null>(<any>null);
+        return _observableOf<AuthorOutputDto>(<any>null);
     }
 
-    post(input: AuthorInputDto): Observable<void> {
+    create(input: AuthorInputDto): Observable<void> {
         let url_ = this.baseUrl + "/api/Author/Create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -305,11 +305,11 @@ export class AuthorService {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPost(response_);
+            return this.processCreate(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPost(<any>response_);
+                    return this.processCreate(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>_observableThrow(e);
                 }
@@ -318,7 +318,7 @@ export class AuthorService {
         }));
     }
 
-    protected processPost(response: HttpResponseBase): Observable<void> {
+    protected processCreate(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -337,7 +337,7 @@ export class AuthorService {
         return _observableOf<void>(<any>null);
     }
 
-    put(input: AuthorUpdateDto): Observable<AuthorOutputDto | null> {
+    update(input: AuthorUpdateDto): Observable<AuthorOutputDto> {
         let url_ = this.baseUrl + "/api/Author/Update";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -354,20 +354,20 @@ export class AuthorService {
         };
 
         return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPut(response_);
+            return this.processUpdate(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPut(<any>response_);
+                    return this.processUpdate(<any>response_);
                 } catch (e) {
-                    return <Observable<AuthorOutputDto | null>><any>_observableThrow(e);
+                    return <Observable<AuthorOutputDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<AuthorOutputDto | null>><any>_observableThrow(response_);
+                return <Observable<AuthorOutputDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPut(response: HttpResponseBase): Observable<AuthorOutputDto | null> {
+    protected processUpdate(response: HttpResponseBase): Observable<AuthorOutputDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -386,7 +386,7 @@ export class AuthorService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<AuthorOutputDto | null>(<any>null);
+        return _observableOf<AuthorOutputDto>(<any>null);
     }
 
     delete(id: number): Observable<void> {
@@ -442,14 +442,14 @@ export class AuthorService {
 export class BooksService {
     private http: HttpClient;
     private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+    protected jsonParseReviver: (key: string, value: any) => any = undefined;
 
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "https://localhost:5001";
     }
 
-    getAll(): Observable<BookOutputDto[] | null> {
+    getAll(): Observable<BookOutputDto[]> {
         let url_ = this.baseUrl + "/api/Books/GetAll";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -468,14 +468,14 @@ export class BooksService {
                 try {
                     return this.processGetAll(<any>response_);
                 } catch (e) {
-                    return <Observable<BookOutputDto[] | null>><any>_observableThrow(e);
+                    return <Observable<BookOutputDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<BookOutputDto[] | null>><any>_observableThrow(response_);
+                return <Observable<BookOutputDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAll(response: HttpResponseBase): Observable<BookOutputDto[] | null> {
+    protected processGetAll(response: HttpResponseBase): Observable<BookOutputDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -489,7 +489,7 @@ export class BooksService {
             if (resultData200 && resultData200.constructor === Array) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(BookOutputDto.fromJS(item));
+                    result200.push(BookOutputDto.fromJS(item));
             }
             return _observableOf(result200);
             }));
@@ -498,10 +498,10 @@ export class BooksService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<BookOutputDto[] | null>(<any>null);
+        return _observableOf<BookOutputDto[]>(<any>null);
     }
 
-    getRare(): Observable<BookOutputDto[] | null> {
+    getRare(): Observable<BookOutputDto[]> {
         let url_ = this.baseUrl + "/api/Books/GetRare";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -520,14 +520,14 @@ export class BooksService {
                 try {
                     return this.processGetRare(<any>response_);
                 } catch (e) {
-                    return <Observable<BookOutputDto[] | null>><any>_observableThrow(e);
+                    return <Observable<BookOutputDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<BookOutputDto[] | null>><any>_observableThrow(response_);
+                return <Observable<BookOutputDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetRare(response: HttpResponseBase): Observable<BookOutputDto[] | null> {
+    protected processGetRare(response: HttpResponseBase): Observable<BookOutputDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -541,7 +541,7 @@ export class BooksService {
             if (resultData200 && resultData200.constructor === Array) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(BookOutputDto.fromJS(item));
+                    result200.push(BookOutputDto.fromJS(item));
             }
             return _observableOf(result200);
             }));
@@ -550,11 +550,11 @@ export class BooksService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<BookOutputDto[] | null>(<any>null);
+        return _observableOf<BookOutputDto[]>(<any>null);
     }
 
-    get(id: number): Observable<BookOutputDto | null> {
-        let url_ = this.baseUrl + "/api/Books/GetById?";
+    getBookById(id: number): Observable<BookOutputDto> {
+        let url_ = this.baseUrl + "/api/Books/GetBookById?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
@@ -570,20 +570,20 @@ export class BooksService {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
+            return this.processGetBookById(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet(<any>response_);
+                    return this.processGetBookById(<any>response_);
                 } catch (e) {
-                    return <Observable<BookOutputDto | null>><any>_observableThrow(e);
+                    return <Observable<BookOutputDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<BookOutputDto | null>><any>_observableThrow(response_);
+                return <Observable<BookOutputDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<BookOutputDto | null> {
+    protected processGetBookById(response: HttpResponseBase): Observable<BookOutputDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -602,11 +602,11 @@ export class BooksService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<BookOutputDto | null>(<any>null);
+        return _observableOf<BookOutputDto>(<any>null);
     }
 
-    post(input: BookInputDto): Observable<void> {
-        let url_ = this.baseUrl + "/api/Books/Create";
+    createBook(input: BookInputDto): Observable<void> {
+        let url_ = this.baseUrl + "/api/Books/CreateBook";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(input);
@@ -621,11 +621,11 @@ export class BooksService {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPost(response_);
+            return this.processCreateBook(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPost(<any>response_);
+                    return this.processCreateBook(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>_observableThrow(e);
                 }
@@ -634,7 +634,7 @@ export class BooksService {
         }));
     }
 
-    protected processPost(response: HttpResponseBase): Observable<void> {
+    protected processCreateBook(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -653,8 +653,8 @@ export class BooksService {
         return _observableOf<void>(<any>null);
     }
 
-    put(input: BookUpdateDto): Observable<BookOutputDto | null> {
-        let url_ = this.baseUrl + "/api/Books/Update";
+    updateBook(input: BookUpdateDto): Observable<BookOutputDto> {
+        let url_ = this.baseUrl + "/api/Books/UpdateBook";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(input);
@@ -670,20 +670,20 @@ export class BooksService {
         };
 
         return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPut(response_);
+            return this.processUpdateBook(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPut(<any>response_);
+                    return this.processUpdateBook(<any>response_);
                 } catch (e) {
-                    return <Observable<BookOutputDto | null>><any>_observableThrow(e);
+                    return <Observable<BookOutputDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<BookOutputDto | null>><any>_observableThrow(response_);
+                return <Observable<BookOutputDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPut(response: HttpResponseBase): Observable<BookOutputDto | null> {
+    protected processUpdateBook(response: HttpResponseBase): Observable<BookOutputDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -702,11 +702,11 @@ export class BooksService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<BookOutputDto | null>(<any>null);
+        return _observableOf<BookOutputDto>(<any>null);
     }
 
-    delete(id: number): Observable<void> {
-        let url_ = this.baseUrl + "/api/Books/Delete?";
+    deleteBook(id: number): Observable<void> {
+        let url_ = this.baseUrl + "/api/Books/DeleteBook?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
         else
@@ -721,11 +721,11 @@ export class BooksService {
         };
 
         return this.http.request("delete", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processDelete(response_);
+            return this.processDeleteBook(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processDelete(<any>response_);
+                    return this.processDeleteBook(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>_observableThrow(e);
                 }
@@ -734,7 +734,7 @@ export class BooksService {
         }));
     }
 
-    protected processDelete(response: HttpResponseBase): Observable<void> {
+    protected processDeleteBook(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -758,14 +758,14 @@ export class BooksService {
 export class CategoryService {
     private http: HttpClient;
     private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+    protected jsonParseReviver: (key: string, value: any) => any = undefined;
 
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "https://localhost:5001";
     }
 
-    getAll(): Observable<CategoryOutputDto[] | null> {
+    getAll(): Observable<CategoryOutputDto[]> {
         let url_ = this.baseUrl + "/api/Category/GetAll";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -784,14 +784,14 @@ export class CategoryService {
                 try {
                     return this.processGetAll(<any>response_);
                 } catch (e) {
-                    return <Observable<CategoryOutputDto[] | null>><any>_observableThrow(e);
+                    return <Observable<CategoryOutputDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<CategoryOutputDto[] | null>><any>_observableThrow(response_);
+                return <Observable<CategoryOutputDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAll(response: HttpResponseBase): Observable<CategoryOutputDto[] | null> {
+    protected processGetAll(response: HttpResponseBase): Observable<CategoryOutputDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -805,7 +805,7 @@ export class CategoryService {
             if (resultData200 && resultData200.constructor === Array) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(CategoryOutputDto.fromJS(item));
+                    result200.push(CategoryOutputDto.fromJS(item));
             }
             return _observableOf(result200);
             }));
@@ -814,10 +814,10 @@ export class CategoryService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<CategoryOutputDto[] | null>(<any>null);
+        return _observableOf<CategoryOutputDto[]>(<any>null);
     }
 
-    get(id: number): Observable<CategoryOutputDto | null> {
+    getById(id: number): Observable<CategoryOutputDto> {
         let url_ = this.baseUrl + "/api/Category/GetById?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
@@ -834,20 +834,20 @@ export class CategoryService {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
+            return this.processGetById(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet(<any>response_);
+                    return this.processGetById(<any>response_);
                 } catch (e) {
-                    return <Observable<CategoryOutputDto | null>><any>_observableThrow(e);
+                    return <Observable<CategoryOutputDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<CategoryOutputDto | null>><any>_observableThrow(response_);
+                return <Observable<CategoryOutputDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<CategoryOutputDto | null> {
+    protected processGetById(response: HttpResponseBase): Observable<CategoryOutputDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -866,10 +866,10 @@ export class CategoryService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<CategoryOutputDto | null>(<any>null);
+        return _observableOf<CategoryOutputDto>(<any>null);
     }
 
-    post(input: CategoryInputDto): Observable<void> {
+    create(input: CategoryInputDto): Observable<void> {
         let url_ = this.baseUrl + "/api/Category/Create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -885,11 +885,11 @@ export class CategoryService {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPost(response_);
+            return this.processCreate(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPost(<any>response_);
+                    return this.processCreate(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>_observableThrow(e);
                 }
@@ -898,7 +898,7 @@ export class CategoryService {
         }));
     }
 
-    protected processPost(response: HttpResponseBase): Observable<void> {
+    protected processCreate(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -917,7 +917,7 @@ export class CategoryService {
         return _observableOf<void>(<any>null);
     }
 
-    put(input: CategoryUpdateDto): Observable<CategoryOutputDto | null> {
+    update(input: CategoryUpdateDto): Observable<CategoryOutputDto> {
         let url_ = this.baseUrl + "/api/Category/Update";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -934,20 +934,20 @@ export class CategoryService {
         };
 
         return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPut(response_);
+            return this.processUpdate(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPut(<any>response_);
+                    return this.processUpdate(<any>response_);
                 } catch (e) {
-                    return <Observable<CategoryOutputDto | null>><any>_observableThrow(e);
+                    return <Observable<CategoryOutputDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<CategoryOutputDto | null>><any>_observableThrow(response_);
+                return <Observable<CategoryOutputDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPut(response: HttpResponseBase): Observable<CategoryOutputDto | null> {
+    protected processUpdate(response: HttpResponseBase): Observable<CategoryOutputDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -966,7 +966,7 @@ export class CategoryService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<CategoryOutputDto | null>(<any>null);
+        return _observableOf<CategoryOutputDto>(<any>null);
     }
 
     delete(id: number): Observable<void> {
@@ -1022,14 +1022,14 @@ export class CategoryService {
 export class GovernmentPublicationsService {
     private http: HttpClient;
     private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+    protected jsonParseReviver: (key: string, value: any) => any = undefined;
 
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "https://localhost:5001";
     }
 
-    getAll(): Observable<GovtPublicationOutputDto[] | null> {
+    getAll(): Observable<GovtPublicationOutputDto[]> {
         let url_ = this.baseUrl + "/api/GovernmentPublications/GetAll";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1048,14 +1048,14 @@ export class GovernmentPublicationsService {
                 try {
                     return this.processGetAll(<any>response_);
                 } catch (e) {
-                    return <Observable<GovtPublicationOutputDto[] | null>><any>_observableThrow(e);
+                    return <Observable<GovtPublicationOutputDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<GovtPublicationOutputDto[] | null>><any>_observableThrow(response_);
+                return <Observable<GovtPublicationOutputDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAll(response: HttpResponseBase): Observable<GovtPublicationOutputDto[] | null> {
+    protected processGetAll(response: HttpResponseBase): Observable<GovtPublicationOutputDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1069,7 +1069,7 @@ export class GovernmentPublicationsService {
             if (resultData200 && resultData200.constructor === Array) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(GovtPublicationOutputDto.fromJS(item));
+                    result200.push(GovtPublicationOutputDto.fromJS(item));
             }
             return _observableOf(result200);
             }));
@@ -1078,10 +1078,10 @@ export class GovernmentPublicationsService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<GovtPublicationOutputDto[] | null>(<any>null);
+        return _observableOf<GovtPublicationOutputDto[]>(<any>null);
     }
 
-    getRare(): Observable<GovtPublicationOutputDto[] | null> {
+    getRare(): Observable<GovtPublicationOutputDto[]> {
         let url_ = this.baseUrl + "/api/GovernmentPublications/GetRare";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1100,14 +1100,14 @@ export class GovernmentPublicationsService {
                 try {
                     return this.processGetRare(<any>response_);
                 } catch (e) {
-                    return <Observable<GovtPublicationOutputDto[] | null>><any>_observableThrow(e);
+                    return <Observable<GovtPublicationOutputDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<GovtPublicationOutputDto[] | null>><any>_observableThrow(response_);
+                return <Observable<GovtPublicationOutputDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetRare(response: HttpResponseBase): Observable<GovtPublicationOutputDto[] | null> {
+    protected processGetRare(response: HttpResponseBase): Observable<GovtPublicationOutputDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1121,7 +1121,7 @@ export class GovernmentPublicationsService {
             if (resultData200 && resultData200.constructor === Array) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(GovtPublicationOutputDto.fromJS(item));
+                    result200.push(GovtPublicationOutputDto.fromJS(item));
             }
             return _observableOf(result200);
             }));
@@ -1130,10 +1130,10 @@ export class GovernmentPublicationsService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<GovtPublicationOutputDto[] | null>(<any>null);
+        return _observableOf<GovtPublicationOutputDto[]>(<any>null);
     }
 
-    get(id: number): Observable<GovtPublicationOutputDto | null> {
+    getById(id: number): Observable<GovtPublicationOutputDto> {
         let url_ = this.baseUrl + "/api/GovernmentPublications/GetById?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
@@ -1150,20 +1150,20 @@ export class GovernmentPublicationsService {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
+            return this.processGetById(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet(<any>response_);
+                    return this.processGetById(<any>response_);
                 } catch (e) {
-                    return <Observable<GovtPublicationOutputDto | null>><any>_observableThrow(e);
+                    return <Observable<GovtPublicationOutputDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<GovtPublicationOutputDto | null>><any>_observableThrow(response_);
+                return <Observable<GovtPublicationOutputDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<GovtPublicationOutputDto | null> {
+    protected processGetById(response: HttpResponseBase): Observable<GovtPublicationOutputDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1182,10 +1182,10 @@ export class GovernmentPublicationsService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<GovtPublicationOutputDto | null>(<any>null);
+        return _observableOf<GovtPublicationOutputDto>(<any>null);
     }
 
-    post(input: GovtPublicationInputDto): Observable<void> {
+    create(input: GovtPublicationInputDto): Observable<void> {
         let url_ = this.baseUrl + "/api/GovernmentPublications/Create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1201,11 +1201,11 @@ export class GovernmentPublicationsService {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPost(response_);
+            return this.processCreate(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPost(<any>response_);
+                    return this.processCreate(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>_observableThrow(e);
                 }
@@ -1214,7 +1214,7 @@ export class GovernmentPublicationsService {
         }));
     }
 
-    protected processPost(response: HttpResponseBase): Observable<void> {
+    protected processCreate(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1233,7 +1233,7 @@ export class GovernmentPublicationsService {
         return _observableOf<void>(<any>null);
     }
 
-    put(input: GovtPublicationUpdateDto): Observable<GovtPublicationOutputDto | null> {
+    update(input: GovtPublicationUpdateDto): Observable<GovtPublicationOutputDto> {
         let url_ = this.baseUrl + "/api/GovernmentPublications/Update";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1250,20 +1250,20 @@ export class GovernmentPublicationsService {
         };
 
         return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPut(response_);
+            return this.processUpdate(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPut(<any>response_);
+                    return this.processUpdate(<any>response_);
                 } catch (e) {
-                    return <Observable<GovtPublicationOutputDto | null>><any>_observableThrow(e);
+                    return <Observable<GovtPublicationOutputDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<GovtPublicationOutputDto | null>><any>_observableThrow(response_);
+                return <Observable<GovtPublicationOutputDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPut(response: HttpResponseBase): Observable<GovtPublicationOutputDto | null> {
+    protected processUpdate(response: HttpResponseBase): Observable<GovtPublicationOutputDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1282,7 +1282,7 @@ export class GovernmentPublicationsService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<GovtPublicationOutputDto | null>(<any>null);
+        return _observableOf<GovtPublicationOutputDto>(<any>null);
     }
 
     delete(id: number): Observable<void> {
@@ -1338,14 +1338,14 @@ export class GovernmentPublicationsService {
 export class NewsPapersService {
     private http: HttpClient;
     private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+    protected jsonParseReviver: (key: string, value: any) => any = undefined;
 
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "https://localhost:5001";
     }
 
-    getAll(): Observable<NewspaperOutputDto[] | null> {
+    getAll(): Observable<NewspaperOutputDto[]> {
         let url_ = this.baseUrl + "/api/NewsPapers/GetAll";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1364,14 +1364,14 @@ export class NewsPapersService {
                 try {
                     return this.processGetAll(<any>response_);
                 } catch (e) {
-                    return <Observable<NewspaperOutputDto[] | null>><any>_observableThrow(e);
+                    return <Observable<NewspaperOutputDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<NewspaperOutputDto[] | null>><any>_observableThrow(response_);
+                return <Observable<NewspaperOutputDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAll(response: HttpResponseBase): Observable<NewspaperOutputDto[] | null> {
+    protected processGetAll(response: HttpResponseBase): Observable<NewspaperOutputDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1385,7 +1385,7 @@ export class NewsPapersService {
             if (resultData200 && resultData200.constructor === Array) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(NewspaperOutputDto.fromJS(item));
+                    result200.push(NewspaperOutputDto.fromJS(item));
             }
             return _observableOf(result200);
             }));
@@ -1394,10 +1394,10 @@ export class NewsPapersService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<NewspaperOutputDto[] | null>(<any>null);
+        return _observableOf<NewspaperOutputDto[]>(<any>null);
     }
 
-    getRare(): Observable<NewspaperOutputDto[] | null> {
+    getRare(): Observable<NewspaperOutputDto[]> {
         let url_ = this.baseUrl + "/api/NewsPapers/GetRare";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1416,14 +1416,14 @@ export class NewsPapersService {
                 try {
                     return this.processGetRare(<any>response_);
                 } catch (e) {
-                    return <Observable<NewspaperOutputDto[] | null>><any>_observableThrow(e);
+                    return <Observable<NewspaperOutputDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<NewspaperOutputDto[] | null>><any>_observableThrow(response_);
+                return <Observable<NewspaperOutputDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetRare(response: HttpResponseBase): Observable<NewspaperOutputDto[] | null> {
+    protected processGetRare(response: HttpResponseBase): Observable<NewspaperOutputDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1437,7 +1437,7 @@ export class NewsPapersService {
             if (resultData200 && resultData200.constructor === Array) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(NewspaperOutputDto.fromJS(item));
+                    result200.push(NewspaperOutputDto.fromJS(item));
             }
             return _observableOf(result200);
             }));
@@ -1446,10 +1446,10 @@ export class NewsPapersService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<NewspaperOutputDto[] | null>(<any>null);
+        return _observableOf<NewspaperOutputDto[]>(<any>null);
     }
 
-    get(id: number): Observable<NewspaperOutputDto | null> {
+    getById(id: number): Observable<NewspaperOutputDto> {
         let url_ = this.baseUrl + "/api/NewsPapers/GetById?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
@@ -1466,20 +1466,20 @@ export class NewsPapersService {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
+            return this.processGetById(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet(<any>response_);
+                    return this.processGetById(<any>response_);
                 } catch (e) {
-                    return <Observable<NewspaperOutputDto | null>><any>_observableThrow(e);
+                    return <Observable<NewspaperOutputDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<NewspaperOutputDto | null>><any>_observableThrow(response_);
+                return <Observable<NewspaperOutputDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<NewspaperOutputDto | null> {
+    protected processGetById(response: HttpResponseBase): Observable<NewspaperOutputDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1498,10 +1498,10 @@ export class NewsPapersService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<NewspaperOutputDto | null>(<any>null);
+        return _observableOf<NewspaperOutputDto>(<any>null);
     }
 
-    post(input: NewspaperInputDto): Observable<void> {
+    create(input: NewspaperInputDto): Observable<void> {
         let url_ = this.baseUrl + "/api/NewsPapers/Create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1517,11 +1517,11 @@ export class NewsPapersService {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPost(response_);
+            return this.processCreate(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPost(<any>response_);
+                    return this.processCreate(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>_observableThrow(e);
                 }
@@ -1530,7 +1530,7 @@ export class NewsPapersService {
         }));
     }
 
-    protected processPost(response: HttpResponseBase): Observable<void> {
+    protected processCreate(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1549,7 +1549,7 @@ export class NewsPapersService {
         return _observableOf<void>(<any>null);
     }
 
-    put(input: NewspaperUpdateDto): Observable<NewspaperOutputDto | null> {
+    update(input: NewspaperUpdateDto): Observable<NewspaperOutputDto> {
         let url_ = this.baseUrl + "/api/NewsPapers/Update";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1566,20 +1566,20 @@ export class NewsPapersService {
         };
 
         return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPut(response_);
+            return this.processUpdate(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPut(<any>response_);
+                    return this.processUpdate(<any>response_);
                 } catch (e) {
-                    return <Observable<NewspaperOutputDto | null>><any>_observableThrow(e);
+                    return <Observable<NewspaperOutputDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<NewspaperOutputDto | null>><any>_observableThrow(response_);
+                return <Observable<NewspaperOutputDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPut(response: HttpResponseBase): Observable<NewspaperOutputDto | null> {
+    protected processUpdate(response: HttpResponseBase): Observable<NewspaperOutputDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1598,7 +1598,7 @@ export class NewsPapersService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<NewspaperOutputDto | null>(<any>null);
+        return _observableOf<NewspaperOutputDto>(<any>null);
     }
 
     delete(id: number): Observable<void> {
@@ -1654,14 +1654,14 @@ export class NewsPapersService {
 export class OlaLeafsService {
     private http: HttpClient;
     private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+    protected jsonParseReviver: (key: string, value: any) => any = undefined;
 
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl ? baseUrl : "https://localhost:5001";
     }
 
-    getAll(): Observable<OlaleafoutputDto[] | null> {
+    getAll(): Observable<OlaleafoutputDto[]> {
         let url_ = this.baseUrl + "/api/OlaLeafs/GetAll";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1680,14 +1680,14 @@ export class OlaLeafsService {
                 try {
                     return this.processGetAll(<any>response_);
                 } catch (e) {
-                    return <Observable<OlaleafoutputDto[] | null>><any>_observableThrow(e);
+                    return <Observable<OlaleafoutputDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<OlaleafoutputDto[] | null>><any>_observableThrow(response_);
+                return <Observable<OlaleafoutputDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetAll(response: HttpResponseBase): Observable<OlaleafoutputDto[] | null> {
+    protected processGetAll(response: HttpResponseBase): Observable<OlaleafoutputDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1701,7 +1701,7 @@ export class OlaLeafsService {
             if (resultData200 && resultData200.constructor === Array) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(OlaleafoutputDto.fromJS(item));
+                    result200.push(OlaleafoutputDto.fromJS(item));
             }
             return _observableOf(result200);
             }));
@@ -1710,10 +1710,10 @@ export class OlaLeafsService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<OlaleafoutputDto[] | null>(<any>null);
+        return _observableOf<OlaleafoutputDto[]>(<any>null);
     }
 
-    getRare(): Observable<OlaleafoutputDto[] | null> {
+    getRare(): Observable<OlaleafoutputDto[]> {
         let url_ = this.baseUrl + "/api/OlaLeafs/GetRare";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1732,14 +1732,14 @@ export class OlaLeafsService {
                 try {
                     return this.processGetRare(<any>response_);
                 } catch (e) {
-                    return <Observable<OlaleafoutputDto[] | null>><any>_observableThrow(e);
+                    return <Observable<OlaleafoutputDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<OlaleafoutputDto[] | null>><any>_observableThrow(response_);
+                return <Observable<OlaleafoutputDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGetRare(response: HttpResponseBase): Observable<OlaleafoutputDto[] | null> {
+    protected processGetRare(response: HttpResponseBase): Observable<OlaleafoutputDto[]> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1753,7 +1753,7 @@ export class OlaLeafsService {
             if (resultData200 && resultData200.constructor === Array) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(OlaleafoutputDto.fromJS(item));
+                    result200.push(OlaleafoutputDto.fromJS(item));
             }
             return _observableOf(result200);
             }));
@@ -1762,10 +1762,10 @@ export class OlaLeafsService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<OlaleafoutputDto[] | null>(<any>null);
+        return _observableOf<OlaleafoutputDto[]>(<any>null);
     }
 
-    get(id: number): Observable<OlaleafoutputDto | null> {
+    getById(id: number): Observable<OlaleafoutputDto> {
         let url_ = this.baseUrl + "/api/OlaLeafs/GetById?";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined and cannot be null.");
@@ -1782,20 +1782,20 @@ export class OlaLeafsService {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
+            return this.processGetById(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet(<any>response_);
+                    return this.processGetById(<any>response_);
                 } catch (e) {
-                    return <Observable<OlaleafoutputDto | null>><any>_observableThrow(e);
+                    return <Observable<OlaleafoutputDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<OlaleafoutputDto | null>><any>_observableThrow(response_);
+                return <Observable<OlaleafoutputDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<OlaleafoutputDto | null> {
+    protected processGetById(response: HttpResponseBase): Observable<OlaleafoutputDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1814,10 +1814,10 @@ export class OlaLeafsService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<OlaleafoutputDto | null>(<any>null);
+        return _observableOf<OlaleafoutputDto>(<any>null);
     }
 
-    post(input: OlaLeafInputDto): Observable<void> {
+    create(input: OlaLeafInputDto): Observable<void> {
         let url_ = this.baseUrl + "/api/OlaLeafs/Create";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1833,11 +1833,11 @@ export class OlaLeafsService {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPost(response_);
+            return this.processCreate(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPost(<any>response_);
+                    return this.processCreate(<any>response_);
                 } catch (e) {
                     return <Observable<void>><any>_observableThrow(e);
                 }
@@ -1846,7 +1846,7 @@ export class OlaLeafsService {
         }));
     }
 
-    protected processPost(response: HttpResponseBase): Observable<void> {
+    protected processCreate(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1865,7 +1865,7 @@ export class OlaLeafsService {
         return _observableOf<void>(<any>null);
     }
 
-    put(input: OlaleafUpdateDto): Observable<OlaleafoutputDto | null> {
+    update(input: OlaleafUpdateDto): Observable<OlaleafoutputDto> {
         let url_ = this.baseUrl + "/api/OlaLeafs/Update";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1882,20 +1882,20 @@ export class OlaLeafsService {
         };
 
         return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processPut(response_);
+            return this.processUpdate(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processPut(<any>response_);
+                    return this.processUpdate(<any>response_);
                 } catch (e) {
-                    return <Observable<OlaleafoutputDto | null>><any>_observableThrow(e);
+                    return <Observable<OlaleafoutputDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<OlaleafoutputDto | null>><any>_observableThrow(response_);
+                return <Observable<OlaleafoutputDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processPut(response: HttpResponseBase): Observable<OlaleafoutputDto | null> {
+    protected processUpdate(response: HttpResponseBase): Observable<OlaleafoutputDto> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -1914,7 +1914,7 @@ export class OlaLeafsService {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<OlaleafoutputDto | null>(<any>null);
+        return _observableOf<OlaleafoutputDto>(<any>null);
     }
 
     delete(id: number): Observable<void> {
@@ -1967,10 +1967,10 @@ export class OlaLeafsService {
 }
 
 export class UserRegisterInputDto implements IUserRegisterInputDto {
-    userName?: string | undefined;
-    emailAddress?: string | undefined;
-    password?: string | undefined;
-    nationalId?: string | undefined;
+    userName: string;
+    emailAddress: string;
+    password: string;
+    nationalId: string;
 
     constructor(data?: IUserRegisterInputDto) {
         if (data) {
@@ -2005,20 +2005,27 @@ export class UserRegisterInputDto implements IUserRegisterInputDto {
         data["nationalId"] = this.nationalId;
         return data; 
     }
+
+    clone(): UserRegisterInputDto {
+        const json = this.toJSON();
+        let result = new UserRegisterInputDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface IUserRegisterInputDto {
-    userName?: string | undefined;
-    emailAddress?: string | undefined;
-    password?: string | undefined;
-    nationalId?: string | undefined;
+    userName: string;
+    emailAddress: string;
+    password: string;
+    nationalId: string;
 }
 
 export class UnRegUserOutputDto implements IUnRegUserOutputDto {
-    id?: string | undefined;
-    userName?: string | undefined;
-    email?: string | undefined;
-    isActive!: boolean;
+    id: string;
+    userName: string;
+    email: string;
+    isActive: boolean;
 
     constructor(data?: IUnRegUserOutputDto) {
         if (data) {
@@ -2053,17 +2060,24 @@ export class UnRegUserOutputDto implements IUnRegUserOutputDto {
         data["isActive"] = this.isActive;
         return data; 
     }
+
+    clone(): UnRegUserOutputDto {
+        const json = this.toJSON();
+        let result = new UnRegUserOutputDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface IUnRegUserOutputDto {
-    id?: string | undefined;
-    userName?: string | undefined;
-    email?: string | undefined;
+    id: string;
+    userName: string;
+    email: string;
     isActive: boolean;
 }
 
 export class AddForiegnerInputDto implements IAddForiegnerInputDto {
-    id?: string | undefined;
+    id: string;
 
     constructor(data?: IAddForiegnerInputDto) {
         if (data) {
@@ -2092,17 +2106,24 @@ export class AddForiegnerInputDto implements IAddForiegnerInputDto {
         data["id"] = this.id;
         return data; 
     }
+
+    clone(): AddForiegnerInputDto {
+        const json = this.toJSON();
+        let result = new AddForiegnerInputDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface IAddForiegnerInputDto {
-    id?: string | undefined;
+    id: string;
 }
 
 export class AuthorOutputDto implements IAuthorOutputDto {
-    id!: number;
-    displayName?: string | undefined;
-    age?: number | undefined;
-    emailAddress?: string | undefined;
+    id: number;
+    displayName: string;
+    age: number;
+    emailAddress: string;
 
     constructor(data?: IAuthorOutputDto) {
         if (data) {
@@ -2137,19 +2158,26 @@ export class AuthorOutputDto implements IAuthorOutputDto {
         data["emailAddress"] = this.emailAddress;
         return data; 
     }
+
+    clone(): AuthorOutputDto {
+        const json = this.toJSON();
+        let result = new AuthorOutputDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface IAuthorOutputDto {
     id: number;
-    displayName?: string | undefined;
-    age?: number | undefined;
-    emailAddress?: string | undefined;
+    displayName: string;
+    age: number;
+    emailAddress: string;
 }
 
 export class AuthorInputDto implements IAuthorInputDto {
-    displayName?: string | undefined;
-    age?: number | undefined;
-    emailAddress?: string | undefined;
+    displayName: string;
+    age: number;
+    emailAddress: string;
 
     constructor(data?: IAuthorInputDto) {
         if (data) {
@@ -2182,19 +2210,26 @@ export class AuthorInputDto implements IAuthorInputDto {
         data["emailAddress"] = this.emailAddress;
         return data; 
     }
+
+    clone(): AuthorInputDto {
+        const json = this.toJSON();
+        let result = new AuthorInputDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface IAuthorInputDto {
-    displayName?: string | undefined;
-    age?: number | undefined;
-    emailAddress?: string | undefined;
+    displayName: string;
+    age: number;
+    emailAddress: string;
 }
 
 export class AuthorUpdateDto implements IAuthorUpdateDto {
-    id!: number;
-    displayName?: string | undefined;
-    age?: number | undefined;
-    emailAddress?: string | undefined;
+    id: number;
+    displayName: string;
+    age: number;
+    emailAddress: string;
 
     constructor(data?: IAuthorUpdateDto) {
         if (data) {
@@ -2229,26 +2264,33 @@ export class AuthorUpdateDto implements IAuthorUpdateDto {
         data["emailAddress"] = this.emailAddress;
         return data; 
     }
+
+    clone(): AuthorUpdateDto {
+        const json = this.toJSON();
+        let result = new AuthorUpdateDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface IAuthorUpdateDto {
     id: number;
-    displayName?: string | undefined;
-    age?: number | undefined;
-    emailAddress?: string | undefined;
+    displayName: string;
+    age: number;
+    emailAddress: string;
 }
 
 export class BookOutputDto implements IBookOutputDto {
-    id!: number;
-    isbnNumber?: string | undefined;
-    totalPages?: number | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
-    year!: Date;
-    price!: number;
-    sourceType!: SourceType;
-    author?: AuthorOutputDto | undefined;
-    category?: CategoryOutputDto | undefined;
+    id: number;
+    isbnNumber: string;
+    totalPages: number;
+    displayName: string;
+    publisher: string;
+    year: Date;
+    price: number;
+    sourceType: SourceType;
+    author: AuthorOutputDto;
+    category: CategoryOutputDto;
 
     constructor(data?: IBookOutputDto) {
         if (data) {
@@ -2295,19 +2337,26 @@ export class BookOutputDto implements IBookOutputDto {
         data["category"] = this.category ? this.category.toJSON() : <any>undefined;
         return data; 
     }
+
+    clone(): BookOutputDto {
+        const json = this.toJSON();
+        let result = new BookOutputDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface IBookOutputDto {
     id: number;
-    isbnNumber?: string | undefined;
-    totalPages?: number | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
+    isbnNumber: string;
+    totalPages: number;
+    displayName: string;
+    publisher: string;
     year: Date;
     price: number;
     sourceType: SourceType;
-    author?: AuthorOutputDto | undefined;
-    category?: CategoryOutputDto | undefined;
+    author: AuthorOutputDto;
+    category: CategoryOutputDto;
 }
 
 export enum SourceType {
@@ -2316,8 +2365,8 @@ export enum SourceType {
 }
 
 export class CategoryOutputDto implements ICategoryOutputDto {
-    id!: number;
-    displayName?: string | undefined;
+    id: number;
+    displayName: string;
 
     constructor(data?: ICategoryOutputDto) {
         if (data) {
@@ -2348,23 +2397,30 @@ export class CategoryOutputDto implements ICategoryOutputDto {
         data["displayName"] = this.displayName;
         return data; 
     }
+
+    clone(): CategoryOutputDto {
+        const json = this.toJSON();
+        let result = new CategoryOutputDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface ICategoryOutputDto {
     id: number;
-    displayName?: string | undefined;
+    displayName: string;
 }
 
 export class BookInputDto implements IBookInputDto {
-    isbnNumber?: string | undefined;
-    totalPages?: number | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
-    year!: Date;
-    price!: number;
-    sourceType!: SourceType;
-    authorId!: number;
-    categoryId!: number;
+    isbnNumber: string;
+    totalPages: number;
+    displayName: string;
+    publisher: string;
+    year: Date;
+    price: number;
+    sourceType: SourceType;
+    authorId: number;
+    categoryId: number;
 
     constructor(data?: IBookInputDto) {
         if (data) {
@@ -2409,13 +2465,20 @@ export class BookInputDto implements IBookInputDto {
         data["categoryId"] = this.categoryId;
         return data; 
     }
+
+    clone(): BookInputDto {
+        const json = this.toJSON();
+        let result = new BookInputDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface IBookInputDto {
-    isbnNumber?: string | undefined;
-    totalPages?: number | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
+    isbnNumber: string;
+    totalPages: number;
+    displayName: string;
+    publisher: string;
     year: Date;
     price: number;
     sourceType: SourceType;
@@ -2424,16 +2487,16 @@ export interface IBookInputDto {
 }
 
 export class BookUpdateDto implements IBookUpdateDto {
-    id!: number;
-    isbnNumber?: string | undefined;
-    totalPages?: number | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
-    year!: Date;
-    price!: number;
-    sourceType!: SourceType;
-    authorId!: number;
-    categoryId!: number;
+    id: number;
+    isbnNumber: string;
+    totalPages: number;
+    displayName: string;
+    publisher: string;
+    year: Date;
+    price: number;
+    sourceType: SourceType;
+    author: Author;
+    category: Category;
 
     constructor(data?: IBookUpdateDto) {
         if (data) {
@@ -2454,8 +2517,8 @@ export class BookUpdateDto implements IBookUpdateDto {
             this.year = data["year"] ? new Date(data["year"].toString()) : <any>undefined;
             this.price = data["price"];
             this.sourceType = data["sourceType"];
-            this.authorId = data["authorId"];
-            this.categoryId = data["categoryId"];
+            this.author = data["author"] ? Author.fromJS(data["author"]) : <any>undefined;
+            this.category = data["category"] ? Category.fromJS(data["category"]) : <any>undefined;
         }
     }
 
@@ -2476,27 +2539,329 @@ export class BookUpdateDto implements IBookUpdateDto {
         data["year"] = this.year ? this.year.toISOString() : <any>undefined;
         data["price"] = this.price;
         data["sourceType"] = this.sourceType;
-        data["authorId"] = this.authorId;
-        data["categoryId"] = this.categoryId;
+        data["author"] = this.author ? this.author.toJSON() : <any>undefined;
+        data["category"] = this.category ? this.category.toJSON() : <any>undefined;
         return data; 
+    }
+
+    clone(): BookUpdateDto {
+        const json = this.toJSON();
+        let result = new BookUpdateDto();
+        result.init(json);
+        return result;
     }
 }
 
 export interface IBookUpdateDto {
     id: number;
-    isbnNumber?: string | undefined;
-    totalPages?: number | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
+    isbnNumber: string;
+    totalPages: number;
+    displayName: string;
+    publisher: string;
+    year: Date;
+    price: number;
+    sourceType: SourceType;
+    author: Author;
+    category: Category;
+}
+
+export abstract class AuditedEntity implements IAuditedEntity {
+    id: number;
+    isDeleted: boolean;
+    deleterUserId: number;
+    deletedTime: Date;
+    creatorUserId: number;
+    creationTime: Date;
+    lastModificationDate: Date;
+    lastModifierUser: number;
+
+    constructor(data?: IAuditedEntity) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+        if (!data) {
+            this.isDeleted = false;
+        }
+    }
+
+    init(data?: any) {
+        if (data) {
+            this.id = data["id"];
+            this.isDeleted = data["isDeleted"] !== undefined ? data["isDeleted"] : false;
+            this.deleterUserId = data["deleterUserId"];
+            this.deletedTime = data["deletedTime"] ? new Date(data["deletedTime"].toString()) : <any>undefined;
+            this.creatorUserId = data["creatorUserId"];
+            this.creationTime = data["creationTime"] ? new Date(data["creationTime"].toString()) : <any>undefined;
+            this.lastModificationDate = data["lastModificationDate"] ? new Date(data["lastModificationDate"].toString()) : <any>undefined;
+            this.lastModifierUser = data["lastModifierUser"];
+        }
+    }
+
+    static fromJS(data: any): AuditedEntity {
+        data = typeof data === 'object' ? data : {};
+        throw new Error("The abstract class 'AuditedEntity' cannot be instantiated.");
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["isDeleted"] = this.isDeleted;
+        data["deleterUserId"] = this.deleterUserId;
+        data["deletedTime"] = this.deletedTime ? this.deletedTime.toISOString() : <any>undefined;
+        data["creatorUserId"] = this.creatorUserId;
+        data["creationTime"] = this.creationTime ? this.creationTime.toISOString() : <any>undefined;
+        data["lastModificationDate"] = this.lastModificationDate ? this.lastModificationDate.toISOString() : <any>undefined;
+        data["lastModifierUser"] = this.lastModifierUser;
+        return data; 
+    }
+
+    clone(): AuditedEntity {
+        throw new Error("The abstract class 'AuditedEntity' cannot be instantiated.");
+    }
+}
+
+export interface IAuditedEntity {
+    id: number;
+    isDeleted: boolean;
+    deleterUserId: number;
+    deletedTime: Date;
+    creatorUserId: number;
+    creationTime: Date;
+    lastModificationDate: Date;
+    lastModifierUser: number;
+}
+
+export class Author extends AuditedEntity implements IAuthor {
+    displayName: string;
+    age: number;
+    emailAddress: string;
+    books: Book[];
+
+    constructor(data?: IAuthor) {
+        super(data);
+    }
+
+    init(data?: any) {
+        super.init(data);
+        if (data) {
+            this.displayName = data["displayName"];
+            this.age = data["age"];
+            this.emailAddress = data["emailAddress"];
+            if (data["books"] && data["books"].constructor === Array) {
+                this.books = [] as any;
+                for (let item of data["books"])
+                    this.books.push(Book.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): Author {
+        data = typeof data === 'object' ? data : {};
+        let result = new Author();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["displayName"] = this.displayName;
+        data["age"] = this.age;
+        data["emailAddress"] = this.emailAddress;
+        if (this.books && this.books.constructor === Array) {
+            data["books"] = [];
+            for (let item of this.books)
+                data["books"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data; 
+    }
+
+    clone(): Author {
+        const json = this.toJSON();
+        let result = new Author();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IAuthor extends IAuditedEntity {
+    displayName: string;
+    age: number;
+    emailAddress: string;
+    books: Book[];
+}
+
+export abstract class SourceEntity extends AuditedEntity implements ISourceEntity {
+    displayName: string;
+    publisher: string;
     year: Date;
     price: number;
     sourceType: SourceType;
     authorId: number;
     categoryId: number;
+    author: Author;
+    category: Category;
+
+    constructor(data?: ISourceEntity) {
+        super(data);
+        if (!data) {
+            this.sourceType = SourceType.Available;
+        }
+    }
+
+    init(data?: any) {
+        super.init(data);
+        if (data) {
+            this.displayName = data["displayName"];
+            this.publisher = data["publisher"];
+            this.year = data["year"] ? new Date(data["year"].toString()) : <any>undefined;
+            this.price = data["price"];
+            this.sourceType = data["sourceType"] !== undefined ? data["sourceType"] : SourceType.Available;
+            this.authorId = data["authorId"];
+            this.categoryId = data["categoryId"];
+            this.author = data["author"] ? Author.fromJS(data["author"]) : <any>undefined;
+            this.category = data["category"] ? Category.fromJS(data["category"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): SourceEntity {
+        data = typeof data === 'object' ? data : {};
+        throw new Error("The abstract class 'SourceEntity' cannot be instantiated.");
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["displayName"] = this.displayName;
+        data["publisher"] = this.publisher;
+        data["year"] = this.year ? this.year.toISOString() : <any>undefined;
+        data["price"] = this.price;
+        data["sourceType"] = this.sourceType;
+        data["authorId"] = this.authorId;
+        data["categoryId"] = this.categoryId;
+        data["author"] = this.author ? this.author.toJSON() : <any>undefined;
+        data["category"] = this.category ? this.category.toJSON() : <any>undefined;
+        super.toJSON(data);
+        return data; 
+    }
+
+    clone(): SourceEntity {
+        throw new Error("The abstract class 'SourceEntity' cannot be instantiated.");
+    }
+}
+
+export interface ISourceEntity extends IAuditedEntity {
+    displayName: string;
+    publisher: string;
+    year: Date;
+    price: number;
+    sourceType: SourceType;
+    authorId: number;
+    categoryId: number;
+    author: Author;
+    category: Category;
+}
+
+export class Book extends SourceEntity implements IBook {
+    isbnNumber: string;
+    totalPages: number;
+
+    constructor(data?: IBook) {
+        super(data);
+    }
+
+    init(data?: any) {
+        super.init(data);
+        if (data) {
+            this.isbnNumber = data["isbnNumber"];
+            this.totalPages = data["totalPages"];
+        }
+    }
+
+    static fromJS(data: any): Book {
+        data = typeof data === 'object' ? data : {};
+        let result = new Book();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isbnNumber"] = this.isbnNumber;
+        data["totalPages"] = this.totalPages;
+        super.toJSON(data);
+        return data; 
+    }
+
+    clone(): Book {
+        const json = this.toJSON();
+        let result = new Book();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IBook extends ISourceEntity {
+    isbnNumber: string;
+    totalPages: number;
+}
+
+export class Category extends AuditedEntity implements ICategory {
+    displayName: string;
+    books: Book[];
+
+    constructor(data?: ICategory) {
+        super(data);
+    }
+
+    init(data?: any) {
+        super.init(data);
+        if (data) {
+            this.displayName = data["displayName"];
+            if (data["books"] && data["books"].constructor === Array) {
+                this.books = [] as any;
+                for (let item of data["books"])
+                    this.books.push(Book.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): Category {
+        data = typeof data === 'object' ? data : {};
+        let result = new Category();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["displayName"] = this.displayName;
+        if (this.books && this.books.constructor === Array) {
+            data["books"] = [];
+            for (let item of this.books)
+                data["books"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data; 
+    }
+
+    clone(): Category {
+        const json = this.toJSON();
+        let result = new Category();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface ICategory extends IAuditedEntity {
+    displayName: string;
+    books: Book[];
 }
 
 export class CategoryInputDto implements ICategoryInputDto {
-    displayName?: string | undefined;
+    displayName: string;
 
     constructor(data?: ICategoryInputDto) {
         if (data) {
@@ -2525,15 +2890,22 @@ export class CategoryInputDto implements ICategoryInputDto {
         data["displayName"] = this.displayName;
         return data; 
     }
+
+    clone(): CategoryInputDto {
+        const json = this.toJSON();
+        let result = new CategoryInputDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface ICategoryInputDto {
-    displayName?: string | undefined;
+    displayName: string;
 }
 
 export class CategoryUpdateDto implements ICategoryUpdateDto {
-    id!: number;
-    displayName?: string | undefined;
+    id: number;
+    displayName: string;
 
     constructor(data?: ICategoryUpdateDto) {
         if (data) {
@@ -2564,24 +2936,31 @@ export class CategoryUpdateDto implements ICategoryUpdateDto {
         data["displayName"] = this.displayName;
         return data; 
     }
+
+    clone(): CategoryUpdateDto {
+        const json = this.toJSON();
+        let result = new CategoryUpdateDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface ICategoryUpdateDto {
     id: number;
-    displayName?: string | undefined;
+    displayName: string;
 }
 
 export class GovtPublicationOutputDto implements IGovtPublicationOutputDto {
-    id!: number;
-    totalPages!: number;
-    sector?: string | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
-    year!: Date;
-    price!: number;
-    sourceType!: SourceType;
-    author?: AuthorOutputDto | undefined;
-    category?: CategoryOutputDto | undefined;
+    id: number;
+    totalPages: number;
+    sector: string;
+    displayName: string;
+    publisher: string;
+    year: Date;
+    price: number;
+    sourceType: SourceType;
+    author: AuthorOutputDto;
+    category: CategoryOutputDto;
 
     constructor(data?: IGovtPublicationOutputDto) {
         if (data) {
@@ -2628,31 +3007,38 @@ export class GovtPublicationOutputDto implements IGovtPublicationOutputDto {
         data["category"] = this.category ? this.category.toJSON() : <any>undefined;
         return data; 
     }
+
+    clone(): GovtPublicationOutputDto {
+        const json = this.toJSON();
+        let result = new GovtPublicationOutputDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface IGovtPublicationOutputDto {
     id: number;
     totalPages: number;
-    sector?: string | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
+    sector: string;
+    displayName: string;
+    publisher: string;
     year: Date;
     price: number;
     sourceType: SourceType;
-    author?: AuthorOutputDto | undefined;
-    category?: CategoryOutputDto | undefined;
+    author: AuthorOutputDto;
+    category: CategoryOutputDto;
 }
 
 export class GovtPublicationInputDto implements IGovtPublicationInputDto {
-    totalPages!: number;
-    sector?: string | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
-    year!: Date;
-    price!: number;
-    sourceType!: SourceType;
-    authorId!: number;
-    categoryId!: number;
+    totalPages: number;
+    sector: string;
+    displayName: string;
+    publisher: string;
+    year: Date;
+    price: number;
+    sourceType: SourceType;
+    authorId: number;
+    categoryId: number;
 
     constructor(data?: IGovtPublicationInputDto) {
         if (data) {
@@ -2697,13 +3083,20 @@ export class GovtPublicationInputDto implements IGovtPublicationInputDto {
         data["categoryId"] = this.categoryId;
         return data; 
     }
+
+    clone(): GovtPublicationInputDto {
+        const json = this.toJSON();
+        let result = new GovtPublicationInputDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface IGovtPublicationInputDto {
     totalPages: number;
-    sector?: string | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
+    sector: string;
+    displayName: string;
+    publisher: string;
     year: Date;
     price: number;
     sourceType: SourceType;
@@ -2712,16 +3105,16 @@ export interface IGovtPublicationInputDto {
 }
 
 export class GovtPublicationUpdateDto implements IGovtPublicationUpdateDto {
-    id!: number;
-    totalPages!: number;
-    sector?: string | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
-    year!: Date;
-    price!: number;
-    sourceType!: SourceType;
-    authorId!: number;
-    categoryId!: number;
+    id: number;
+    totalPages: number;
+    sector: string;
+    displayName: string;
+    publisher: string;
+    year: Date;
+    price: number;
+    sourceType: SourceType;
+    authorId: number;
+    categoryId: number;
 
     constructor(data?: IGovtPublicationUpdateDto) {
         if (data) {
@@ -2768,14 +3161,21 @@ export class GovtPublicationUpdateDto implements IGovtPublicationUpdateDto {
         data["categoryId"] = this.categoryId;
         return data; 
     }
+
+    clone(): GovtPublicationUpdateDto {
+        const json = this.toJSON();
+        let result = new GovtPublicationUpdateDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface IGovtPublicationUpdateDto {
     id: number;
     totalPages: number;
-    sector?: string | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
+    sector: string;
+    displayName: string;
+    publisher: string;
     year: Date;
     price: number;
     sourceType: SourceType;
@@ -2784,16 +3184,16 @@ export interface IGovtPublicationUpdateDto {
 }
 
 export class NewspaperOutputDto implements INewspaperOutputDto {
-    id!: number;
-    publicationDate!: Date;
-    totalSubParts!: number;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
-    year!: Date;
-    price!: number;
-    sourceType!: SourceType;
-    author?: AuthorOutputDto | undefined;
-    category?: CategoryOutputDto | undefined;
+    id: number;
+    publicationDate: Date;
+    totalSubParts: number;
+    displayName: string;
+    publisher: string;
+    year: Date;
+    price: number;
+    sourceType: SourceType;
+    author: AuthorOutputDto;
+    category: CategoryOutputDto;
 
     constructor(data?: INewspaperOutputDto) {
         if (data) {
@@ -2840,31 +3240,38 @@ export class NewspaperOutputDto implements INewspaperOutputDto {
         data["category"] = this.category ? this.category.toJSON() : <any>undefined;
         return data; 
     }
+
+    clone(): NewspaperOutputDto {
+        const json = this.toJSON();
+        let result = new NewspaperOutputDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface INewspaperOutputDto {
     id: number;
     publicationDate: Date;
     totalSubParts: number;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
+    displayName: string;
+    publisher: string;
     year: Date;
     price: number;
     sourceType: SourceType;
-    author?: AuthorOutputDto | undefined;
-    category?: CategoryOutputDto | undefined;
+    author: AuthorOutputDto;
+    category: CategoryOutputDto;
 }
 
 export class NewspaperInputDto implements INewspaperInputDto {
-    publicationDate!: Date;
-    totalSubParts!: number;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
-    year!: Date;
-    price!: number;
-    sourceType!: SourceType;
-    authorId!: number;
-    categoryId!: number;
+    publicationDate: Date;
+    totalSubParts: number;
+    displayName: string;
+    publisher: string;
+    year: Date;
+    price: number;
+    sourceType: SourceType;
+    authorId: number;
+    categoryId: number;
 
     constructor(data?: INewspaperInputDto) {
         if (data) {
@@ -2909,13 +3316,20 @@ export class NewspaperInputDto implements INewspaperInputDto {
         data["categoryId"] = this.categoryId;
         return data; 
     }
+
+    clone(): NewspaperInputDto {
+        const json = this.toJSON();
+        let result = new NewspaperInputDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface INewspaperInputDto {
     publicationDate: Date;
     totalSubParts: number;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
+    displayName: string;
+    publisher: string;
     year: Date;
     price: number;
     sourceType: SourceType;
@@ -2924,16 +3338,16 @@ export interface INewspaperInputDto {
 }
 
 export class NewspaperUpdateDto implements INewspaperUpdateDto {
-    id!: number;
-    publicationDate!: Date;
-    totalSubParts!: number;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
-    year!: Date;
-    price!: number;
-    sourceType!: SourceType;
-    authorId!: number;
-    categoryId!: number;
+    id: number;
+    publicationDate: Date;
+    totalSubParts: number;
+    displayName: string;
+    publisher: string;
+    year: Date;
+    price: number;
+    sourceType: SourceType;
+    authorId: number;
+    categoryId: number;
 
     constructor(data?: INewspaperUpdateDto) {
         if (data) {
@@ -2980,14 +3394,21 @@ export class NewspaperUpdateDto implements INewspaperUpdateDto {
         data["categoryId"] = this.categoryId;
         return data; 
     }
+
+    clone(): NewspaperUpdateDto {
+        const json = this.toJSON();
+        let result = new NewspaperUpdateDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface INewspaperUpdateDto {
     id: number;
     publicationDate: Date;
     totalSubParts: number;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
+    displayName: string;
+    publisher: string;
     year: Date;
     price: number;
     sourceType: SourceType;
@@ -2996,15 +3417,15 @@ export interface INewspaperUpdateDto {
 }
 
 export class OlaleafoutputDto implements IOlaleafoutputDto {
-    id!: number;
-    description?: string | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
-    year!: Date;
-    price!: number;
-    sourceType!: SourceType;
-    author?: AuthorOutputDto | undefined;
-    category?: CategoryOutputDto | undefined;
+    id: number;
+    description: string;
+    displayName: string;
+    publisher: string;
+    year: Date;
+    price: number;
+    sourceType: SourceType;
+    author: AuthorOutputDto;
+    category: CategoryOutputDto;
 
     constructor(data?: IOlaleafoutputDto) {
         if (data) {
@@ -3049,29 +3470,36 @@ export class OlaleafoutputDto implements IOlaleafoutputDto {
         data["category"] = this.category ? this.category.toJSON() : <any>undefined;
         return data; 
     }
+
+    clone(): OlaleafoutputDto {
+        const json = this.toJSON();
+        let result = new OlaleafoutputDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface IOlaleafoutputDto {
     id: number;
-    description?: string | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
+    description: string;
+    displayName: string;
+    publisher: string;
     year: Date;
     price: number;
     sourceType: SourceType;
-    author?: AuthorOutputDto | undefined;
-    category?: CategoryOutputDto | undefined;
+    author: AuthorOutputDto;
+    category: CategoryOutputDto;
 }
 
 export class OlaLeafInputDto implements IOlaLeafInputDto {
-    description?: string | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
-    year!: Date;
-    price!: number;
-    sourceType!: SourceType;
-    authorId!: number;
-    categoryId!: number;
+    description: string;
+    displayName: string;
+    publisher: string;
+    year: Date;
+    price: number;
+    sourceType: SourceType;
+    authorId: number;
+    categoryId: number;
 
     constructor(data?: IOlaLeafInputDto) {
         if (data) {
@@ -3114,12 +3542,19 @@ export class OlaLeafInputDto implements IOlaLeafInputDto {
         data["categoryId"] = this.categoryId;
         return data; 
     }
+
+    clone(): OlaLeafInputDto {
+        const json = this.toJSON();
+        let result = new OlaLeafInputDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface IOlaLeafInputDto {
-    description?: string | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
+    description: string;
+    displayName: string;
+    publisher: string;
     year: Date;
     price: number;
     sourceType: SourceType;
@@ -3128,15 +3563,15 @@ export interface IOlaLeafInputDto {
 }
 
 export class OlaleafUpdateDto implements IOlaleafUpdateDto {
-    id!: number;
-    description?: string | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
-    year!: Date;
-    price!: number;
-    sourceType!: SourceType;
-    authorId!: number;
-    categoryId!: number;
+    id: number;
+    description: string;
+    displayName: string;
+    publisher: string;
+    year: Date;
+    price: number;
+    sourceType: SourceType;
+    authorId: number;
+    categoryId: number;
 
     constructor(data?: IOlaleafUpdateDto) {
         if (data) {
@@ -3181,13 +3616,20 @@ export class OlaleafUpdateDto implements IOlaleafUpdateDto {
         data["categoryId"] = this.categoryId;
         return data; 
     }
+
+    clone(): OlaleafUpdateDto {
+        const json = this.toJSON();
+        let result = new OlaleafUpdateDto();
+        result.init(json);
+        return result;
+    }
 }
 
 export interface IOlaleafUpdateDto {
     id: number;
-    description?: string | undefined;
-    displayName?: string | undefined;
-    publisher?: string | undefined;
+    description: string;
+    displayName: string;
+    publisher: string;
     year: Date;
     price: number;
     sourceType: SourceType;

@@ -40,16 +40,18 @@ namespace Intellect.WebApi.Controllers
         [AllowAnonymous]
         public async Task Register([FromBody]UserRegisterInputDto input)
         {
-            if (input.NationalId.Length != 10)
-            {
-                throw new Exception("NationalId should be a legal 10 digit value");
-            }
+            
             var result = new IdentityResult();
 
             var user = new ApplicationUser { UserName = input.UserName, Email = input.EmailAddress, NationalId = input.NationalId };
 
             if (!string.IsNullOrEmpty(user.NationalId))
             {
+                if (input.NationalId.Length != 10)
+                {
+                    throw new Exception("NationalId should be a legal 10 digit value");
+                }
+
                 user.IsActive = true;
                 result = await _userManager.CreateAsync(user, input.Password);
 

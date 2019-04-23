@@ -111,10 +111,10 @@ namespace Intellect.WebApi.Controllers
 
         }
 
-        [HttpGet()]
-        [Route("GetById")]
+        [HttpGet]
+        [Route("GetBookById")]
         [AllowAnonymous]
-        public async Task<BookOutputDto> Get(int id)
+        public async Task<BookOutputDto> GetBookById(int id)
         {
             BookOutputDto book = new BookOutputDto();
             var result = _bookManager.GetAsync(id);
@@ -124,18 +124,18 @@ namespace Intellect.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("Create")]
+        [Route("CreateBook")]
         [Authorize(Policy = PolicyTypes.BooksPolicy.Cru)]
-        public async Task Post([FromBody] BookInputDto input)
+        public async Task CreateBook([FromBody] BookInputDto input)
         {
             var book = _mapper.Map<Book>(input);
             await _bookManager.InsertAsync(book);
         }
 
-        [HttpPut()]
-        [Route("Update")]
+        [HttpPut]
+        [Route("UpdateBook")]
         [Authorize(Policy = PolicyTypes.BooksPolicy.Cru)]
-        public async Task<BookOutputDto> Put([FromBody] BookUpdateDto input)
+        public async Task<BookOutputDto> UpdateBook([FromBody] BookUpdateDto input)
         {
             var book = _mapper.Map<Book>(input);
             var result = await _bookManager.UpdateAsync(book);
@@ -143,10 +143,10 @@ namespace Intellect.WebApi.Controllers
             return _mapper.Map<BookOutputDto>(result);
         }
 
-        [HttpDelete()]
-        [Route("Delete")]
+        [HttpDelete]
+        [Route("DeleteBook")]
         [Authorize(Policy = PolicyTypes.BooksPolicy.delete)]
-        public void Delete(int id)
+        public void DeleteBook(int id)
         {
             _bookManager.DeleteAsync(id);
         }

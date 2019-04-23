@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserRegisterInputDto, AccountService } from '../shared-services/shared-services.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -8,30 +10,23 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
   
-  selected = 'None';
+  userRegister: UserRegisterInputDto;
 
-  private hidden:boolean;
-
-  constructor() { }
+  constructor(
+    private router: Router,
+    private _userService: AccountService
+  ) { }
 
   ngOnInit() {
-    this.hidden = true;
+    this.userRegister = new UserRegisterInputDto();
   }
 
-  showUserIdentity()
-  {
-    return this.hidden;
+  register(userRegister: UserRegisterInputDto): void{
+    this._userService.register(userRegister).subscribe(res => {
+      this.router.navigate(['/login']);
+    })
   }
 
-  localUserClick()
-  {
-    this.hidden = false;
-  }
-
-  foreignUserClick()
-  {
-    this.hidden = true;
-  }
 
 
 }

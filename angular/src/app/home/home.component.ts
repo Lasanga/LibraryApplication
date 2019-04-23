@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BooksService, BookOutputDto } from '../shared-services/shared-services.component';
 
 @Component({
   selector: 'app-home',
@@ -13,15 +14,20 @@ export class HomeComponent implements OnInit {
   id;
   role:string;
 
+  bookOutputDto: BookOutputDto[] = [];
+
   constructor(
     private jwtHelper: JwtHelperService,
     private _Activatedroute:ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private _bookService: BooksService
   ) { }
 
   ngOnInit() {
 
-    // this.role = localStorage.getItem('username');
+    this._bookService.getAll().subscribe(res => {
+      this.bookOutputDto = res;
+    })
 
     this.id = this._Activatedroute.snapshot.params['id'];
     console.log(this.id);
@@ -30,19 +36,16 @@ export class HomeComponent implements OnInit {
     const decodeToken = this.jwtHelper.decodeToken(token);
 
     if (!decodeToken) {
-      // console.log('Invalid token');
       return false;
     }
-
-    // return allowedRoles.includes(decodeToken['role']);
-
-    // console.log(decodeToken['role']);
 
     if(decodeToken['role'] == 'Admin'){
       this.admin = "Admin";
     }else{
       this.admin = "No";
     }
+
+
 
   }
 
