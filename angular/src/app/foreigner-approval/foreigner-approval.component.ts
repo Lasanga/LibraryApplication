@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AccountService, UnRegUserOutputDto, AddForiegnerInputDto } from '../shared-services/shared-services.component';
 
 // export interface PeriodicElement {
@@ -17,7 +17,7 @@ export class ForeignerApprovalComponent implements OnInit {
 
   // displayedColumns: string[] = ['userName', 'email', 'isActive'];
   foreignOutputDto: UnRegUserOutputDto[] = [];
-  // dataSource = this.foreignOutputDto;
+  input: AddForiegnerInputDto = new AddForiegnerInputDto();
 
   constructor(
     private _accountService: AccountService,
@@ -33,8 +33,9 @@ export class ForeignerApprovalComponent implements OnInit {
 
   }
 
-  _onApproved(id:any){
-    this._accountService.addForiegner(id).subscribe(res => {
+  _onApproved(id:string){
+    this.input.id = id;
+    this._accountService.addForiegner(this.input).subscribe(res => {
       location.reload();
     })
     // console.log(id);

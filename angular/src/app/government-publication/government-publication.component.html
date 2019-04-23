@@ -14,16 +14,8 @@
               <mat-option [value]="govPub.id" *ngIf="canDelete">Delete</mat-option>
             </mat-select>
           </div>
-
-          <!-- <mat-card-title>
-              {{book.displayName}}
-          </mat-card-title>
-          <mat-card-subtitle>
-              #{{book.category.displayName}}
-          </mat-card-subtitle> -->
-
         </mat-card-header>
-        <!-- <mat-divider></mat-divider> -->
+
         <mat-card-content>
           <p><small>#{{govPub.category.displayName}}</small></p>
           <h4>{{govPub.displayName}}</h4>
@@ -32,13 +24,6 @@
           <small>
               {{govPub.author.emailAddress}}
           </small>
-
-            <!-- {{govPub.author.displayName}} | {{govPub.author.emailAddress}} -->
-          <!-- <p>
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, dignissimos ut maxime dolore enim,
-            temporibus reprehenderit
-            numquam doloremque cum eos ad! Voluptate modi, vitae iste vel fuga fugiat culpa animi!"
-          </p> -->
 
           <i><strong></strong></i>
           <p style="text-align:right">{{govPub.totalPages}} Pages</p>

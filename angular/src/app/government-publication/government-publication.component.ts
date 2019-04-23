@@ -4,6 +4,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { MatDialog } from '@angular/material';
 import { GovernmentPublicationEditComponent } from './government-publication-edit/government-publication-edit.component';
 import { GovernmentPublicationCreateComponent } from './government-publication-create/government-publication-create.component';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-government-publication',
@@ -20,30 +22,40 @@ export class GovernmentPublicationComponent implements OnInit {
   constructor(
     private jwtHelper: JwtHelperService,
     private _govService: GovernmentPublicationsService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
+    private _authservice: AuthService
   ) { }
 
   ngOnInit() {
 
-    this._govService.getAll().subscribe(res => {
-      this.govPubOutputDto = res;
-    })
+    if( this._authservice.isAuthenticated() ){
 
-    const token = localStorage.getItem('token');
-    const decodeToken = this.jwtHelper.decodeToken(token);
+      this._govService.getAll().subscribe(res => {
+        this.govPubOutputDto = res;
+      })
+  
+      const token = localStorage.getItem('token');
+      const decodeToken = this.jwtHelper.decodeToken(token);
+  
+      if (!decodeToken) {
+        return false;
+      }
+  
+      if (decodeToken['permission'].includes("books.edit"))
+        this.canEdit = true;
+  
+      if (decodeToken['permission'].includes("books.delete"))
+        this.canDelete = true;
+  
+      if (decodeToken['role'] == 'ForeignUser')
+        this.isForeign = true;
 
-    if (!decodeToken) {
-      return false;
+    }else{
+      this.router.navigate(['/404NotFound']);
     }
 
-    if (decodeToken['permission'].includes("books.edit"))
-      this.canEdit = true;
-
-    if (decodeToken['permission'].includes("books.delete"))
-      this.canDelete = true;
-
-    if (decodeToken['role'] == 'ForeignUser')
-      this.isForeign = true;
+   
 
   }
 

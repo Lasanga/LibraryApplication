@@ -32,7 +32,7 @@ export class NewsPaperComponent implements OnInit {
     if( this._authservice.isAuthenticated() ){
 
       this._newsService.getAll().subscribe(res => {
-      this.newsOutputDto = res;
+        this.newsOutputDto = res;
       })
 
       const token = localStorage.getItem('token');

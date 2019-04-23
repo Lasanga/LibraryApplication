@@ -1,3 +1,31 @@
-<p>
-  government-publications works!
-</p>
+<div class="container" style="margin-top: 20px">
+  <div class="row">
+    <div class="col-4 mb-3" *ngFor="let govPub of govPubOutputDto">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <!-- <div mat-card-avatar class="example-header-image"></div> -->
+
+          <div style="width: 100%">
+            <mat-select style="width: 30%; float: right;" *ngIf="canEdit" (selectionChange)="option($event.value)">
+              <mat-option [value]="govPub">Edit</mat-option>
+              <mat-option [value]="govPub.id" *ngIf="canDelete">Delete</mat-option>
+            </mat-select>
+          </div>
+        </mat-card-header>
+
+        <mat-card-content>
+          <p><small>#{{govPub.category.displayName}}</small></p>
+          <h4>{{govPub.displayName}}</h4>
+          <mat-divider></mat-divider><br />
+          <span style="font-size: 12px;">{{govPub.author.displayName}}</span><br />
+          <small>
+              {{govPub.author.emailAddress}}
+          </small>
+
+          <i><strong></strong></i>
+          <p style="text-align:right">{{govPub.totalPages}} Pages</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

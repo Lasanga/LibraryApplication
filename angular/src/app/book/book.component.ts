@@ -25,15 +25,12 @@ export class BookComponent implements OnInit {
 
   ngOnInit() {
 
-
     this._bookService.getAll().subscribe(res => {
       this.bookOutputDto = res;
     })
 
     const token = localStorage.getItem('token');
-    const decodeToken = this.jwtHelper.decodeToken(token);
-
-    console.log(decodeToken);
+    const decodeToken = this.jwtHelper.decodeToken(token);  
     
     if (!decodeToken) {
       return false;
