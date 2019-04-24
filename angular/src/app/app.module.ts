@@ -16,7 +16,7 @@ import { AuthInterceptor } from './auth-interceptor';
 	//Material Component Imports
 import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule,
     MatCardModule, MatMenuModule, MatInputModule, MatFormFieldModule, MatRippleModule, MatSelectModule,
-    MatRadioModule, MatOptionModule,MatDialogModule, MatTableModule, MatTabsModule} from "@angular/material";
+    MatRadioModule, MatOptionModule,MatDialogModule, MatTableModule, MatTabsModule, MatPaginatorModule} from "@angular/material";
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { BookComponent } from './book/book.component';
@@ -108,6 +108,7 @@ import { CategoryCreateComponent } from './categories/category-create/category-c
     MatDialogModule,
     MatTableModule,
     MatTabsModule,
+    MatPaginatorModule,
 
     JwtModule.forRoot({
       config: {

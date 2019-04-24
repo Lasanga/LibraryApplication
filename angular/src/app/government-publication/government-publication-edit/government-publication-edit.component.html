@@ -9,7 +9,7 @@
     </div>
     <div class="col-6">
       <mat-form-field class="example-half-width">
-        <input matInput placeholder="DsiplayName" type="text" [(ngModel)]="govPub.data.displayName" required
+        <input matInput placeholder="Document Title" type="text" [(ngModel)]="govPub.data.displayName" required
           name="displayName">
       </mat-form-field>
     </div>
@@ -18,13 +18,13 @@
   <div class="row">
     <div class="col-6">
       <mat-form-field class="example-half-width">
-        <input matInput placeholder="totalPages" type="number" [(ngModel)]="govPub.data.totalPages" required
+        <input matInput placeholder="Total pages" type="number" [(ngModel)]="govPub.data.totalPages" required
           name="totalPages">
       </mat-form-field>
     </div>
     <div class="col-6">
       <mat-form-field class="example-half-width">
-        <input matInput placeholder="publisher" type="text" [(ngModel)]="govPub.data.publisher" name="publisher">
+        <input matInput placeholder="Publisher Name" type="text" [(ngModel)]="govPub.data.publisher" name="publisher">
       </mat-form-field>
     </div>
   </div>
@@ -61,7 +61,7 @@
   </div>
 
   <div mat-dialog-actions class="mt-3">
-    <button class="btn btn btn-danger mr-3" (click)="onNoClick()">Close</button>
+    <button type="button" class="btn btn btn-danger mr-3" (click)="onNoClick()">Close</button>
     <button type="submit" class="btn btn btn-success">Save</button>
   </div>
 </form>

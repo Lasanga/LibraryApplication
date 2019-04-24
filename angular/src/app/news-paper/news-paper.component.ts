@@ -18,6 +18,9 @@ export class NewsPaperComponent implements OnInit {
   canEdit: Boolean = false;
   canDelete: Boolean = false;
   isForeign: Boolean = false;
+  length = 5;
+  pageSize = 5;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
 
   constructor(
     private jwtHelper: JwtHelperService,
