@@ -30,7 +30,7 @@
 
 .topNav
 {
-    width: 80%;
+    width: 70%;
     margin-left: 0px;
     float: right;
 }
@@ -60,4 +60,9 @@
 .topBg {
     background-color: black;
     height: 500px;
+}
+
+.navBarButtons:hover{
+    background-color: rgb(26, 82, 238);
+    color: white;
 }
