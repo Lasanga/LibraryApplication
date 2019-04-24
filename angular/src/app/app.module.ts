@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BooksService, CategoryService, OlaLeafsService, AccountService, AuthorService } from './shared-services/shared-services.component';
+import { BooksService, CategoryService, OlaLeafsService, AccountService, AuthorService, NewsPapersService, GovernmentPublicationsService } from './shared-services/shared-services.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -16,12 +16,36 @@ import { AuthInterceptor } from './auth-interceptor';
 	//Material Component Imports
 import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule,
     MatCardModule, MatMenuModule, MatInputModule, MatFormFieldModule, MatRippleModule, MatSelectModule,
-    MatRadioModule, MatOptionModule,MatDialogModule} from "@angular/material";
+    MatRadioModule, MatOptionModule,MatDialogModule, MatTableModule, MatTabsModule, MatPaginatorModule} from "@angular/material";
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { BookComponent } from './book/book.component';
 import { BookEditComponent } from './book/book-edit/book-edit.component';
 import { BookCreateComponent } from './book/book-create/book-create.component';
+import { ForeignerApprovalComponent } from './foreigner-approval/foreigner-approval.component';
+import { NewsPaperComponent } from './news-paper/news-paper.component';
+import { NewsPaperEditComponent } from './news-paper/news-paper-edit/news-paper-edit.component';
+import { NewsPaperCreateComponent } from './news-paper/news-paper-create/news-paper-create.component';
+import { GovernmentPublicationComponent } from './government-publication/government-publication.component';
+import { GovernmentPublicationCreateComponent } from './government-publication/government-publication-create/government-publication-create.component';
+import { GovernmentPublicationEditComponent } from './government-publication/government-publication-edit/government-publication-edit.component';
+import { NotFound404Component } from './not-found404/not-found404.component';
+import { RareCollectionComponent } from './rare-collection/rare-collection.component';
+import { BooksRareComponent } from './rare-collection/books/books-rare.component';
+import { NewspapersRareComponent } from './rare-collection/newspapers/newspapers-rare.component';
+import { GovernmentPublicationsRareComponent } from './rare-collection/government-publications/government-publications-rare.component';
+import { OlaLeafRareComponent } from './rare-collection/ola-leaf/ola-leaf-rare.component';
+import { OlaLeafComponent } from './ola-leaf/ola-leaf.component';
+import { OlaLeafEditComponent } from './ola-leaf/ola-leaf-edit/ola-leaf-edit.component';
+import { OlaLeafCreateComponent } from './ola-leaf/ola-leaf-create/ola-leaf-create.component';
+import { RareBooksEditComponent } from './rare-collection/books/rare-books-edit/rare-books-edit.component';
+import { RareNewspapersEditComponent } from './rare-collection/newspapers/rare-newspapers-edit/rare-newspapers-edit.component';
+import { GovernmentPublicationsRareEditComponent } from './rare-collection/government-publications/government-publications-rare-edit/government-publications-rare-edit.component';
+import { OlaLeafRareEditComponent } from './rare-collection/ola-leaf/ola-leaf-rare-edit/ola-leaf-rare-edit.component';
+import { AuthorsComponent } from './authors/authors.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { AuthorCreateComponent } from './authors/author-create/author-create.component';
+import { CategoryCreateComponent } from './categories/category-create/category-create.component';
 
 
 @NgModule({
@@ -35,6 +59,30 @@ import { BookCreateComponent } from './book/book-create/book-create.component';
     BookComponent,
     BookEditComponent,
     BookCreateComponent,
+    ForeignerApprovalComponent,
+    NewsPaperComponent,
+    NewsPaperEditComponent,
+    NewsPaperCreateComponent,
+    GovernmentPublicationComponent,
+    GovernmentPublicationCreateComponent,
+    GovernmentPublicationEditComponent,
+    NotFound404Component,
+    RareCollectionComponent,
+    BooksRareComponent,
+    NewspapersRareComponent,
+    GovernmentPublicationsRareComponent,
+    OlaLeafRareComponent,
+    OlaLeafComponent,
+    OlaLeafEditComponent,
+    OlaLeafCreateComponent,
+    RareBooksEditComponent,
+    RareNewspapersEditComponent,
+    GovernmentPublicationsRareEditComponent,
+    OlaLeafRareEditComponent,
+    AuthorsComponent,
+    CategoriesComponent,
+    AuthorCreateComponent,
+    CategoryCreateComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +106,9 @@ import { BookCreateComponent } from './book/book-create/book-create.component';
     MatOptionModule,
     MatRadioModule,
     MatDialogModule,
+    MatTableModule,
+    MatTabsModule,
+    MatPaginatorModule,
 
     JwtModule.forRoot({
       config: {
@@ -71,6 +122,8 @@ import { BookCreateComponent } from './book/book-create/book-create.component';
     AccountService,
     OlaLeafsService,
     AuthorService,
+    NewsPapersService,
+    GovernmentPublicationsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
@@ -78,6 +131,8 @@ import { BookCreateComponent } from './book/book-create/book-create.component';
     },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [BookEditComponent, BookCreateComponent]
+  entryComponents: [BookEditComponent, BookCreateComponent, NewsPaperEditComponent, NewsPaperCreateComponent, GovernmentPublicationCreateComponent, 
+    GovernmentPublicationEditComponent, OlaLeafEditComponent, OlaLeafCreateComponent, RareBooksEditComponent, RareNewspapersEditComponent,
+    GovernmentPublicationsRareEditComponent, OlaLeafRareEditComponent, AuthorCreateComponent, CategoryCreateComponent]
 })
 export class AppModule { }

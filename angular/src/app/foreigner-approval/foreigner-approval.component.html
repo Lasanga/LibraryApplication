@@ -1,0 +1,20 @@
+
+
+<table class="col-10" style="margin: 0 auto; border: 1px solid lightgrey;" class="table table-striped">
+  <thead>
+    <tr style="font-weight: bold;">
+      <td width="40%">Username</td>
+      <td width="50%">Email</td>
+      <td width="10%">Options</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let foreign of foreignOutputDto">
+      <td>{{ foreign.userName }}</td>
+      <td>{{ foreign.email }}</td>
+      <td>
+        <button class="btn btn-block btn-outline-success" (click)="_onApproved( foreign.id )">Approve</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

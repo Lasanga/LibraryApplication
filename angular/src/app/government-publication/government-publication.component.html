@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row">
+    <div style=" width: 50%">
+      <mat-form-field style="width: 90%;">
+        <input matInput placeholder="Search" type="text" name="search">
+      </mat-form-field>
+    </div>
+    <div style="width: 20%;">
+      <button class="btn btn-block btn-outline-primary col-6" (click)="search()">Search</button>
+    </div>
+    <div class="col-2" style="margin-bottom: 10px; float: right; margin-left: 120px; width: 30%;">
+      <button *ngIf="canEdit" class="btn btn-block btn-outline-primary" (click)="openCreate()">Create New</button>
+    </div>
+  </div><br /><br />
+  <div class="row">
+    <div class="col-4 mb-3" *ngFor="let govPub of govPubOutputDto">
+      <mat-card class="example-card">
+        <mat-card-header>
+          <!-- <div mat-card-avatar class="example-header-image"></div> -->
+
+          <div style="width: 100%">
+            <mat-select style="width: 30%; float: right;" *ngIf="canEdit" (selectionChange)="option($event.value)">
+              <mat-option [value]="govPub">Edit</mat-option>
+              <mat-option [value]="govPub.id" *ngIf="canDelete">Delete</mat-option>
+            </mat-select>
+          </div>
+        </mat-card-header>
+
+        <mat-card-content>
+          <p><small>#{{govPub.category.displayName}}</small></p>
+          <h4>{{govPub.displayName}}</h4>
+          <mat-divider></mat-divider><br />
+          <span style="font-size: 12px;">{{govPub.author.displayName}}</span><br />
+          <small>
+              {{govPub.author.emailAddress}}
+          </small>
+
+          <i><strong></strong></i>
+          <p style="text-align:right">{{govPub.totalPages}} Pages</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <mat-paginator 
+    [length]="length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="pageEvent = $event">
+  </mat-paginator>
+    
+</div>

@@ -1,0 +1,21 @@
+
+<div class="col-1" style="margin-bottom: 10px; float: right; margin-right: 50px;">
+  <button *ngIf="canEdit" class="btn btn-block btn-outline-primary" (click)="openCreate()">Create New</button>
+</div><br /><br />
+
+<table class="col-4" style="margin: 0 auto; border: 1px solid lightgrey; width: 40%;" class="table table-striped">
+  <thead>
+    <tr style="font-weight: bold;">
+      <td width="40%">Category name</td>
+      <td width="10%" *ngIf="canDelete">Options</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let category of categoryOutputDto">
+      <td>{{ category.displayName }}</td>
+      <td *ngIf="canDelete">
+        <button class="btn btn-block btn-outline-danger" (click)="_onDelete( category.id )">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

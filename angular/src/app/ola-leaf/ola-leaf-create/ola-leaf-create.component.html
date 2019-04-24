@@ -1,0 +1,50 @@
+<h1 mat-dialog-title>Create ola leaf</h1>
+<form class="example-form" (ngSubmit)="onSubmit(olaLeaf)">
+  <div class="row">
+    <div class="col-6">
+      <mat-form-field class="example-half-width">
+        <input matInput placeholder="Publisher" type="text" [(ngModel)]="olaLeaf.publisher" required name="publisher">
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field class="example-half-width">
+        <input matInput placeholder="Title" type="text" [(ngModel)]="olaLeaf.displayName" required
+          name="displayName">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <mat-form-field class="example-half-width">
+        <input matInput placeholder="Price" type="number" [(ngModel)]="olaLeaf.price" required name="price">
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field class="example-half-width">
+        <!-- <input matInput placeholder="Description" type="text" [(ngModel)]="olaLeaf.description" name="description"> -->
+        <textarea matInput placeholder="Description" rows="6" [(ngModel)]="olaLeaf.description" required name="description" style="resize: none;"></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <p class="mat-small">Category</p>
+      <mat-select [(ngModel)]="olaLeaf.categoryId" name="categoryId">
+        <mat-option *ngFor="let category of categories" [value]=category.id>{{category.displayName}}</mat-option>
+      </mat-select>
+    </div>
+    <div class="col-6">
+      <p class="mat-small">Author</p>
+      <mat-select [(ngModel)]="olaLeaf.authorId" name=authorId>
+        <mat-option *ngFor="let author of authors" [value]=author.id>{{author.displayName}}</mat-option>
+      </mat-select>
+    </div>
+  </div>
+
+  <div mat-dialog-actions class="mt-3">
+    <button type="button" class="btn btn btn-danger mr-3" (click)="onNoClick()">Close</button>
+    <button type="submit" class="btn btn btn-success">Save</button>
+  </div>
+</form>

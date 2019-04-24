@@ -3,6 +3,7 @@ import { AppComponent } from '../app.component';
 import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { flattenStyles } from '@angular/platform-browser/src/dom/dom_renderer';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ export class HeaderComponent implements OnInit {
   title = 'Intellect';
   name = "Guest";
   viewRare: Boolean = false;
+  viewForeignerApprovals: Boolean = false;
 
   public isLoggedIn = false;
 
@@ -33,8 +35,15 @@ export class HeaderComponent implements OnInit {
       return false;
     }
 
-    if (decodeToken['role'][0] == "LocalUser")
+    if (decodeToken['role'][0] == "LocalUser"){
       this.viewRare = true;
+    }
+
+
+    if(decodeToken['role'] == 'Admin'){
+      this.viewForeignerApprovals = true;
+      this.viewRare = true;
+    }
 
 
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Location } from '@angular/common';
-import { BooksService, BookInputDto, AuthorService, CategoryService, AuthorOutputDto, CategoryOutputDto } from 'src/app/shared-services/shared-services.component';
+import { AuthorOutputDto, CategoryOutputDto, BookInputDto, BooksService, AuthorService, CategoryService } from '../../shared-services/shared-services.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-book-create',

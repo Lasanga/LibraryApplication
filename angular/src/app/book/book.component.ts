@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BooksService, BookOutputDto, BookUpdateDto } from '../shared-services/shared-services.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, PageEvent } from '@angular/material';
 import { BookEditComponent } from './book-edit/book-edit.component';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BookCreateComponent } from './book-create/book-create.component';
@@ -16,6 +16,9 @@ export class BookComponent implements OnInit {
   canEdit: Boolean = false;
   canDelete: Boolean = false;
   isForeign: Boolean = false;
+  length = 5;
+  pageSize = 5;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
 
   constructor(
     private jwtHelper: JwtHelperService,
@@ -25,14 +28,17 @@ export class BookComponent implements OnInit {
 
   ngOnInit() {
 
-
     this._bookService.getAll().subscribe(res => {
       this.bookOutputDto = res;
     })
 
-    const token = localStorage.getItem('token');
-    const decodeToken = this.jwtHelper.decodeToken(token);
+    console.log(this.bookOutputDto.length);
 
+    const token = localStorage.getItem('token');
+    const decodeToken = this.jwtHelper.decodeToken(token); 
+    
+    console.log(decodeToken);
+    
     if (!decodeToken) {
       return false;
     }
@@ -70,4 +76,11 @@ export class BookComponent implements OnInit {
       width: '800px'
     });
   }
+
+  pageEvent: PageEvent;
+
+  setPageSizeOptions(setPageSizeOptionsInput: string) {
+    this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+  }
+  
 }
