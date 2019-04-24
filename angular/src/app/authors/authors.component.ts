@@ -16,6 +16,7 @@ export class AuthorsComponent implements OnInit {
   authorOutputDto: AuthorOutputDto[] =[];
   canEdit: Boolean = false;
   input: AuthorInputDto = new AuthorInputDto();
+  canDelete: Boolean = false;
 
   constructor(
     private _authorView: AuthorService,
@@ -41,8 +42,11 @@ export class AuthorsComponent implements OnInit {
         return false;
       }
 
-      if (decodeToken['permission'].includes("author.add"))
+      if (decodeToken['permission'].includes("author.add")){
         this.canEdit = true;
+        this.canDelete = true;
+      }
+        
 
     }else {
 

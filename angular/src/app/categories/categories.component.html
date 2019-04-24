@@ -7,13 +7,13 @@
   <thead>
     <tr style="font-weight: bold;">
       <td width="40%">Category name</td>
-      <td width="10%">Options</td>
+      <td width="10%" *ngIf="canDelete">Options</td>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let category of categoryOutputDto">
       <td>{{ category.displayName }}</td>
-      <td>
+      <td *ngIf="canDelete">
         <button class="btn btn-block btn-outline-danger" (click)="_onDelete( category.id )">Delete</button>
       </td>
     </tr>

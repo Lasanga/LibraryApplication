@@ -8,14 +8,14 @@
     <tr style="font-weight: bold;">
       <td width="40%">Username</td>
       <td width="50%">Email</td>
-      <td width="10%">Options</td>
+      <td width="10%" *ngIf="canDelete">Options</td>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let author of authorOutputDto">
       <td>{{ author.displayName }}</td>
       <td>{{ author.emailAddress }}</td>
-      <td>
+      <td *ngIf="canDelete">
         <button class="btn btn-block btn-outline-danger" (click)="_onDelete( author.id )">Delete</button>
       </td>
     </tr>

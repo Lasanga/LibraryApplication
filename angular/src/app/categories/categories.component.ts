@@ -16,6 +16,7 @@ export class CategoriesComponent implements OnInit {
   categoryOutputDto: CategoryOutputDto[] = [];
   canEdit: Boolean = false;
   input: CategoryInputDto = new CategoryInputDto();
+  canDelete: Boolean = false;
 
   constructor(
     private _categoryService: CategoryService,
@@ -41,8 +42,11 @@ export class CategoriesComponent implements OnInit {
         return false;
       }
 
-      if (decodeToken['permission'].includes("category.add"))
+      if (decodeToken['permission'].includes("category.add")){
         this.canEdit = true;
+        this.canDelete = true;
+      }
+        
 
     }else {
 
