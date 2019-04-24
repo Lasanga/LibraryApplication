@@ -1,12 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AccountService, UnRegUserOutputDto, AddForiegnerInputDto } from '../shared-services/shared-services.component';
 
-// export interface PeriodicElement {
-//   username: string;
-//   email: string;
-// }
-
-// const ELEMENT_DATA: PeriodicElement[] = [];
 
 @Component({
   selector: 'app-foreigner-approval',
@@ -15,7 +9,6 @@ import { AccountService, UnRegUserOutputDto, AddForiegnerInputDto } from '../sha
 })
 export class ForeignerApprovalComponent implements OnInit {
 
-  // displayedColumns: string[] = ['userName', 'email', 'isActive'];
   foreignOutputDto: UnRegUserOutputDto[] = [];
   input: AddForiegnerInputDto = new AddForiegnerInputDto();
 
@@ -29,8 +22,6 @@ export class ForeignerApprovalComponent implements OnInit {
       this.foreignOutputDto = res;
     })
 
-    // console.log(this.foreignOutputDto);
-
   }
 
   _onApproved(id:string){
@@ -38,7 +29,6 @@ export class ForeignerApprovalComponent implements OnInit {
     this._accountService.addForiegner(this.input).subscribe(res => {
       location.reload();
     })
-    // console.log(id);
   }
 
 }

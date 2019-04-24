@@ -17,6 +17,8 @@ import { BooksRareComponent } from './rare-collection/books/books-rare.component
 import { NewspapersRareComponent } from './rare-collection/newspapers/newspapers-rare.component';
 import { GovernmentPublicationsRareComponent } from './rare-collection/government-publications/government-publications-rare.component';
 import { OlaLeafRareComponent } from './rare-collection/ola-leaf/ola-leaf-rare.component';
+import { AuthorsComponent } from './authors/authors.component';
+import { CategoriesComponent } from './categories/categories.component';
 
 const routes: Routes = [
   {
@@ -75,6 +77,14 @@ const routes: Routes = [
   {
     path: "rareOla",
     component: OlaLeafRareComponent
+  },
+  {
+    path: "authors",
+    component: AuthorsComponent
+  },
+  {
+    path: "category",
+    component: CategoriesComponent
   },
   {
     path: "404NotFound",

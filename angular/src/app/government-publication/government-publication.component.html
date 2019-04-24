@@ -1,7 +1,7 @@
 <div class="container">
-  <div class="col-2" style="margin-bottom: 10px;">
+  <div class="col-2" style="margin-bottom: 10px; float: right; margin-right: 50px;">
       <button *ngIf="canEdit" class="btn btn-block btn-outline-primary" (click)="openCreate()">Create New</button>
-  </div>
+  </div><br /><br />
   <div class="row">
     <div class="col-4 mb-3" *ngFor="let govPub of govPubOutputDto">
       <mat-card class="example-card">

@@ -42,6 +42,10 @@ import { RareBooksEditComponent } from './rare-collection/books/rare-books-edit/
 import { RareNewspapersEditComponent } from './rare-collection/newspapers/rare-newspapers-edit/rare-newspapers-edit.component';
 import { GovernmentPublicationsRareEditComponent } from './rare-collection/government-publications/government-publications-rare-edit/government-publications-rare-edit.component';
 import { OlaLeafRareEditComponent } from './rare-collection/ola-leaf/ola-leaf-rare-edit/ola-leaf-rare-edit.component';
+import { AuthorsComponent } from './authors/authors.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { AuthorCreateComponent } from './authors/author-create/author-create.component';
+import { CategoryCreateComponent } from './categories/category-create/category-create.component';
 
 
 @NgModule({
@@ -75,6 +79,10 @@ import { OlaLeafRareEditComponent } from './rare-collection/ola-leaf/ola-leaf-ra
     RareNewspapersEditComponent,
     GovernmentPublicationsRareEditComponent,
     OlaLeafRareEditComponent,
+    AuthorsComponent,
+    CategoriesComponent,
+    AuthorCreateComponent,
+    CategoryCreateComponent,
   ],
   imports: [
     BrowserModule,
@@ -124,6 +132,6 @@ import { OlaLeafRareEditComponent } from './rare-collection/ola-leaf/ola-leaf-ra
   bootstrap: [AppComponent],
   entryComponents: [BookEditComponent, BookCreateComponent, NewsPaperEditComponent, NewsPaperCreateComponent, GovernmentPublicationCreateComponent, 
     GovernmentPublicationEditComponent, OlaLeafEditComponent, OlaLeafCreateComponent, RareBooksEditComponent, RareNewspapersEditComponent,
-    GovernmentPublicationsRareEditComponent, OlaLeafRareEditComponent]
+    GovernmentPublicationsRareEditComponent, OlaLeafRareEditComponent, AuthorCreateComponent, CategoryCreateComponent]
 })
 export class AppModule { }
