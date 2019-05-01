@@ -16,6 +16,8 @@ export class GovernmentPublicationsRareComponent implements OnInit {
   govPubOutputDto: GovtPublicationOutputDto[] = [];
   canEdit: Boolean = false;
   canDelete: Boolean = false;
+  isContentFilled = false;
+  isContentError = true;
 
   constructor(
     private jwtHelper: JwtHelperService,
@@ -31,6 +33,12 @@ export class GovernmentPublicationsRareComponent implements OnInit {
 
       this._govService.getRare().subscribe(res => {
         this.govPubOutputDto = res;
+        
+        if(res.length != 0){
+          this.isContentFilled = true;
+          this.isContentError = false;
+        }
+      
       })
 
       const token = localStorage.getItem('token');

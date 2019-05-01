@@ -14,6 +14,8 @@ export class BooksRareComponent implements OnInit {
   bookOutputDto: BookOutputDto[] = [];
   canEdit: Boolean = false;
   canDelete: Boolean = false;
+  isContentFilled = false;
+  isContentError = true;
 
   constructor(
     private _bookService: BooksService,
@@ -25,6 +27,12 @@ export class BooksRareComponent implements OnInit {
 
     this._bookService.getRare().subscribe(res => {
       this.bookOutputDto = res;
+
+      if(res.length != 0){
+        this.isContentFilled = true;
+        this.isContentError = false;
+      }
+      
     })
 
     const token = localStorage.getItem('token');

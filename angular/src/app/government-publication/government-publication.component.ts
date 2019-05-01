@@ -21,6 +21,8 @@ export class GovernmentPublicationComponent implements OnInit {
   length = 5;
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
+  isContentFilled = false;
+  isContentError = true;
 
   constructor(
     private jwtHelper: JwtHelperService,
@@ -36,6 +38,12 @@ export class GovernmentPublicationComponent implements OnInit {
 
       this._govService.getAll().subscribe(res => {
         this.govPubOutputDto = res;
+        
+        if(res.length != 0){
+          this.isContentFilled = true;
+          this.isContentError = false;
+        }
+        
       })
   
       const token = localStorage.getItem('token');

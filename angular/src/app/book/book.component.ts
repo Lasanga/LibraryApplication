@@ -19,6 +19,8 @@ export class BookComponent implements OnInit {
   length = 5;
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
+  isContentFilled = false;
+  isContentError = true;
 
   constructor(
     private jwtHelper: JwtHelperService,
@@ -30,14 +32,21 @@ export class BookComponent implements OnInit {
 
     this._bookService.getAll().subscribe(res => {
       this.bookOutputDto = res;
-    })
+      
+      if(res.length != 0){
+        this.isContentFilled = true;
+        this.isContentError = false;
+      }
 
-    console.log(this.bookOutputDto.length);
+    })
+    
+
+    // console.log(this.bookOutputDto.length);
 
     const token = localStorage.getItem('token');
     const decodeToken = this.jwtHelper.decodeToken(token); 
     
-    console.log(decodeToken);
+    // console.log(decodeToken);
     
     if (!decodeToken) {
       return false;

@@ -12,7 +12,12 @@
       <button *ngIf="canEdit" class="btn btn-block btn-outline-primary" (click)="openCreate()">Create New</button>
     </div>
   </div><br /><br />
-  <div class="row">
+
+  <div class="row" *ngIf="isContentError">
+    <app-unfilled-content></app-unfilled-content>
+  </div>
+
+  <div class="row" *ngIf="isContentFilled">
     <div class="col-4 mb-3" *ngFor="let olaLeaf of olaLeafOutputDto">
       <mat-card class="example-card">
         <mat-card-header>

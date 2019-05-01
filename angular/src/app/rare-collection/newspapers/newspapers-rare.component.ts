@@ -14,6 +14,8 @@ export class NewspapersRareComponent implements OnInit {
   newsOutputDto: NewspaperOutputDto[] = [];
   canEdit: Boolean = false;
   canDelete: Boolean = false;
+  isContentFilled = false;
+  isContentError = true;
 
   constructor(
     private _newsService: NewsPapersService,
@@ -25,6 +27,12 @@ export class NewspapersRareComponent implements OnInit {
 
     this._newsService.getRare().subscribe(res => {
       this.newsOutputDto = res;
+      
+      if(res.length != 0){
+        this.isContentFilled = true;
+        this.isContentError = false;
+      }
+      
     })
 
     const token = localStorage.getItem('token');
