@@ -46,6 +46,7 @@ import { AuthorsComponent } from './authors/authors.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { AuthorCreateComponent } from './authors/author-create/author-create.component';
 import { CategoryCreateComponent } from './categories/category-create/category-create.component';
+import { UnfilledContentComponent } from './unfilled-content/unfilled-content.component';
 
 
 @NgModule({
@@ -83,6 +84,7 @@ import { CategoryCreateComponent } from './categories/category-create/category-c
     CategoriesComponent,
     AuthorCreateComponent,
     CategoryCreateComponent,
+    UnfilledContentComponent,
   ],
   imports: [
     BrowserModule,

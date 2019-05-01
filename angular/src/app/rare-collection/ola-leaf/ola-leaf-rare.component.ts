@@ -16,6 +16,8 @@ export class OlaLeafRareComponent implements OnInit {
   olaLeafOutputDto: OlaleafoutputDto[] = [];
   canEdit: Boolean = false;
   canDelete: Boolean = false;
+  isContentFilled = false;
+  isContentError = true;
 
   constructor(
     private jwtHelper: JwtHelperService,
@@ -29,6 +31,12 @@ export class OlaLeafRareComponent implements OnInit {
 
     this._olaService.getRare().subscribe(res => {
       this.olaLeafOutputDto = res;
+
+      if(res.length != 0){
+        this.isContentFilled = true;
+        this.isContentError = false;
+      }
+      
     })
 
     const token = localStorage.getItem('token');
